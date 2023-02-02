@@ -1,0 +1,84 @@
+﻿<html>
+	<head>
+		<style>
+			body { margin: 0; }
+			canvas { width: 100%; height: 100% }
+		</style>
+	</head>
+	<body>
+		<script src="three.min.js"></script>
+		<script>
+			// Задача: направете движещите се сфери да са
+			// точкови светлинни източници, като светлината
+			// е със съответния цвят на сферата
+			
+			
+			var renderer = new THREE.WebGLRenderer();
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			renderer.setAnimationLoop( drawFrame );
+			document.body.appendChild( renderer.domElement );
+
+			var scene = new THREE.Scene();
+			
+			var aspect = window.innerWidth/window.innerHeight;
+			var camera = new THREE.PerspectiveCamera( 30, aspect );
+			camera.position.set( 12, 14, 30 );
+			camera.lookAt( new THREE.Vector3() );
+
+			// широка платформа, която ще бъде осветявана
+			var geometry = new THREE.BoxGeometry( 20, 1, 20 );
+			var material = new THREE.MeshPhongMaterial();
+			scene.add( new THREE.Mesh( geometry, material ) );
+			
+			// списък с цветове
+			var colors = ['red','blue','yellow'];
+			
+			// създаване на сфери и светлини
+			var balls=[];
+			var geometry = new THREE.SphereGeometry( 0.2 );
+			for (var i=0; i<3; i++)
+			{
+				// създаване на 3 сфери със съответен цвят,
+				// материалът е Basic, а не Phong, за да не
+				// се осветяват самите сфери и да нямат тъмна
+				// половина - все пак целта е те да са лампи
+				var material = new THREE.MeshBasicMaterial( {color:colors[i]} );
+				balls[i] = new THREE.Mesh( geometry, material );
+				scene.add( balls[i] );
+				
+				// създаване на светлинa със съответен цвят,
+				// която е сложена в съответната сфера
+				var light = new THREE.PointLight( colors[i] );
+				balls[i].add( light );
+			}
+			
+			
+			var t=0;
+			function drawFrame()
+			{
+				// въртене на сцената, за да не е скучно
+				scene.rotation.y += 0.001;
+
+				// псевдотаймер за движение на сферите
+				t += 0.005;
+
+				// движение на едната сфера
+				balls[0].position.x = 10*Math.cos(2.5*t);
+				balls[0].position.y = 2.5+1*Math.sin(2.4*t);
+				balls[0].position.z = 10*Math.cos(1.9*t);
+
+				// движение на другата
+				balls[1].position.x = 10*Math.cos(2.1*t);
+				balls[1].position.y = 2.5+1*Math.cos(2.5*t);
+				balls[1].position.z = 10*Math.sin(2.2*t);
+
+				// движение и на третата
+				balls[2].position.x = 10*Math.sin(1.8*t);
+				balls[2].position.y = 2.5+1*Math.sin(2.6*t);
+				balls[2].position.z = 10*Math.cos(2.6*t);
+
+				renderer.render( scene, camera );
+			}
+		</script>
+	</body>
+</html>

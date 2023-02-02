@@ -1,0 +1,103 @@
+﻿<html>
+	<head>
+		<style>
+			body { margin: 0; }
+			canvas { width: 100%; height: 100% }
+		</style>
+	</head>
+	<body>
+		<script src="three.min.js"></script>
+		<script src="labyrinth.js"></script> <!-- Включване на модула -->
+		<script>
+			// Задача: напавете възможно движение из лабиринта
+			// чрез стрелките от клавиатурата, без да ползвате
+			// външни модули и библиотеки за това - т.е. да 
+			// е изцяло "ръчно" направено
+			
+	
+			var renderer = new THREE.WebGLRenderer({antialias:true});
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			//renderer.setAnimationLoop( drawFrame ); <- без това
+			document.body.appendChild( renderer.domElement );
+			
+			// ловим натискане на клавиш - при всяко натискане
+			// се извиква нашата функция onKeyDown
+			document.body.addEventListener( 'keydown', onKeyDown ); 
+
+			var scene = new THREE.Scene();
+			scene.background = new THREE.Color( 'white' );
+
+			var aspect = window.innerWidth/window.innerHeight;
+			var camera = new THREE.PerspectiveCamera( 30, aspect );
+			camera.position.set( dW-1, dH+1, 70 );
+			
+
+			// създаване на лабиринта (като структура)
+			generateLabyrinth();
+			
+			// рисуване на лабиринта
+			var block = new THREE.PlaneGeometry( 1, 1 ); // единична кутийка
+			var nmaterial = new THREE.MeshBasicMaterial( {color: 'indigo'} );
+			var labyrinth = new THREE.Group(); // целият лабиринт
+			for( var x=0; x<2*dW+1; x++ )
+			for( var y=0; y<2*dH+2; y++ )
+				if( isWall(x,y) )
+				{
+					// за всяка пълна клетка създаваме стена
+					// и я добавяме към лабиринта
+					var wall = new THREE.Mesh( block, nmaterial );
+					wall.position.set( x, y, 0);
+					labyrinth.add( wall );
+				}
+			scene.add( labyrinth );
+		
+			// създаване на топчето като триъгълниче
+			var ball = new THREE.Mesh(
+				new THREE.CircleGeometry( 0.7, 3 ),
+				new THREE.MeshBasicMaterial( {color: 'hotpink'} )
+			);
+			ball.scale.set( 1, 0.7, 1 );
+			ball.position.set( 1, 2, 0 );
+			ball.rotation.z = Math.PI/2;
+			scene.add( ball );
+			
+			// функция, която обработванатиснат клавиш,
+			// той е в event.code
+			function onKeyDown(event)
+			{
+				var nx =0, ny=0, //желано отместване
+				    rt=0; // ориентация на триъгълничето
+					
+				if( event.code=='ArrowLeft'  || event.keyCode==37 ) nx = -1, rt = 2;
+				if( event.code=='ArrowRight' || event.keyCode==39 ) nx =  1, rt = 0;
+				if( event.code=='ArrowUp'    || event.keyCode==38 ) ny =  1, rt = 1;
+				if( event.code=='ArrowDown'  || event.keyCode==40 ) ny = -1, rt = 3;
+
+				// слагаме ориентацията
+				ball.rotation.z = rt*Math.PI/2;
+				
+				// ако желатана клета е празна, тогава местим
+				// триъгълничето в нея
+				if( isFree( ball.position.x+nx, ball.position.y+ny ) )
+				{
+					ball.position.x += nx;
+					ball.position.y += ny;
+				}
+
+				renderer.render( scene, camera ); // прерисуваме сцената след клавиш
+			}
+			
+			function drawFrame()
+			{
+				// ако ползвахме досегашния шаблон, щахме да 
+				// рисуваме лабиринта десетки пъти в секундата,
+				// а това не е нужно -- трябва само след
+				// натискане на клавиш, затова drawFrame
+				// не се ползва, а е оставено само като
+				// място, което да съдържа този коментар
+			}
+			
+			renderer.render( scene, camera ); // първоначално рисуване на сцената
+		</script>
+	</body>
+</html>

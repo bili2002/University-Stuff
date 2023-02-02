@@ -1,0 +1,96 @@
+﻿<html>
+	<head>
+		<style>
+			body { margin: 0; }
+			canvas { width: 100%; height: 100% }
+		</style>
+	</head>
+	<body>
+		<script src="three.min.js"></script>
+		<script src="futuristicPillar.js"></script>
+		<script>
+			// Задача: Направете топка да се движи на зигзаг
+			// около пилони по екватора на сфера
+			
+			
+			var renderer = new THREE.WebGLRenderer({antialias: true});
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			renderer.setAnimationLoop( drawFrame );
+			document.body.appendChild( renderer.domElement );
+			
+			// включваме генерирането на меки сенки
+			renderer.shadowMap.enabled = true;
+			renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+			var scene = new THREE.Scene();
+			scene.background = new THREE.Color( 'khaki' );
+			
+			var aspect = window.innerWidth/window.innerHeight;
+			var camera = new THREE.PerspectiveCamera( 30, aspect );
+			camera.position.set( 250, 80, 0 );
+			camera.lookAt( new THREE.Vector3());
+			
+			
+			// създаване на пилони
+			var n = 6;
+			var material = new THREE.MeshPhongMaterial( {color: 'plum', shininess: 0, specular: 'white'} );
+			for( a=0; a<2*Math.PI; a+=2*Math.PI/n)
+			{
+				var pillar = futuristicPillar( 0, 0, 50, material );
+				pillar.position.set( 42*Math.sin(a+Math.PI/2), 0, 42*Math.cos(a+Math.PI/2) );
+				pillar.rotation.z = -Math.PI/2;
+				pillar.rotation.y = a;
+				scene.add( pillar );
+			}
+	
+			
+			// създаване на топка
+			var ball = new THREE.Mesh(
+				new THREE.SphereGeometry( 6, 32, 32 ),
+				new THREE.MeshPhongMaterial( {color: 'red', shininess: 50, specular: 'white'} )
+			);
+			ball.position.set( 0, 0, 70 );
+			ball.castShadow = true;
+			scene.add( ball );
+
+
+			// създаване на земята
+			var ground = new THREE.Mesh(
+				new THREE.SphereGeometry( 50, 64, 64 ),
+				new THREE.MeshPhongMaterial( {color: 'plum', shininess: 0, specular: 'white'} )
+			);
+			ground.receiveShadow = true;
+			scene.add( ground );
+		
+			
+			// светлина
+			var light = new THREE.PointLight();
+			light.castShadow = true;
+			scene.add( light );
+			
+			scene.add( new THREE.AmbientLight( 'white', 0.2 ) );
+			
+			var clock = new THREE.Clock();
+			
+			function drawFrame()
+			{
+				var t = clock.getElapsedTime();
+				
+				// движение на зигзаг
+				var a = 2*t; // хоризонтален ъгъл
+				var b = 0.25*Math.cos(n*t); // вертикален ъгъл
+				
+				// декартови коокрдинати по сфера с радиус 80
+				// чрез конвертиране от сферични координати
+				ball.position.x = 80*Math.cos(a)*Math.cos(b);
+				ball.position.y = 80*Math.sin(b);
+				ball.position.z = 80*Math.sin(a)*Math.cos(b);
+
+				scene.rotation.y += 0.01;
+				light.position.set( 100*Math.cos(scene.rotation.y-0.5), 30, 100*Math.sin(scene.rotation.y-0.5) );
+				
+				renderer.render( scene, camera );
+			}
+		</script>
+	</body>
+</html>

@@ -1,0 +1,129 @@
+﻿<html>
+	<head>
+		<style>
+			body { margin: 0; }
+			canvas { width: 100%; height: 100% }
+		</style>
+	</head>
+	<body>
+		<script src="three.min.js"></script>
+		<script>
+			// Задача: Направете топките да се движат в
+			// паралелепипед, като рикошират от стените и
+			// са подвластни на гравитацията.			
+			
+			var renderer = new THREE.WebGLRenderer({antialias:true});
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			renderer.setAnimationLoop( drawFrame );
+			document.body.appendChild( renderer.domElement );
+
+			renderer.shadowMap.enabled = true;
+			renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+			var scene = new THREE.Scene();
+			scene.background = new THREE.Color( 'skyblue' );
+			
+			var aspect = window.innerWidth/window.innerHeight;
+			var camera = new THREE.PerspectiveCamera( 30, aspect );
+			camera.position.set( 0, 60, 300 );
+			camera.lookAt( new THREE.Vector3( 0, -10, 0 ) );
+
+			
+			// гравитация - вектор с посока надолу
+			var a = new THREE.Vector3(0,-0.05,0);
+			
+			// брой топчета
+			var n = 10;
+			var balls = [];
+			
+			// топчета за движене, случайната начална скорост
+			// е вградена в топчето (това е полето v)
+			for( var i=0; i<n; i++ )
+			{
+				balls[i] = new THREE.Mesh(
+					new THREE.SphereGeometry( 5, 32, 32 ),
+					new THREE.MeshPhongMaterial( {shininess: 100} )
+				);
+				balls[i].castShadow = true;
+				balls[i].material.color.setRGB( 0.5+0.5*Math.random(), 0.5+0.5*Math.random(),0.5+0.5*Math.random() );
+				balls[i].material.emissive.setRGB( 0.5*Math.random(), 0.5*Math.random(), 0.5*Math.random() );
+				balls[i].position.set( 40-80*Math.random(), 40-80*Math.random(), 40-80*Math.random() );
+				balls[i].v = new THREE.Vector3( 1-2*Math.random(), 0, 1-2*Math.random() );
+				balls[i].v.setLength( 0.5 );
+				scene.add( balls[i] );
+			}
+			
+			// платформата
+			var ground = new THREE.Mesh(
+				new THREE.BoxGeometry( 160.2, 2.2, 100.2 ),
+				new THREE.MeshPhongMaterial( {color: 'slateblue', shininess: 2, specular: 'white'} )
+			);
+			ground.position.y = -51;
+			ground.receiveShadow = true;
+			scene.add( ground );
+		
+			// стъкленият корпус
+			var glass = new THREE.Mesh(
+				new THREE.BoxGeometry( 160, 100, 100 ),
+				new THREE.MeshPhongMaterial( {color: 'lightcyan', opacity: 0.3, transparent: true, shininess: 0, specular: 'white', side:THREE.BackSide} )
+			);
+			glass.receiveShadow = true;
+			scene.add( glass );
+			
+			// бялата рамка на стъкления корпус
+			var frame = new THREE.BoxHelper( glass );
+			frame.material.color.set( 'white' );
+			scene.add( frame );
+		
+			// светлина
+			var light = new THREE.PointLight( 'white', 0.5 );
+			light.position.set( 0, 0, 0 );
+			light.castShadow = false;
+			scene.add( light );
+
+			// и още една
+			var light = new THREE.PointLight();
+			light.position.set( 0, 100, 0 );
+			light.castShadow = true;
+			scene.add( light );
+
+			
+			// ограничения на движението по X, Y и Z
+			var maxX = 160/2-5;
+			var minX = -maxX;
+			var maxY = 100/2-5;
+			var minY = -maxY;
+			var maxZ = 100/2-5;
+			var minZ = -maxZ;
+			
+			function drawFrame()
+			{
+				scene.rotation.y += 0.001;
+			
+				// преместване на топчето
+				for( var i=0; i<n; i++ )
+				{
+					var v = balls[i].v;
+					var p = balls[i].position;
+					
+					v.add( a );
+					p.add( v );
+						
+					// проверка за удар
+					if( p.x >= maxX ) { v.x = -v.x; p.x = maxX-(p.x-maxX); }
+					if( p.x <= minX ) { v.x = -v.x; p.x = minX-(p.x-minX); }
+					
+					if( p.y >= maxY ) { v.y = -v.y; p.y = maxY-(p.y-maxY); }
+					if( p.y <= minY ) { v.y = -v.y; p.y = minY-(p.y-minY); }
+					
+					if( p.z >= maxZ ) { v.z = -v.z; p.z = maxZ-(p.z-maxZ); }
+					if( p.z <= minZ ) { v.z = -v.z; p.z = minZ-(p.z-minZ); }
+				}
+				
+				renderer.render( scene, camera );
+			}
+			
+			drawFrame();
+		</script>
+	</body>
+</html>

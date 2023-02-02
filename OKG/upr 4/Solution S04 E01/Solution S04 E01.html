@@ -1,0 +1,77 @@
+﻿<html>
+	<head>
+		<style>
+			body { margin: 0; }
+			canvas { width: 100%; height: 100% }
+		</style>
+	</head>
+	<body>
+		<script src="three.min.js"></script>
+		<script>
+			// Задача: задайте цвета на фона и на четирите
+			// куба по четири различни начина:
+			// 		- чрез име на цвят
+			// 		- чрез числа от 0 до 1
+			// 		- чрез число в шестнадесетична бройна система
+			// 		- чрез стринг от RGB байтове
+			// 		- чрез стринг от RGB проценти
+			
+			
+			var renderer = new THREE.WebGLRenderer();
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			renderer.setAnimationLoop( drawFrame );
+			document.body.appendChild( renderer.domElement );
+			
+			// цвят на фона - чрез име на цвят
+			var scene = new THREE.Scene();
+			scene.background = new THREE.Color( 'peachpuff' );
+
+			
+			var aspect = window.innerWidth/window.innerHeight;
+			var camera = new THREE.PerspectiveCamera( 30, aspect );
+			camera.position.set( 0, 0, 16 );
+			camera.lookAt( new THREE.Vector3() );
+
+		
+			var group = new THREE.Group();
+			scene.add( group );
+			
+			// Цвят на куб 1 - чрез три числови компоненти от 0 до 1
+			var geometry = new THREE.BoxGeometry( 3, 3, 3 );
+			var material = new THREE.MeshPhongMaterial( {color: new THREE.Color( 1, 0.5, 0 )} );
+			var cube = new THREE.Mesh( geometry, material );
+			cube.position.set( 2, 0, 2 );
+			group.add( cube );
+			
+			// Цвят на куб 2 - чрез число в шестнадесетична бройна система
+			material = new THREE.MeshPhongMaterial( {color: 0xFF007F} );
+			cube = new THREE.Mesh( geometry, material );
+			cube.position.set( 2, 0, -2 );
+			group.add( cube );
+			
+			// Цвят на куб 3 - чрез стринг от RGB байтове
+			material = new THREE.MeshPhongMaterial( {color: 'rgb(0,127,255)'} );
+			cube = new THREE.Mesh( geometry, material );
+			cube.position.set( -2, 0, -2 );
+			group.add( cube );
+			
+			// Цвят на куб 4 - чрез стринг от RGB проценти
+			material = new THREE.MeshPhongMaterial( {color: 'rgb(50%,100%,0%)'} );
+			cube = new THREE.Mesh( geometry, material );
+			cube.position.set( -2, 0, 2 );
+			group.add( cube );
+
+			
+			var light = new THREE.PointLight();
+			light.position.set( 0, 5, 10 );
+			scene.add( light );
+			
+			function drawFrame()
+			{
+				group.rotation.x += 0.005;
+				group.rotation.y += 0.005;
+				renderer.render( scene, camera );
+			}
+		</script>
+	</body>
+</html>

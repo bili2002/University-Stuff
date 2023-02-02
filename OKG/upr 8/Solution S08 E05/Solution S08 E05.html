@@ -1,0 +1,128 @@
+﻿<html>
+	<head>
+		<style>
+			body { margin: 0; }
+			canvas { width: 100%; height: 100% }
+		</style>
+	</head>
+	<body>
+		<script src="three.min.js"></script>
+		<script src="CSG.js"></script>
+		<script>
+			// Задача: Направете топки да се пързалят напряко
+			// по улей до затихване. Улеят също го направете.			
+			
+			var renderer = new THREE.WebGLRenderer({antialias:true});
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			renderer.setAnimationLoop( drawFrame );
+			document.body.appendChild( renderer.domElement );
+
+			renderer.shadowMap.enabled = true;
+			renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+			var scene = new THREE.Scene();
+			scene.background = new THREE.Color( 'skyblue' );
+			
+			var aspect = window.innerWidth/window.innerHeight;
+			var camera = new THREE.PerspectiveCamera( 30, aspect );
+			camera.position.set( 0, 120, 300 );
+			camera.lookAt( new THREE.Vector3( 0, -10, 0 ) );
+
+			
+			var n = 3; // брой топки
+			var r = 15; // радиус на топка
+			var balls = [];
+			var colors = [ 0x907000, 0x2040A0, 0xA02040 ]; // фиксирани цветове
+
+			// създаване на трите топки
+			for( var i=0; i<n; i++ )
+			{
+				balls[i] = new THREE.Mesh(
+					new THREE.SphereGeometry( r, 32, 32 ),
+					new THREE.MeshPhongMaterial( {shininess: 100 } )
+				);
+				balls[i].castShadow = true;
+				balls[i].material.color.set( colors[i] );
+				balls[i].material.emissive.set( colors[i] );
+				balls[i].position.set( -50+50*i, 0, 0 );
+				balls[i].t = 2+5*Math.random(); // момент на стартиране
+				balls[i].a = 1.2; // амплитуда (отместване в радиани)
+				scene.add( balls[i] );
+			}
+			
+			// улей
+			var box = new THREE.Mesh(
+				new THREE.BoxGeometry( 200, 50, 140 ),
+				new THREE.MeshPhongMaterial( {color: 'slateblue', shininess: 2, specular: 'white'} )
+			);
+			box.position.y = -25;
+			var cyl = new THREE.Mesh(new THREE.CylinderGeometry( 60, 60, 210, 120 ) );
+			cyl.position.y = 20;
+			cyl.rotation.z = Math.PI/2;
+			var csg = new CSG();
+			csg.subtract( [box, cyl] );
+			var ground = csg.toMesh();
+			ground.receiveShadow = true;
+			scene.add( ground );
+
+			// светлина
+			var light = new THREE.PointLight( 'white', 0.5 );
+			light.position.set( 0, 0, 0 );
+			light.castShadow = false;
+			scene.add( light );
+
+			// и още една
+			var light = new THREE.PointLight();
+			light.position.set( 0, 100, 0 );
+			light.castShadow = true;
+			scene.add( light );
+
+			
+			var clock = new THREE.Clock();
+			
+			function drawFrame()
+			{
+				var t = clock.getElapsedTime();
+				
+				scene.rotation.y = Math.PI/2+Math.cos(t/2)/2;
+				
+				// преместване на топка
+				for (var i=0; i<3; i++)
+				{
+					// скоростта зависи обратнопропорционално
+					// на квадрата на амплитудата, е, с други
+					// коефициенти е, но в случая са избрани 
+					// числа, които правят движението приемливо
+					var v = 6/(1+balls[i].a*balls[i].a);
+					
+					// ъглово отместване - топката е като че 
+					// ли на върха на махало
+					var angle = 1.2;
+					
+					// ако е време топката да се търкаля,
+					// смятаме истинският ъгъл
+					if( t > balls[i].t )
+					{
+						// времето го броим спрямо началното
+						// време на пускане на топката, затова
+						// имаме t-balls[i].t
+						angle = balls[i].a*Math.cos(v*(t-balls[i].t));
+						// с времето амплитудата намалява
+						// поради триене, съпротивление на
+						// въздуха, загуба на енергия, ...
+						balls[i].a *= 0.998;
+					}
+					
+					// пресмятане на положението на топка,
+					// то е по дъга от окръжност 
+					var y = 20-(60-r)*Math.cos(angle);
+					var z = (60-r)*Math.sin(angle);
+					balls[i].position.setY( y );
+					balls[i].position.setZ( z );
+				}
+				
+				renderer.render( scene, camera );
+			}
+		</script>
+	</body>
+</html>

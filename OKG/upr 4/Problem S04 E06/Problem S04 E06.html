@@ -1,0 +1,51 @@
+﻿<html>
+	<head>
+		<style>
+			body { margin: 0; }
+			canvas { width: 100%; height: 100% }
+		</style>
+	</head>
+	<body>
+		<script src="three.min.js"></script>
+		<script>
+			// Задача: направете полет над кристална планета
+			// с големи, ръбести, лъскави кристали
+			
+			
+			var renderer = new THREE.WebGLRenderer();
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			renderer.setAnimationLoop( drawFrame );
+			document.body.appendChild( renderer.domElement );
+
+			var scene = new THREE.Scene();
+			
+			var aspect = window.innerWidth/window.innerHeight;
+			var camera = new THREE.PerspectiveCamera( 30, aspect );
+			camera.position.set( 0, 0, 100 );
+			camera.lookAt( new THREE.Vector3() );
+
+			// Планета - за момента е сфера, решете как да
+			// я кристализирате цялата (подсказка - не чрез сфера)
+			var geometry = new THREE.SphereGeometry( 20, 16, 16 );
+			var material = new THREE.MeshPhongMaterial({
+				flatShading: true, // плоско осветяване - всяка стена е едноцветна
+				shininess: 50, // степен на лъскавост
+				specular: 'white' // цвят на лъскавината
+			});
+			var solid = new THREE.Mesh( geometry, material );
+			scene.add( solid );
+			
+			
+			var light = new THREE.PointLight();
+			light.position.set( 0, 0, 50 );
+			scene.add( light );
+			
+
+			function drawFrame()
+			{
+				solid.rotation.x += 0.01;
+				renderer.render( scene, camera );
+			}
+		</script>
+	</body>
+</html>

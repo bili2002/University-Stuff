@@ -1,0 +1,110 @@
+﻿<html>
+	<head>
+		<style>
+			body { margin: 0; }
+			canvas { width: 100%; height: 100% }
+		</style>
+	</head>
+	<body>
+		<script src="three.min.js"></script>
+		<script src="cradle.js"></script> <!-- външен файл с помощни обекти-->
+		<script>
+			// Задача: Направете Люлка на Нютон, с черен мрамор,
+			// златни крачета, сребърна рамка и диамантени топки.
+			
+			var renderer = new THREE.WebGLRenderer( {antialias: true} );
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			renderer.setAnimationLoop( drawFrame );
+			document.body.appendChild( renderer.domElement );
+
+			var scene = new THREE.Scene();
+			scene.background = new THREE.Color( 'skyblue' );
+			
+			var aspect = window.innerWidth/window.innerHeight;
+			var camera = new THREE.PerspectiveCamera( 30, aspect );
+			camera.position.set( 0, 50, 200 );
+			camera.lookAt( new THREE.Vector3( 0, 25, 0 ) );
+
+			// създаване на конструкцията - вж. cradle.js
+			var cradle = cradleBase(
+				new THREE.MeshPhongMaterial( {color: 'black', shininess: 50,specular: 'white'} ),
+				new THREE.MeshPhongMaterial( {color: 'goldenrod', shininess: 50,specular: 'white'} ),
+				new THREE.MeshPhongMaterial( {color: 'gray', shininess: 150,specular: 'white'} )
+			);
+			scene.add( cradle );
+
+			// създаване на подвижните елементи - вж. cradle.js
+			var n = 6; // брой топки
+			var balls = [];
+			for (var i=0; i<n; i++)
+			{
+				balls[i] = cradleBall(
+					new THREE.MeshPhongMaterial( {color: 'black', shininess: 50,specular: 'white'}),
+					new THREE.MeshPhongMaterial( {color:'lightblue', transparent:true, opacity: 0.8, shininess: 50, specular: 'white', flatShading: true })
+				);
+				balls[i].position.set( 12*(i-(n-1)/2), 60, 0 );
+				scene.add( balls[i] );
+			}
+
+			
+			// светлина
+			var light1 = new THREE.PointLight( 'white', 0.5 );
+			light1.position.set( 0, 50, 0 );
+			scene.add( light1 );
+
+			// и още една
+			var light = new THREE.PointLight();
+			light.position.set( 0, 100, 0 );
+			scene.add( light );
+			
+			// и още една
+			var light = new THREE.DirectionalLight( 'white' );
+			light.position.set( 0, 0, -1 );
+			scene.add( light );
+
+			
+			var clock = new THREE.Clock();
+			
+			function drawFrame()
+			{
+				var t = clock.getElapsedTime();
+
+				// отклонение в радиани на крайна топка
+				var angle = Math.sin(3*t);
+				
+				// ако ъгълът е положителен, отклоняваме
+				// топката в края на масива от топки, иначе
+				// отклоняваме тази в началото на масива
+				if( angle > 0 )
+				{
+					balls[n-1].rotation.z = angle;
+					// въвеждаме малко дефект - отклоняват се
+					// и съседните две топки, но много малко
+					balls[n-2].rotation.z = angle/10;
+					balls[n-3].rotation.z = angle/40;
+					balls[0].rotation.z = 0;
+					balls[1].rotation.z = 0;
+					balls[2].rotation.z = 0;
+				}
+				else
+				{
+					balls[0].rotation.z = angle;
+					balls[1].rotation.z = angle/10;
+					balls[2].rotation.z = angle/40;
+					balls[n-3].rotation.z = 0;
+					balls[n-2].rotation.z = 0;
+					balls[n-1].rotation.z = 0;
+				}
+				scene.rotation.y = t/5;
+				
+				// понеже въртим сцената, две от светлините
+				// въртим "ръчно", за да са неподвижни спрямо
+				// нашата гледна точка
+				light1.position.set( 160*Math.sin(t/5), 50, 160*Math.cos(t/5) );
+				light.position.set( Math.sin(-t/5), 0, Math.cos(-t/5) );
+
+				renderer.render( scene, camera );
+			}
+		</script>
+	</body>
+</html>

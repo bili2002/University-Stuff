@@ -1,0 +1,94 @@
+﻿<html>
+	<head>
+		<style>
+			body { margin: 0; }
+			canvas { width: 100%; height: 100% }
+		</style>
+	</head>
+	<body>
+		<script src="three.min.js"></script>
+		<script>
+			// Задача: изградете селище с различни по размер
+			// къщи, ориентирани в една от две перпендикулярни
+			// посоки, като добавете и мъгла, така че да са
+			// замъглени най-отдалечените къщи
+
+			
+			var renderer = new THREE.WebGLRenderer( {antialias: true} );
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			renderer.setAnimationLoop( drawFrame );
+			document.body.appendChild( renderer.domElement );
+
+			var scene = new THREE.Scene();
+			scene.background = new THREE.Color( 'tan' );
+			// добавяме мъгла със същия цвят като фона,
+			// а параметърът 0.01 е налучкан
+			scene.fog = new THREE.FogExp2( 'tan', 0.01 );
+			
+			var aspect = window.innerWidth/window.innerHeight;
+			var camera = new THREE.PerspectiveCamera( 30, aspect );
+			camera.position.set( 0, 15, 100 );
+			camera.lookAt( new THREE.Vector3() );
+			
+
+			// профил на къща
+			var shape = new THREE.Shape();
+			shape.moveTo(   2, 0 );
+			shape.lineTo(   2, 4 );
+			shape.lineTo( 2.5, 4 );
+			shape.lineTo(   0, 6 );
+			shape.lineTo(-2.5, 4 );
+			shape.lineTo(  -2, 4 );
+			shape.lineTo(  -2, 0 );
+			shape.lineTo(   2, 0 );
+
+			// създаване на къщата като изтòчен обект
+			var extrudeSettings = { depth: 6, bevelEnabled: true, bevelSegments: 2, steps: 2, bevelSize: 0.1, bevelThickness: 0.1 };
+			var geometry = new THREE.ExtrudeGeometry( shape, extrudeSettings );
+			
+			// селище
+			var village = new THREE.Group();
+			scene.add( village );
+			
+			// построяване на къщите в селището
+			for (var i=0; i<200; i++)
+			{
+				// къща
+				var house = new THREE.Mesh( geometry, new THREE.MeshPhongMaterial() );
+				
+				// на случайно място от -70 до +70 по хоризонтала
+				house.position.set( 140*Math.random()-70, 0, 140*Math.random()-70 );
+				
+				// размер
+				house.scale.set( 1/2+Math.random(), 1/2+Math.random(), 1/2+Math.random() );
+				
+				// ориентация
+				house.rotation.set( 0, Math.PI/2*Math.round(Math.random()), 0 );
+
+				// добавяме я в селището
+				village.add( house );
+			}
+
+			// светлини
+			light1 = new THREE.PointLight( 'orange', 0.5 );
+			light1.position.set( 20, 40, 0 );
+			scene.add( light1 );
+			
+			light3 = new THREE.PointLight( 'red', 0.5 );
+			light3.position.set( -20, 40, 0 );
+			scene.add( light3 );
+			
+			light2 = new THREE.PointLight();
+			light2.position.set( 0, -50, 100 );
+			scene.add( light2 );
+
+			function drawFrame()
+			{
+				// въртим селището
+				village.rotation.y += 0.001;
+				
+				renderer.render( scene, camera );
+			}
+		</script>
+	</body>
+</html>

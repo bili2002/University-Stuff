@@ -1,0 +1,65 @@
+﻿<html>
+	<head>
+		<style>
+			body { margin: 0; }
+			canvas { width: 100%; height: 100% }
+		</style>
+	</head>
+	<body>
+		<script src="three.min.js"></script>
+		<script>
+			var renderer = new THREE.WebGLRenderer();
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			document.body.appendChild( renderer.domElement );
+
+			var scene = new THREE.Scene();
+			
+			var aspect = window.innerWidth/window.innerHeight;
+			var camera = new THREE.PerspectiveCamera( 30, aspect );
+			camera.position.set( 0, 0, 20 );
+			camera.lookAt( new THREE.Vector3() );
+
+			var material = new THREE.MeshPhongMaterial();	
+			var geometry = new THREE.BoxGeometry( 5, 1/3, 1/3 );
+			var plate = new THREE.Mesh( geometry, material );
+			plate.position.y = -3/2 + 1/6;
+			scene.add( plate );
+
+			// и една вдясно от центъра
+			plate = new THREE.Mesh( geometry, material );
+			plate.position.y = 3/2 - 1/6;
+			scene.add( plate );
+
+			geometry = new THREE.BoxGeometry( 1/3, 3, 1/3 );
+			plate = new THREE.Mesh( geometry, material );
+			plate.position.x = -5/2 + 1/6;
+			scene.add( plate );
+
+			plate = new THREE.Mesh( geometry, material );
+			plate.position.x = 5/2 - 1/6;
+			scene.add( plate );
+
+			geometry = new THREE.BoxGeometry( 1/6, 3, 1/3 );
+			plate = new THREE.Mesh( geometry, material );
+			plate.position.x = 1;
+			scene.add( plate );
+
+			geometry = new THREE.BoxGeometry( 3 + 1/3, 1/6, 1/3 );
+			plate = new THREE.Mesh( geometry, material );
+			plate.position.x = -1 + 1/3;
+			scene.add( plate );
+
+			var light = new THREE.PointLight( );
+			light.position.set( 3, 2, 3 );
+			scene.add( light );
+
+			renderer.render(scene, camera);
+
+			var light = new THREE.PointLight( );
+			light.position.set( 2, 2, 3 );
+			scene.add( light );
+
+			renderer.render( scene, camera );
+		</script>
+	</body>
+</html>

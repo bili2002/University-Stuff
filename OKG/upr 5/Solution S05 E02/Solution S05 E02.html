@@ -1,0 +1,74 @@
+﻿<html>
+	<head>
+		<style>
+			body { margin: 0; }
+			canvas { width: 100%; height: 100% }
+		</style>
+	</head>
+	<body>
+		<script src="three.min.js"></script>
+		<script src="CSG.js"></script>
+		<script>
+			// Задача: конструирайте златен осмоъгълен
+			// пепелник-сувенир за четирима. 
+
+			
+			var renderer = new THREE.WebGLRenderer();
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			renderer.setAnimationLoop( drawFrame );
+			document.body.appendChild( renderer.domElement );
+			
+			var scene = new THREE.Scene();
+			scene.background = new THREE.Color( 'midnightblue' );
+			
+			var aspect = window.innerWidth/window.innerHeight;
+			camera = new THREE.PerspectiveCamera( 30, aspect );
+			camera.position.set( 0, 0, 8 );
+			camera.lookAt( new THREE.Vector3() );
+			
+		
+			// Основно тяло - осмоъгълна пресечена пирамида
+			var body = new THREE.Mesh( new THREE.CylinderGeometry( 2, 2.5, 1, 8 ) );
+			
+			// Дупка по средата
+			var hole = new THREE.Mesh( new THREE.CylinderGeometry( 1.7, 1.7, 1, 8 ));
+			hole.position.set( 0, 0.3, 0 );
+			
+			// Улей за двама
+			var gutter1 = new THREE.Mesh( new THREE.CylinderGeometry( 0.3, 0.3, 5, 40 ));
+			gutter1.position.y = 0.5;
+			gutter1.rotation.x = Math.PI/2;
+			gutter1.rotation.z = 3*Math.PI/8;
+			
+			// Улей за другите двама
+			var gutter2 = new THREE.Mesh( new THREE.CylinderGeometry( 0.3, 0.3, 5, 40 ));
+			gutter2.position.y = 0.5;
+			gutter2.rotation.x = Math.PI/2;
+			gutter2.rotation.z = 7*Math.PI/8;
+			
+			// Изрязваме голямата централна дупка и улеите
+			var csg = new CSG();
+			csg.subtract( [body, hole, gutter1, gutter2] );
+			var ashTray = csg.toMesh();
+			ashTray.material = new THREE.MeshPhongMaterial( {
+				color: 'gold',
+				specular: 'white' });
+			scene.add( ashTray );
+			
+			
+			var light = new THREE.PointLight();
+			light.position.set( 0, 5, 10 );
+			scene.add( light );
+			
+			
+			function drawFrame()
+			{
+				// въртим пепелника
+				ashTray.rotation.x = 0.3+0.2*Math.sin(ashTray.rotation.y);
+				ashTray.rotation.y += 0.010;
+				
+				renderer.render( scene, camera );
+			}
+		</script>
+	</body>
+</html>

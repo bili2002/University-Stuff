@@ -1,0 +1,88 @@
+﻿<html>
+	<head>
+		<style>
+			body { margin: 0; }
+			canvas { width: 100%; height: 100% }
+		</style>
+	</head>
+	<body>
+		<script src="three.min.js"></script>
+		<script>
+			// Задача: Направете няколко топки да се движат
+			// "хаотично" по повърхността на куб
+			
+			
+			var renderer = new THREE.WebGLRenderer({antialias: true});
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			renderer.setAnimationLoop( drawFrame );
+			document.body.appendChild( renderer.domElement );
+			
+			// включваме генерирането на меки сенки
+			renderer.shadowMap.enabled = true;
+			renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+			var scene = new THREE.Scene();
+			scene.background = new THREE.Color( 'sienna' );
+			
+			var aspect = window.innerWidth/window.innerHeight;
+			var camera = new THREE.PerspectiveCamera( 30, aspect );
+			camera.position.set( 0, 0, 200 );
+			camera.lookAt( new THREE.Vector3());
+			
+
+			// създаване на куба
+			var ground = new THREE.Mesh(
+				new THREE.BoxGeometry( 50, 50, 50 ),
+				new THREE.MeshPhongMaterial( {color: 'seashell', shininess: 10} )
+			);
+			ground.receiveShadow = true;
+			scene.add( ground );
+
+
+			// създаване на топки
+			var n = 10;
+			var balls = [];
+			for (var i=0; i<n; i++)
+			{
+				balls[i] = new THREE.Mesh(
+					new THREE.SphereGeometry( 3, 24, 24 ),
+					new THREE.MeshPhongMaterial( {color: 'gainsboro', shininess: 5, specular: 'white'} )
+				);
+				balls[i].position.set( 15*Math.sin(i/1.6), 15*Math.cos(i/1.6), 28 );
+				ground.add( balls[i] );
+			}
+		
+			
+			// светлина
+			var light = new THREE.PointLight( 'orange' );
+			light.position.set( 100, 0, 50 );
+			light.castShadow = true;
+			scene.add( light );
+						
+			var light = new THREE.PointLight( 'pink' );
+			light.position.set( -100, 0, -50 );
+			light.castShadow = true;
+			scene.add( light );
+						
+			var light = new THREE.PointLight( 'white', 0.5 );
+			light.position.set( 0, 0, 50 );
+			scene.add( light );
+						
+		
+			var clock = new THREE.Clock();
+			
+			function drawFrame()
+			{
+				var t = clock.getElapsedTime();
+				
+				// движение на топките
+				// ???
+
+				ground.rotation.x += 0.0012;
+				ground.rotation.y += 0.0017;
+				
+				renderer.render( scene, camera );
+			}
+		</script>
+	</body>
+</html>

@@ -1,0 +1,110 @@
+﻿<html>
+	<head>
+		<style>
+			body { margin: 0; }
+			canvas { width: 100%; height: 100% }
+		</style>
+	</head>
+	<body>
+		<script src="three.min.js"></script>
+		<script src="labyrinth.js"></script> <!-- Включване на модула -->
+		<script>
+			// Задача: напавете възможно движение из лабиринта
+			// чрез стрелките от клавиатурата, без да ползвате
+			// външни модули и библиотеки за това - т.е. да 
+			// е изцяло "ръчно" направено
+			
+	
+			var renderer = new THREE.WebGLRenderer({antialias:true});
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			renderer.setAnimationLoop( drawFrame );
+			document.body.appendChild( renderer.domElement );
+			
+
+			var scene = new THREE.Scene();
+			scene.background = new THREE.Color( 'white' );
+
+			var aspect = window.innerWidth/window.innerHeight;
+			var camera = new THREE.PerspectiveCamera( 30, aspect );
+			camera.position.set( dW-1, dH+1, 70 );
+			
+
+			// създаване на лабиринта (като структура)
+			generateLabyrinth();
+			
+			// рисуване на лабиринта
+			var block = new THREE.PlaneGeometry( 1, 1 ); // единична кутийка
+			var nmaterial = new THREE.MeshBasicMaterial( {color: 'indigo'} );
+			var labyrinth = new THREE.Group(); // целият лабиринт
+			for( var x=0; x<2*dW+1; x++ )
+			for( var y=0; y<2*dH+2; y++ )
+				if( isWall(x,y) )
+				{
+					// за всяка пълна клетка създаваме стена
+					// и я добавяме към лабиринта
+					var wall = new THREE.Mesh( block, nmaterial );
+					wall.position.set( x, y, 0);
+					labyrinth.add( wall );
+				}
+			scene.add( labyrinth );
+		
+			// създаване на топчето като триъгълниче
+			var ball = new THREE.Mesh(
+				new THREE.CircleGeometry( 0.7, 3 ),
+				new THREE.MeshBasicMaterial( {color: 'hotpink'} )
+			);
+			ball.scale.set( 1, 0.7, 1 );
+			ball.position.set( 1, 2, 0 );
+			ball.rotation.z = Math.PI/2;
+			scene.add( ball );
+			
+			// функции за движение на триъгълничето - те са
+			// само за реализиране на обхождането на лабиринта
+			// и за решението няма да ви трябват такива
+			// каквито са:
+			
+			var nx=0, ny=1, rt=1;
+			
+			// прави една стъпка със завъртане по посока
+			// наляво при n=1 и надясно при n=-1, връща дали
+			// е успешна стъпката
+			function doTurn( n )
+			{
+				rt = (4+rt+n)%4;
+				switch (rt)
+				{
+					case 0:  nx = 1; ny = 0; break;
+					case 1:  nx = 0; ny = 1; break;
+					case 2:  nx =-1; ny = 0; break;
+					case 3:  nx = 0; ny =-1; break;
+				}
+				if( isFree(ball.position.x+nx,ball.position.y+ny) )
+				{
+					ball.rotation.z = rt*Math.PI/2;
+					ball.position.x += nx;
+					ball.position.y += ny;
+					return true;
+				}
+				return false;
+			}
+			
+			// обхожда лабиринта по алгоритъма на лявата ръка
+			// (дясната държи смартфон и лови покемони)
+			function doStep()
+			{
+				if( doTurn(1) ) return;
+				for( var i=0; i<4; i++ )
+					if( doTurn(-1) ) return;
+			}
+			
+			var t=0;
+			function drawFrame()
+			{
+				t++;
+				if( t%10==0 ) doStep(); // стъпка през 10 кадъра (иначе е много бързо)
+
+				renderer.render( scene, camera );
+			}
+		</script>
+	</body>
+</html>

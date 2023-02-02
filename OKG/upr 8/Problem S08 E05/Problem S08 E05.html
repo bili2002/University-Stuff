@@ -1,0 +1,82 @@
+﻿<html>
+	<head>
+		<style>
+			body { margin: 0; }
+			canvas { width: 100%; height: 100% }
+		</style>
+	</head>
+	<body>
+		<script src="three.min.js"></script>
+		<script>
+			// Задача: Направете топки да се пързалят напряко
+			// по улей до затихване. Улеят също го направете.			
+			
+			var renderer = new THREE.WebGLRenderer({antialias:true});
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			renderer.setAnimationLoop( drawFrame );
+			document.body.appendChild( renderer.domElement );
+
+			renderer.shadowMap.enabled = true;
+			renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+			var scene = new THREE.Scene();
+			scene.background = new THREE.Color( 'skyblue' );
+			
+			var aspect = window.innerWidth/window.innerHeight;
+			var camera = new THREE.PerspectiveCamera( 30, aspect );
+			camera.position.set( 0, 120, 300 );
+			camera.lookAt( new THREE.Vector3( 0, -10, 0 ) );
+
+			
+			var n = 3; // брой топки
+			var r = 15; // радиус на топка
+			var balls = [];
+			var colors = [ 0x907000, 0x2040A0, 0xA02040 ]; // фиксирани цветове
+
+			// създаване на трите топки
+			for( var i=0; i<n; i++ )
+			{
+				balls[i] = new THREE.Mesh(
+					new THREE.SphereGeometry( r, 32, 32 ),
+					new THREE.MeshPhongMaterial( {shininess: 100 } )
+				);
+				balls[i].castShadow = true;
+				balls[i].material.color.set( colors[i] );
+				balls[i].material.emissive.set( colors[i] );
+				balls[i].position.set( -50+50*i, 0, 0 );
+				balls[i].v = 1.5+1*Math.random(); // скорост
+				balls[i].o = 2*Math.PI*Math.random(); // отместване
+				scene.add( balls[i] );
+			}
+			
+			// улей (не все още)
+			var ground = new THREE.Mesh(
+				new THREE.BoxGeometry( 200, 50, 140 ),
+				new THREE.MeshPhongMaterial()
+			);
+			ground.position.y = -25;
+			ground.receiveShadow = true;
+			scene.add( ground );
+
+			// светлина
+			var light = new THREE.PointLight( 'white', 0.5 );
+			light.position.set( 0, 40, 0 );
+			light.castShadow = false;
+			scene.add( light );
+
+			// и още една
+			var light = new THREE.PointLight();
+			light.position.set( 0, 100, 0 );
+			light.castShadow = true;
+			scene.add( light );
+
+			
+			function drawFrame()
+			{
+				scene.rotation.y += 0.003;
+				
+				renderer.render( scene, camera );
+			}
+		</script>
+	</body>
+</html>

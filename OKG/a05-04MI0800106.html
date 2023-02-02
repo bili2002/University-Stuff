@@ -1,0 +1,53 @@
+﻿<html>
+	<head>
+		<style>
+			body { margin: 0; }
+			canvas { width: 100%; height: 100% }
+		</style>
+	</head>
+	<body>
+		<script src="three.min.js"></script>
+		<script src="CSG.js"></script> <!-- Включване на библиотека за CSG -->
+		<script>
+			var renderer = new THREE.WebGLRenderer();
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			renderer.setAnimationLoop( drawFrame );
+			document.body.appendChild( renderer.domElement );
+
+			var scene = new THREE.Scene();
+			scene.background = new THREE.Color( 'lavenderblush' );
+			
+			var aspect = window.innerWidth/window.innerHeight;
+			camera = new THREE.PerspectiveCamera( 30, aspect );
+			camera.position.set( 0, 5, 16 );
+			camera.lookAt( new THREE.Vector3() );
+
+			var outer = new THREE.Mesh( new THREE.CylinderGeometry( 3, 3, 1, 80 ) );
+			var inner = new THREE.Mesh( new THREE.CylinderGeometry( 2.5, 2.5, 2, 80 ) );
+			var csg = new CSG();
+			csg.subtract( [outer, inner] );
+			
+			var tube = csg.toMesh();
+			var texture = new THREE.TextureLoader().load('https://static.vecteezy.com/system/resources/previews/003/517/366/large_2x/gray-concrete-backdrop-white-dirty-old-cement-texture-grunge-of-old-concrete-photo.jpg');
+			tube.material = new THREE.MeshBasicMaterial( { map: texture } );
+			scene.add(tube);
+			
+			texture = new THREE.TextureLoader().load('https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/b7ecf52a-a7c6-46b0-babc-fd1f5dd6162f/dcf1a9k-4eaba001-beb0-48d0-aeb3-dbc5194b3078.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcL2I3ZWNmNTJhLWE3YzYtNDZiMC1iYWJjLWZkMWY1ZGQ2MTYyZlwvZGNmMWE5ay00ZWFiYTAwMS1iZWIwLTQ4ZDAtYWViMy1kYmM1MTk0YjMwNzgucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.jNrhvEu4ndX1gGTet-vLdqQSZ8jyCFwYSo0813SyoPA');
+			material = new THREE.MeshBasicMaterial( { map: texture } );
+			var geometry = new THREE.CylinderGeometry( 2.5, 2.5, 0.7, 80 );
+			var water = new THREE.Mesh(geometry, material);
+			scene.add(water);
+			
+			
+			var light = new THREE.PointLight();
+			light.position.set( 0, 5, 10 );
+			scene.add( light );
+			
+			
+			function drawFrame()
+			{
+				renderer.render( scene, camera );
+			}
+		</script>
+	</body>
+</html>

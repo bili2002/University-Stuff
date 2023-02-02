@@ -1,0 +1,276 @@
+﻿<!DOCTYPE html>
+
+<!-- Биляна Инджева, група 2, ф.н. 4MI0800106 -->
+
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<script src="three.min.js"></script>
+		<script src="OrbitControls.js"></script>
+		<script src="CSG.js"></script>
+	</head>
+	
+	<body>
+		<script>
+			const FN = '4MI0800106'; 
+		</script>
+		
+		<script src="init.js"></script>
+			
+		<script>
+			function makeWall(length, x, y, rotation = 0) {
+				var wall = new THREE.Mesh(new THREE.BoxGeometry(length, 2, 0.2), wallMaterial);
+				wall.position.set(x, 1, y);
+				wall.rotation.y = rotation;
+				wall.receiveShadow = true;
+				wall.castShadow = true;
+
+				scene.add(wall);
+			}
+
+			function makeWallWithDoor(length, x, y, rotation = 0) {
+				var wallBody = new THREE.Mesh(new THREE.BoxGeometry(length, 2, 0.2));
+				var doorBody = new THREE.Mesh(new THREE.BoxGeometry(1, 1.8, 0.2));
+				doorBody.position.y = -0.2;
+
+				var csg = new CSG();
+				csg.subtract([wallBody, doorBody]);
+
+				var wall = csg.toMesh();
+				wall.material = wallMaterial;
+				wall.position.set(x, 1, y);
+				wall.rotation.y = rotation;
+				wall.receiveShadow = true;
+				wall.castShadow = true;
+
+				scene.add(wall);
+			}
+
+			function makeWallWithWindow(length, x, y, rotation = 0) {
+				const group = new THREE.Group();
+				
+				var wallBody = new THREE.Mesh(new THREE.BoxGeometry(length, 2, 0.2));
+				var windowInside = new THREE.Mesh(new THREE.BoxGeometry(1.1, 1.1, 0.2));
+				
+				var csg = new CSG();
+				csg.subtract([wallBody, windowInside]);
+				var wall = csg.toMesh();
+				wall.material = wallMaterial;
+				group.add(wall)
+
+				var windowOutside = new THREE.Mesh(new THREE.BoxGeometry(1.4, 1.4, 0.3));
+				var windowInside = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 0.3));
+
+				csg = new CSG();
+				csg.subtract([windowOutside, windowInside]);
+				var window = csg.toMesh();
+				window.material = windowMaterial;
+				group.add(window);
+
+				windowGlass = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 0.2), windowGlassMaterial);;
+				group.add(windowGlass);
+
+				group.position.set(x, 1, y);
+				group.rotation.y = rotation;
+				group.receiveShadow = true;
+				group.castShadow = true;
+				scene.add(group);
+			}
+
+
+			function makeWalls() {
+				makeWallWithDoor(6, 0, 6 - 0.1);
+				makeWall(6, 0, -6 + 0.1);
+				makeWallWithWindow(2, 4, -5 + 0.1);
+				makeWall(2, 4, 2 - 0.1);
+				makeWallWithWindow(5, -5.5, -5 + 0.1);	
+				makeWallWithWindow(5, -5.5, 2 - 0.1);
+
+				makeWall(7, -8 + 0.1, -1.5, Math.PI/2);
+				makeWall(7, 5 - 0.1, -1.5, Math.PI/2);
+				makeWallWithWindow(4 + 0.2, -3 + 0.1, 4 - 0.1, Math.PI/2);
+				makeWallWithWindow(4 + 0.2, 3 - 0.1, 4 - 0.1, Math.PI/2);
+				makeWall(1 + 0.2, -3 + 0.1, -5.5 + 0.1, Math.PI/2);
+				makeWall(1 + 0.2, 3 - 0.1, -5.5 + 0.1, Math.PI/2);
+
+				makeWallWithDoor(2, 2, 2 - 0.1);
+				makeWallWithDoor(4, -1, 2 - 0.1);
+				makeWallWithDoor(7, -3 + 0.1, -1 - 0.3, Math.PI/2);
+				
+				makeWall(4.2, 2.1, -3, 3*Math.PI/8);
+				makeWall(3, 1.3, 0.4, Math.PI/2);
+			}
+
+			function makeTripod() {
+				const group = new THREE.Group();
+				var base = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.08, 1, 32), tripodMetalMaterial);
+				var metalInsideLeg = new THREE.Mesh(new THREE.CylinderGeometry(0.09, 0.09, 0.1, 32), tripodMetalMaterial);
+				group.add(base);
+				group.add(metalInsideLeg);
+				
+				var leg = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.08, 1, 32), tripodPlasticMaterial);
+				var metalInsideLeg = new THREE.Mesh(new THREE.CylinderGeometry(0.09, 0.09, 0.2, 32), tripodMetalMaterial);
+				
+				var legGroup = new THREE.Group();
+				legGroup.add(leg);
+				legGroup.add(metalInsideLeg);
+				legGroup.rotation.set(Math.PI/5, 0, Math.PI/5);
+				legGroup.position.set(0.3, 0, -0.3);
+				group.add(legGroup);
+
+				legGroup = new THREE.Group();
+				legGroup.add(leg.clone());
+				legGroup.add(metalInsideLeg.clone());
+				legGroup.rotation.set(Math.PI/5, 0, -Math.PI/5);
+				legGroup.position.set(-0.3, 0, -0.3);
+				group.add(legGroup);
+
+				legGroup = new THREE.Group();
+				legGroup.add(leg.clone());
+				legGroup.add(metalInsideLeg.clone());
+				legGroup.rotation.set(-Math.PI/5, 0, 0);
+				legGroup.position.set(0, 0, 0.3);
+				group.add(legGroup);
+	
+
+				var betweenLegs = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.04, 1, 32), tripodMetalMaterial);
+				betweenLegs.rotation.set(Math.PI/2, 0, Math.PI/8);
+				betweenLegs.position.set(0.15, 0, 0);
+				group.add(betweenLegs);
+
+				betweenLegs = betweenLegs.clone();
+				betweenLegs.rotation.set(Math.PI/2, 0, -Math.PI/8);
+				betweenLegs.position.set(-0.15, 0, 0);
+				group.add(betweenLegs);
+
+				betweenLegs = betweenLegs.clone();
+				betweenLegs.rotation.set(Math.PI/2, 0, Math.PI/2);
+				betweenLegs.position.set(0, 0, -0.3);
+				group.add(betweenLegs);
+
+
+				var smallPole = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.04, 0.2, 32), tripodPlasticMaterial);
+				smallPole.position.set(0, 0.6, 0);
+				group.add(smallPole);
+
+
+				var cameraOutside = new THREE.Mesh(new THREE.CylinderGeometry(0.2, 0.2, 0.2, 32), tripodCameraMaterial);
+				cameraOutside.rotation.set(Math.PI/2, 0, 0);
+				cameraOutside.position.set(0, 0.8, 0);
+				group.add(cameraOutside);
+
+				var cameraFrontGroup = new THREE.Group()
+				var cameraOutside2 = new THREE.Mesh(new THREE.CylinderGeometry(0.1, 0.1, 0.15, 32));
+				var cameraGlass = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.05, 0.15, 32), tripodGlassMaterial);
+
+				csg = new CSG();
+				csg.subtract([cameraOutside2, cameraGlass]);
+				var cameraFront = csg.toMesh();
+				cameraFront.material = tripodCameraMaterial;
+				
+				cameraFrontGroup.add(cameraFront);
+				cameraFrontGroup.add(cameraGlass);
+
+				cameraFrontGroup.rotation.set(Math.PI/2, 0, 0);
+				cameraFrontGroup.position.set(0, 0.8, 0.1);
+				group.add(cameraFrontGroup);
+
+				group.receiveShadow = true;
+				group.castShadow = true;
+
+				group.rotation.set(0, Math.PI, 0);
+				group.position.set(-5.5, 0.4, -4);
+				scene.add(group);
+			}
+
+			function makeRadiator(coordinates, rot) {
+				const group = new THREE.Group();
+				for (var i=0; i<10; i++) {
+					const elyps = new THREE.Mesh(new THREE.TorusGeometry(1,  0.3, 16, 100), radiatorMetal);
+					elyps.scale.set(1.3, 0.5, 0.6)
+					elyps.rotation.z = Math.PI/2;
+					elyps.position.z = 2*i/5
+					group.add(elyps);
+				}
+
+				var insidePole = new THREE.Mesh(new THREE.CylinderGeometry(0.25, 0.25, 4.5, 32), radiatorMetal);
+				insidePole.rotation.x = Math.PI/2;
+				insidePole.position.set(0, 0.6, 2);
+				group.add(insidePole);
+
+				insidePole = insidePole.clone();
+				insidePole.rotation.x = Math.PI/2;
+				insidePole.position.set(0, -0.6, 2);
+				group.add(insidePole);
+
+				var smallDetail = new THREE.Mesh(new THREE.CylinderGeometry(0.15, 0.15, 0.05, 32), radiatorMetalEnd);
+				smallDetail.rotation.x = Math.PI/2;
+				smallDetail.position.set(0, 0.6, -0.3);
+				group.add(smallDetail);
+
+				smallDetail = smallDetail.clone();
+				smallDetail.rotation.x = Math.PI/2;
+				smallDetail.position.set(0, -0.6, -0.3);
+				group.add(smallDetail);
+
+				var outsideSmallPole = new THREE.Mesh(new THREE.CylinderGeometry(0.15, 0.15, 0.5, 32), radiatorMetalEnd);
+				outsideSmallPole.rotation.x = Math.PI/2;
+				outsideSmallPole.position.set(0, 0.6, 4.5);
+				group.add(outsideSmallPole);
+
+				var outsideSmallPole2 = new THREE.Mesh(new THREE.CylinderGeometry(0.15, 0.15, 1, 32), radiatorMetalEnd);
+				outsideSmallPole2.rotation.set(Math.PI/2, 0, Math.PI/2);
+				outsideSmallPole2.position.set(-0.3, 0.6, 4.5);
+				group.add(outsideSmallPole2);
+
+				var outsideSmallPole = outsideSmallPole.clone();
+				outsideSmallPole.rotation.x = Math.PI/2;
+				outsideSmallPole.position.set(0, -0.6, 4.5);
+				group.add(outsideSmallPole);
+
+				var outsideSmallPole2 = outsideSmallPole2.clone();
+				outsideSmallPole2.rotation.set(Math.PI/2, 0, Math.PI/2);
+				outsideSmallPole2.position.set(-0.3, -0.6, 4.5);
+				group.add(outsideSmallPole2);
+
+				group.scale.set(0.3, 0.3, 0.3);
+				group.position.set(coordinates[0], coordinates[1], coordinates[2]);
+				group.rotation.set(rot[0], rot[1], rot[2])
+				scene.add(group);
+			}
+
+			function makeRadiators() {
+				makeRadiator([-0.2, 0.5, -5.6], [0, 3*Math.PI/2, 0]);
+				makeRadiator([0.2, 0.5, -5.6], [0, Math.PI/2, Math.PI]);
+				makeRadiator([4.6, 0.5, 1], [0, Math.PI, 0]);
+
+				makeRadiator([-7.6, 0.5, 0], [0, 0, 0]);
+			}
+			const wallMaterial = new THREE.MeshPhongMaterial( {color:'white', shininess: 100} );
+			const windowMaterial = new THREE.MeshPhongMaterial( {color:'pink', shininess: 100} );
+			const windowGlassMaterial = new THREE.MeshPhysicalMaterial( {
+				roughness: 0.02, 
+				transmission: 0.7,
+				color: 'pink',
+				transparent: true,
+				opacity: 0.7
+			} );
+			
+			const tripodPlasticMaterial = new THREE.MeshPhongMaterial( {color:'white', shininess: 100} );
+			const tripodMetalMaterial = new THREE.MeshPhysicalMaterial( {metalness: 1, roughness: 0.5} );
+			const tripodCameraMaterial =  tripodMetalMaterial;
+			const tripodGlassMaterial = new THREE.MeshStandardMaterial( {color:'white', opacity: 0.4, transparent: true} );
+
+			//const radiatorMetal = new THREE.MeshPhongMaterial( {color:'white', shininess: 100} );
+			const radiatorMetal = new THREE.MeshPhongMaterial( {color:'#fcfceb', specular:'white', reflectivity : 1, shininess:100} );
+			const radiatorMetalEnd = new THREE.MeshPhongMaterial( {color:'#e6e6d5', roughness: 0.5, reflectivity : 0, shininess:0} );
+
+			makeWalls();
+			makeTripod();
+			makeRadiators();
+		</script>
+		
+	</body>
+</html>
+
+

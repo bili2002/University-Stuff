@@ -1,0 +1,66 @@
+﻿<html>
+	<head>
+		<style>
+			body { margin: 0; }
+			canvas { width: 100%; height: 100% }
+		</style>
+	</head>
+	<body>
+		<script src="three.min.js"></script>
+		<script>
+			// Задача: изградете къща чрез плъзгане на профил
+
+			
+			var renderer = new THREE.WebGLRenderer( {antialias: true} );
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			renderer.setAnimationLoop( drawFrame );
+			document.body.appendChild( renderer.domElement );
+
+			var scene = new THREE.Scene();
+			scene.background = new THREE.Color( 'lightsteelblue' );
+			
+			var aspect = window.innerWidth/window.innerHeight;
+			var camera = new THREE.PerspectiveCamera( 30, aspect );
+			camera.position.set( 0, 4, 20 );
+			camera.lookAt( new THREE.Vector3() );
+
+
+			// профил на къща
+			var shape = new THREE.Shape();
+			shape.moveTo(   2, -2 );
+			shape.lineTo(   2,  2 );
+			shape.lineTo( 2.5,  2 );
+			shape.lineTo(   0,  4 );
+			shape.lineTo(-2.5,  2 );
+			shape.lineTo(  -2,  2 );
+			shape.lineTo(  -2, -2 );
+			shape.lineTo(   2, -2 );
+
+			// създаване на формата на къщата чрез плъзгане
+			var extrudeSettings = { depth: 6, bevelEnabled: true, bevelSegments: 2, steps: 2, bevelSize: 0.1, bevelThickness: 0.1 };
+			var geometry = new THREE.ExtrudeGeometry( shape, extrudeSettings );
+
+			// преместваме центъра на формата така, че после
+			// при въртенето къщата да е горе-долу центрирана
+			geometry.translate( 0, 0, -3 );
+			
+			// построяване на самата къща
+			var house = new THREE.Mesh( geometry, new THREE.MeshPhongMaterial({shininess: 140, specular: 'white'}) );
+			scene.add( house );
+			
+
+			var light = new THREE.PointLight( 'white', 0.4 );
+			light.position.set( 0, 0, 30 );
+			scene.add( light );
+
+			function drawFrame()
+			{
+				// въртим къщата
+				house.rotation.y += 0.002;
+				house.rotation.z = 0.3*Math.sin(10*house.rotation.y);
+				
+				renderer.render( scene, camera );
+			}
+		</script>
+	</body>
+</html>

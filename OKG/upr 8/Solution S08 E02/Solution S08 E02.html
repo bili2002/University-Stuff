@@ -1,0 +1,122 @@
+﻿<html>
+	<head>
+		<style>
+			body { margin: 0; }
+			canvas { width: 100%; height: 100% }
+		</style>
+	</head>
+	<body>
+		<script src="three.min.js"></script>
+		<script>
+			// Задача: Направете топката да се движи в
+			// равнината XZ, като рикошира от стените.
+			
+			
+			var renderer = new THREE.WebGLRenderer({antialias:true});
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			renderer.setAnimationLoop( drawFrame );
+			document.body.appendChild( renderer.domElement );
+
+			renderer.shadowMap.enabled = true;
+			renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+			var scene = new THREE.Scene();
+			scene.background = new THREE.Color( 'skyblue' );
+			
+			var aspect = window.innerWidth/window.innerHeight;
+			var camera = new THREE.PerspectiveCamera( 30, aspect );
+			camera.position.set( 0, 120, 200 );
+			camera.lookAt( new THREE.Vector3( 0, -10, 0 ) );
+
+			
+			// топчето за движене
+			var ball = new THREE.Mesh(
+				new THREE.SphereGeometry( 5, 32, 32 ),
+				new THREE.MeshPhongMaterial( {color: 'orange', shininess: 10, specular: 'white', emissive: 'firebrick'} )
+			);
+			ball.castShadow = true;
+			scene.add( ball );
+
+			// платформата
+			var ground = new THREE.Mesh(
+				new THREE.BoxGeometry( 160.2, 2.2, 100.2 ),
+				new THREE.MeshPhongMaterial( {color: 'slateblue', shininess: 2, specular: 'white'} )
+			);
+			ground.position.y = -6;
+			ground.receiveShadow = true;
+			scene.add( ground );
+		
+			// стъкленият корпус
+			var glass = new THREE.Mesh(
+				new THREE.BoxGeometry( 160, 10, 100 ),
+				new THREE.MeshPhongMaterial( {color: 'azure', opacity: 0.2, transparent: true, shininess: 50, specular: 0x8080ff, side:THREE.BackSide} )
+			);
+			glass.receiveShadow = true;
+			scene.add( glass );
+			
+			// бялата рамка на стъкления корпус
+			var frame = new THREE.BoxHelper( glass );
+			frame.material.color.set( 'white' );
+			scene.add( frame );
+		
+			// светлина
+			var light = new THREE.PointLight( 'white', 0.5 );
+			light.position.set( 0, 100, 0 );
+			light.castShadow = false;
+			scene.add( light );
+
+			// и още една
+			var light = new THREE.PointLight();
+			light.position.set( 0, 20, 0 );
+			light.castShadow = true;
+			scene.add( light );
+
+			
+			// случаен вектор, който определя посоката на
+			// движение на топчето - правим дължината да е 0.5,
+			// като това е скоростта на движение на топчето
+			var v = new THREE.Vector3( 1+7*Math.random(), 0, 1+7*Math.random() );
+			v.setLength( 0.5 );
+			
+			// ограничения на движението по X и по Z
+			var maxX = 160/2-5;
+			var minX = -maxX;
+			var maxZ = 100/2-5;
+			var minZ = -maxZ;
+			
+			function drawFrame()
+			{
+				scene.rotation.y += 0.001;
+			
+				// преместване на топчето p=p+v
+				ball.position.add(v);
+						
+				// проверка за удар спрямо четирите стени
+				// Забележка: може да се оптимизира, но
+				// за яснота е оставено така разписано
+				if( ball.position.x >= maxX )
+				{
+					v.x = -v.x;
+					ball.position.x = maxX-(ball.position.x-maxX); 
+				}
+				if( ball.position.x <= minX )
+				{
+					v.x = -v.x;
+					ball.position.x = minX-(ball.position.x-minX); 
+				}
+				if( ball.position.z >= maxZ )
+				{
+					v.z = -v.z;
+					ball.position.z = maxZ-(ball.position.z-maxZ); 
+				}
+				if( ball.position.z <= minZ )
+				{
+					v.z = -v.z;
+					ball.position.z = minZ-(ball.position.z-minZ); 
+				}
+
+				renderer.render( scene, camera );
+			}
+		</script>
+	</body>
+</html>

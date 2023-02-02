@@ -1,0 +1,49 @@
+﻿<html>
+	<head>
+		<style>
+			body { margin: 0; }
+			canvas { width: 100%; height: 100% }
+		</style>
+	</head>
+	<body>
+		<script src="three.min.js"></script>
+		<script>
+			// Задача: конструирайте ... хипербола
+
+			
+			var renderer = new THREE.WebGLRenderer();
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			renderer.setAnimationLoop( drawFrame );
+			document.body.appendChild( renderer.domElement );
+
+			var scene = new THREE.Scene();
+			
+			var aspect = window.innerWidth/window.innerHeight;
+			camera = new THREE.PerspectiveCamera( 30, aspect );
+			camera.position.set( 0, 0, 100 );
+			camera.lookAt( new THREE.Vector3() );
+
+			// За момента имаме само окръжност
+			var circle = new THREE.Mesh(
+				new THREE.CylinderGeometry( 20, 20, 1/2, 80 ),
+				new THREE.MeshPhongMaterial()
+			);
+			scene.add( circle );
+			
+			// Добавяме светлина
+			light = new THREE.PointLight( 'lightblue' );
+			light.position.set( 0, 0, 100 );
+			scene.add( light );
+			
+			function drawFrame()
+			{
+				// въртим окръжността
+				circle.rotation.x += 0.005;
+				circle.rotation.y += 0.004;
+				circle.rotation.z += 0.003;
+				
+				renderer.render( scene, camera );
+			}
+		</script>
+	</body>
+</html>

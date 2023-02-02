@@ -1,0 +1,80 @@
+﻿<html>
+	<head>
+		<style>
+			body { margin: 0; }
+			canvas { width: 100%; height: 100% }
+		</style>
+	</head>
+	<body>
+		<script src="three.min.js"></script>
+		<script>
+			// Задача: направете сянка на тора
+			
+			
+			var renderer = new THREE.WebGLRenderer();
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			renderer.setAnimationLoop( drawFrame );
+			document.body.appendChild( renderer.domElement );
+			
+			// включваме генерирането на меки сенки
+			renderer.shadowMap.enabled = true;
+			renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+			var scene = new THREE.Scene();
+			
+			var aspect = window.innerWidth/window.innerHeight;
+			var camera = new THREE.PerspectiveCamera( 30, aspect );
+			camera.position.set( 12, 14, 30 );
+			camera.lookAt( new THREE.Vector3() );
+
+			// широка платформа, която ще бъде осветявана
+			var geometry = new THREE.BoxGeometry( 100, 1, 100)
+			var material = new THREE.MeshPhongMaterial();
+			platform = new THREE.Mesh( geometry, material );
+			platform.position.set( 0, -2, 0 );
+			platform.receiveShadow = true; // ще има сянка върху платформата
+			scene.add( platform );
+			
+			// тор, който ще хвърля сянка
+			var geometry = new THREE.TorusGeometry( 2, 0.7, 16, 100 );
+			var material = new THREE.MeshPhongMaterial( {color:'red', shininess:100} );
+			var torus = new THREE.Mesh( geometry, material );
+			torus.position.set( 0, 2, 0 );
+			torus.castShadow = true; // торът хвърля сянка
+			scene.add( torus );
+
+			// създаване на сферa
+			var geometry = new THREE.SphereGeometry( 0.2 );
+			var material = new THREE.MeshBasicMaterial();
+			var ball = new THREE.Mesh( geometry, material );
+			scene.add( ball );
+			
+			// създаване на светлина - сега не е точкова,
+			// а е насочена е към конкретно място (нещо като
+			// светлинен конус). По подразбиране е насочена
+			// към (0,0,0) - стройва ни, затова не го променяме.
+			light = new THREE.SpotLight();
+			light.penumbra = 0.9; // мекост на контура на светлинния конус
+			light.castShadow = true; // тази светлина генерира сянка
+			ball.add( light );
+			
+			
+			var t=0;
+			function drawFrame()
+			{
+				// въртене на тора
+				torus.rotation.x += 0.045;
+				torus.rotation.y += 0.015;
+				torus.rotation.z += 0.038;
+				
+				// движение на сферата
+				t += 0.01;
+				ball.position.x = 7*Math.cos(1.2*t);
+				ball.position.y = 7;
+				ball.position.z = 7*Math.sin(0.9*t);
+				
+				renderer.render( scene, camera );
+			}
+		</script>
+	</body>
+</html>

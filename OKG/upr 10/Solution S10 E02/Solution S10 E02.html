@@ -1,0 +1,102 @@
+﻿<html>
+	<head>
+		<style>
+			body { margin: 0; }
+			canvas { width: 100%; height: 100% }
+		</style>
+	</head>
+	<body>
+		<script src="three.min.js"></script>
+		<script src="dat.gui.min.js"></script>
+		<script>
+			// Задача: размерите на кубчетата да могат да се
+			// контролират по различните оси и това да е
+			// като "поддърво" в панела на dat.GUI
+			
+	
+			var renderer = new THREE.WebGLRenderer( {antialias: true} );
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			renderer.setAnimationLoop( drawFrame );
+			document.body.appendChild( renderer.domElement );
+
+			var scene = new THREE.Scene();
+
+			var aspect = window.innerWidth/window.innerHeight;
+			var camera = new THREE.PerspectiveCamera( 30, aspect );
+			camera.position.set( 0, 0, 20 );
+
+			var N = 200; // брой кубове
+			var speed = 1; // скорост
+			var cubes = []; // масив с всички кубове
+			
+			function rand(a,b)
+			{
+				var r = (Math.random()+Math.random()+Math.random()+Math.random())/4;
+				return a+(b-a)*r;
+			}
+			
+			// създаване на кубовете
+			var obj = new THREE.BoxGeometry(1 , 1, 1 );
+			for( var i=0; i<N; i++ )
+			{
+				var color = new THREE.Color( Math.random(), Math.random(), Math.random());
+				var material = new THREE.MeshPhongMaterial( {color: color, shininess: 100} );
+				
+				var cube = new THREE.Mesh( obj, material );
+				cube.position.set( rand(-10,10), rand(-10,10), rand(-10,10) );
+				cube.rotation.set( 10*Math.random(), 10*Math.random(), 10*Math.random() );
+				
+				cubes.push( cube );
+				scene.add( cube );
+			}
+		
+			// светлини
+			var light = new THREE.PointLight();
+			light.position.set( 0, 0, 10 );
+			scene.add( light );
+
+			light = new THREE.PointLight();
+			light.position.set( -10, 0, 0 );
+			scene.add( light );
+
+			light = new THREE.PointLight();
+			light.position.set( 10, 0, 0 );
+			scene.add( light );
+
+			// български текстове
+			dat.GUI.TEXT_CLOSED = 'Затвори';
+			dat.GUI.TEXT_OPEN = 'Отвори';
+
+			// параметри на интерфейса - скорост и три размера
+			var params = {speed: 1, sizeX: 1, sizeY: 1, sizeZ: 1};
+			
+			// създаваме панела
+			var gui = new dat.GUI();
+			gui.add( params, 'speed', 0.3, 10 ).name( 'Скорост' );
+			// поддървото с параметри се казва "Размер"
+			guiSize = gui.addFolder( 'Размер' );
+			// елементите ги добавяме към поддървото, а не към панела
+			guiSize.add( params, 'sizeX', 0.1, 10 ).name( 'по X' );
+			guiSize.add( params, 'sizeY', 0.1, 10 ).name( 'по Y' );
+			guiSize.add( params, 'sizeZ', 0.1, 10 ).name( 'по Z' );
+			
+
+			function drawFrame()
+			{
+				// актуализиране на размера и ориентацията
+				for( var i=0; i<N; i++ )
+				{
+					cubes[i].rotation.x += params.speed*0.003;
+					cubes[i].rotation.y += params.speed*0.005;
+					cubes[i].rotation.z += params.speed*0.008;
+					
+					cubes[i].scale.x = params.sizeX;
+					cubes[i].scale.y = params.sizeY;
+					cubes[i].scale.z = params.sizeZ;
+				}
+				
+				renderer.render( scene, camera );
+			}
+		</script>
+	</body>
+</html>

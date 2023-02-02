@@ -1,0 +1,92 @@
+﻿<html>
+	<head>
+		<style>
+			body { margin: 0; }
+			canvas { width: 100%; height: 100% }
+		</style>
+	</head>
+	<body>
+		<script src="three.min.js"></script>
+		<script src="CSG.js"></script> <!-- Включване на библиотека за CSG -->
+		<script>
+			var renderer = new THREE.WebGLRenderer();
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			renderer.setAnimationLoop( drawFrame );
+			document.body.appendChild( renderer.domElement );
+
+			var scene = new THREE.Scene();
+			scene.background = new THREE.Color( 'lavenderblush' );
+			
+			var aspect = window.innerWidth/window.innerHeight;
+			camera = new THREE.PerspectiveCamera( 30, aspect );
+			camera.position.set( 5, 5, 50 );
+			camera.lookAt( new THREE.Vector3() );
+
+			var outer = new THREE.Mesh( new THREE.SphereGeometry( 8, 32, 16) );
+			var bot = new THREE.Mesh( new THREE.BoxGeometry( 16, 8, 16) );
+			bot.position.y = -5;
+			
+			var gutter1 = new THREE.Mesh( new THREE.CylinderGeometry( 5, 5, 16, 40 ));
+			gutter1.position.y = -1;
+			gutter1.rotation.x = Math.PI/2;
+			
+			var gutter2 = new THREE.Mesh( new THREE.CylinderGeometry( 5, 5, 16, 40 ));
+			gutter2.position.y = -1;
+			gutter2.rotation.x = Math.PI/2;
+			gutter2.rotation.z = 4*Math.PI/8;
+			
+			var kupolCSG = new CSG();
+			kupolCSG.subtract( [outer, bot, gutter1, gutter2] );
+			
+			var material = new THREE.MeshPhongMaterial( { color : "gray" } );
+			var kupol = kupolCSG.toMesh();
+			kupol.position.set(-6, -10, 0);
+			kupol.material = material;
+			scene.add(kupol);
+			
+			kupol = kupol.clone();
+			kupol.position.set(6, -10, 0);
+			scene.add(kupol);
+			
+			/*kupol = kupol.clone();
+			kupol.position.set(0, -2, -4);
+			scene.add(kupol);*/
+			
+			var body = new THREE.Mesh( new THREE.CylinderGeometry( 1, 1, 4, 40 ));
+			var head =  new THREE.Mesh( new THREE.SphereGeometry( 1, 32, 16) );
+			head.position.y = 2;
+			
+			var center = new CSG();
+			center.union( [body, head] );
+			var tube = center.toMesh();
+			tube.material = material;
+			tube.position.set(0, -5, 4);
+			scene.add(tube);
+			
+			tube = tube.clone();
+			tube.scale.set(5, 3, 5);
+			tube.position.set(0, -5, -1);
+			scene.add(tube);
+			
+			var cross1 = new THREE.Mesh( new THREE.BoxGeometry( 2, 0.8, 0.1) );
+			cross1.material = material;
+			cross1.position.set(0, 5.5, 0);
+			scene.add(cross1);
+			
+			var cross2 = new THREE.Mesh( new THREE.BoxGeometry( 0.8, 3, 0.1) );
+			cross2.material = material;
+			cross2.position.set(0, 5, 0);
+			scene.add(cross2);
+			
+			var light = new THREE.PointLight();
+			light.position.set( 0, 5, 10 );
+			scene.add( light );
+			
+			
+			function drawFrame()
+			{
+				renderer.render( scene, camera );
+			}
+		</script>
+	</body>
+</html>

@@ -1,0 +1,110 @@
+﻿<html>
+	<head>
+		<style>
+			body { margin: 0; }
+			canvas { width: 100%; height: 100% }
+		</style>
+	</head>
+	<body>
+		<script src="three.min.js"></script>
+		<script>
+			// Задача: Запознайте се с Лемниската на Бернули,
+			// представете си, че трябва да се движите по
+			// такава траектория, като минавате през две
+			// врати. Реализирайте тази представа!
+			
+	
+			var renderer = new THREE.WebGLRenderer({antialias:true});
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			renderer.setAnimationLoop( drawFrame );
+			document.body.appendChild( renderer.domElement );
+
+			var scene = new THREE.Scene();
+			scene.background = new THREE.Color( 'black' );
+			scene.fog = new THREE.Fog( 'black', 0, 30 );
+
+			var aspect = window.innerWidth/window.innerHeight;
+			var camera = new THREE.PerspectiveCamera( 30, aspect );
+
+
+			// създаване шестоъгълни призми
+			var terrain = new THREE.Group();
+			var geometry = new THREE.CylinderGeometry( 1, 1, 10, 6 );
+
+			// създаване на терен от призми
+			var material = new THREE.MeshPhongMaterial( {color: 'white', shininess: 60, emissive: 'white', emissiveIntensity: -0.2} );
+			var material2 = new THREE.MeshPhongMaterial( {color: 'white', flatShading: true, emissive: 'lightgreen', transparent: true, opacity: 0.7} );
+			for( var j=-10; j<=10; j++ )
+			for( var i=-10; i<=10; i++ )
+			{
+				// на позиции -6, -3, 3 и 6 се намират колони
+				if (j==0 && (i==3 || i==-3 || i==6 || i==-6))
+				{
+					// създаване на призма-колона
+					var tile = new THREE.Mesh( geometry, material2 );
+					tile.position.set( 2*i+(j%2), -3, 1.6*j );
+					terrain.add( tile );
+					
+					// с ръбчета за красота
+					var edges = new THREE.EdgesHelper( tile, 'green' );
+					tile.add( edges );
+				}
+				else
+				{
+					// създаване на нормална плочка от земята
+					var tile = new THREE.Mesh( geometry, material );
+					tile.position.set( 2*i+(j%2), -5, 1.6*j );
+					terrain.add( tile );
+				}
+			}
+			scene.add( terrain );
+
+			
+			// светлина (в колоните)
+			var light2 = new THREE.PointLight( 'white', 0.5 );
+			light2.position.set( 2*3, 1, 0 );
+			scene.add( light2 );
+			light2 = new THREE.PointLight( 'white', 0.5 );
+			light2.position.set( -2*3, 1, 0 );
+			scene.add( light2 );
+			light2 = new THREE.PointLight( 'white', 0.5 );
+			light2.position.set( 2*6, 1, 0 );
+			scene.add( light2 );
+			light2 = new THREE.PointLight( 'white', 0.5 );
+			light2.position.set( -2*6, 1, 0 );
+			scene.add( light2 );
+
+			scene.add( new THREE.HemisphereLight( 'darkgreen', 'lime' ) );
+			
+			var clock = new THREE.Clock();
+			
+			// Изчислява точка от лемнискатата на Бернули
+			// http://en.wikipedia.org/wiki/Lemniscate_of_Bernoulli
+			function lemniscateOfBernoulli(t)
+			{
+				var s = Math.sin(t);
+				var c = Math.cos(t);
+
+				var x = 10*c/(1+s*s);
+				var y = 1;
+				var z = x*s;
+
+				return new THREE.Vector3( x, y, z );
+			}
+
+			function drawFrame()
+			{
+				// нека времето върви тройно по-бавно
+				var t = clock.getElapsedTime()/3;
+			
+				// точка, от която гледаме, е на позиция t
+				// по лемнискатата, а точката, към която
+				// гледаме е малко по-напред, в t+0.8
+				camera.position.copy( lemniscateOfBernoulli(t) );
+				camera.lookAt( lemniscateOfBernoulli(t+0.8).setY(0.5) );
+			
+				renderer.render( scene, camera );
+			}
+		</script>
+	</body>
+</html>

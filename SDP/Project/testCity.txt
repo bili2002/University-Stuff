@@ -1,0 +1,10 @@
+6 8
+Railstation ArtGallery 26
+Railstation RomanStadium 20
+ArtGallery DzhumayaSquare 5
+ArtGallery HistoricalMuseum 14
+ArtGallery AntiqueTheatre 7
+RomanStadium DzhumayaSquare 2
+DzhumayaSquare HistoricalMuseum 18
+HistoricalMuseum AntiqueTheatre 12
+68

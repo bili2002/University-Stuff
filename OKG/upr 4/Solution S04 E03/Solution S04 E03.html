@@ -1,0 +1,69 @@
+﻿<html>
+	<head>
+		<style>
+			body { margin: 0; }
+			canvas { width: 100%; height: 100% }
+		</style>
+	</head>
+	<body>
+		<script src="three.min.js"></script>
+		<script>
+			// Задача: оцветете на всяка от стените на куб
+			// в отделен цвят, без да композирате куба от
+			// няколко отделни обекта
+			
+			
+			var renderer = new THREE.WebGLRenderer();
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			renderer.setAnimationLoop( drawFrame );
+			document.body.appendChild( renderer.domElement );
+
+			var scene = new THREE.Scene();
+			scene.background = new THREE.Color( 'gainsboro' );
+			
+			var aspect = window.innerWidth/window.innerHeight;
+			var camera = new THREE.PerspectiveCamera( 30, aspect );
+			camera.position.set( 0, 0, 16 );
+			camera.lookAt( new THREE.Vector3() );
+
+			// първият куб
+			var geometry = new THREE.BoxGeometry( 3, 3, 3 );
+			var material = [
+					new THREE.MeshPhongMaterial({color:'red'}),
+					new THREE.MeshPhongMaterial({color:'violet'}),
+					new THREE.MeshPhongMaterial({color:'yellow'}),
+					new THREE.MeshPhongMaterial({color:'orange'}),
+					new THREE.MeshPhongMaterial({color:'green'}),
+					new THREE.MeshPhongMaterial({color:'blue'})
+				];
+			var cube1 = new THREE.Mesh( geometry, material );
+			cube1.position.set( -3, 0, 0 );
+			scene.add( cube1 );
+
+			// правим още един куб, да е със същото оцветяване
+			var cube2 = new THREE.Mesh( geometry, material );
+			cube2.position.set( 3, 0, 0 );
+			scene.add( cube2 );
+
+			
+			var light = new THREE.PointLight();
+			light.position.set( 0, 0, 20 );
+			scene.add( light );
+			
+			// кубовете се въртят с различни ъгли, за да
+			// не се въртят синхронно на екрана
+			function drawFrame()
+			{
+				cube1.rotation.x += 0.005;
+				cube1.rotation.y += 0.004;
+				cube1.rotation.z -= 0.003;
+
+				cube2.rotation.x -= 0.006;
+				cube2.rotation.y -= 0.004;
+				cube2.rotation.z += 0.005;
+				
+				renderer.render( scene, camera );
+			}
+		</script>
+	</body>
+</html>
