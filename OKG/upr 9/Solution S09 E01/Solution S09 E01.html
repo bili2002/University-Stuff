@@ -1,0 +1,92 @@
+﻿<html>
+	<head>
+		<style>
+			body { margin: 0; }
+			canvas { width: 100%; height: 100% }
+		</style>
+	</head>
+	<body>
+		<script src="three.min.js"></script>
+		<script>
+			// Задача: Движете гледната точка (camera) така,
+			// че да заобикаля ту отляво, ту отдясно куба
+			// и е ту срещу зелената издатина, ту срещу бялата
+			
+	
+			var renderer = new THREE.WebGLRenderer( {antialias: true} );
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			renderer.setAnimationLoop( drawFrame );
+			document.body.appendChild( renderer.domElement );
+
+			var scene = new THREE.Scene();
+			scene.background = new THREE.Color( 'gray' );
+
+			// Ето този обект camera се грижи за гледната
+			// точка и той трява да се манипулира за решението
+			// на задачата
+			var aspect = window.innerWidth/window.innerHeight;
+			var camera = new THREE.PerspectiveCamera( 30, aspect );
+
+			
+			// кубът
+			var brick = new THREE.Mesh(
+				new THREE.BoxGeometry( 10, 10, 10 ),
+				new THREE.MeshPhongMaterial( {color: 'orange', shininess: 100} )
+			);
+			scene.add( brick );
+
+			// едната издатина (бялата)
+			var bump = new THREE.Mesh(
+				new THREE.BoxGeometry( 4, 12, 3 ),
+				new THREE.MeshPhongMaterial( {color: 'white', shininess: 100} )
+			);
+			bump.position.x = 4;
+			scene.add( bump );
+			
+			// другата издатина (зелената)
+			var bump = new THREE.Mesh(
+				new THREE.BoxGeometry( 4, 12, 3 ),
+				new THREE.MeshPhongMaterial( {color: 'green', shininess: 100} )
+			);
+			bump.position.x = -4;
+			scene.add( bump );
+
+		
+			// светлина отпред, отляво и отдясно в опит да
+			// се представят така, че да изглеждат като една
+			// светлина като се пусне примера с тухлата
+			var light = new THREE.PointLight();
+			light.position.set( 0, 0, 10 );
+			scene.add( light );
+
+			light = new THREE.PointLight();
+			light.position.set( -10, 0, 0 );
+			scene.add( light );
+
+			light = new THREE.PointLight();
+			light.position.set( 10, 0, 0 );
+			scene.add( light );
+
+			
+			var clock = new THREE.Clock();
+			
+			function drawFrame()
+			{
+				var t = clock.getElapsedTime();
+			
+				// ъгъл на гледане: от -90° до +90°
+				var angle = Math.PI/2 * Math.sin(t/2);
+				
+				// сменяме позицията на камерата - движи
+				// се по дъга на окръжност с радиус 30
+				camera.position.set( 30*Math.sin(angle), 0, 30*Math.cos(angle));
+				
+				// точката, към която гледаме, е центъра,
+				// на куба и в случая съвпада с (0,0,0)
+				camera.lookAt( brick.position );
+				
+				renderer.render( scene, camera );
+			}
+		</script>
+	</body>
+</html>

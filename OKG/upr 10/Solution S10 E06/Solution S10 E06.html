@@ -1,0 +1,264 @@
+﻿<html>
+	<head>
+		<style>
+			body { margin: 0; }
+			canvas { width: 100%; height: 100% }
+		</style>
+	</head>
+	<body>
+		<script src="three.min.js"></script>
+		<script src="labyrinth.js"></script>
+		<script>
+			// Задача: напавете тримерен лабиринт и движение
+			// в него чрез стрелките от клавиатурата (наляво,
+			// надясно и напред), без да ползвате външни модули
+			// и библиотеки за това - т.е. да е изцяло "ръчно"
+			// направено. И още - да се гледа от първо лице,
+			// т.е. като че ли ние самите ходим в лабиринта.
+			// И по-още - с шпация да се скача вертикално.
+			// И най-още - движенията да са плавни - както
+			// завъртане, така и ходене и скачане.
+			
+	
+			var renderer = new THREE.WebGLRenderer({antialias:true});
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			renderer.setAnimationLoop( drawFrame ); // <- с това
+			document.body.appendChild( renderer.domElement );
+			
+			// ловим натискане на клавиш - при всяко натискане
+			// и пускане се извикват наши функции
+			document.body.addEventListener( 'keydown', onKeyDown ); 
+			document.body.addEventListener( 'keyup', onKeyUp ); 
+
+			var scene = new THREE.Scene();
+
+			// слагаме зрителният ъгъл да е 80 градуса,
+			// понеже сме в тясно пространство и е добре
+			// да имаме някакво периферно зрение. за тази
+			// екстра плащаме с деформация на ъглите,
+			// особено по периферията, поради прекалено
+			// силната перспектива
+			var aspect = window.innerWidth/window.innerHeight;
+			var camera = new THREE.PerspectiveCamera( 80, aspect );
+	
+			
+			// земя/под 
+			var plane = new THREE.Mesh(
+				new THREE.BoxGeometry( 1000, 0.1, 1000 ),
+				new THREE.MeshPhongMaterial( {color: 'peachpuff', shininess: 5} )
+			);
+			plane.position.set( 0, -0.4, 0 );
+			scene.add( plane );
+			
+			// цел - сфера в противоположния ъгъл на лабиринта
+			// можете ли да отидете до нея?
+			var goal = new THREE.Mesh(
+				new THREE.SphereGeometry( 1, 32, 32 ),
+				new THREE.MeshPhongMaterial( {color: 'white', shininess: 100, emissive: 'yellow'} )
+			);
+			goal.position.set( 2*dW-3, 1.5, 2*dH );
+			scene.add( goal );
+			
+			
+			// създаване на лабиринта (като структура)
+			generateLabyrinth();
+			
+			// рисуване на лабиринта в 3D -- ако после графиката
+			// е твърде бавна, ще трябва да се слеят формите в една
+			var block = new THREE.BoxGeometry( 1, 1, 1 ); // единична кутийка
+			
+			var labyrinth = new THREE.Group(); // стени на целия лабиринт
+			var labyrinthMaterial = new THREE.MeshPhongMaterial( {color: 'peachpuff',  shininess: 10} );
+			
+			var border = new THREE.Group(); // бордюр на целият лабиринт
+			var borderMaterial = new THREE.MeshBasicMaterial( {color: 'maroon'} );
+			
+			for( var x=0; x<2*dW+1; x++ )
+			for( var y=0; y<2*dH+2; y++ )
+				if( isWall(x,y) )
+				{
+					// за всяка пълна клетка създаваме стена
+					// със случайна височина и я добавяме
+					// към лабиринта
+					var wall = new THREE.Mesh( block, labyrinthMaterial );
+					var h = 0.4+1.2*Math.random();
+					wall.scale.set( 1, h, 1 );
+					wall.position.set( x, h/2-0.5, y );
+					labyrinth.add( wall );
+
+					// ако стената е била ниска, добавяме 
+					// един фрагмент над нея - така се
+					// създават "прозорци" в стената
+					if( h<0.7 )
+					{
+						var wall = wall.clone();
+						wall.scale.set( 1, 0.2, 1 );
+						wall.position.set( x, 0.5, y );
+						labyrinth.add( wall );
+					}
+					
+					// добавяме и бордюр ниско долу
+					var wall = new THREE.Mesh( block, borderMaterial );
+					wall.scale.set( 1.05, 1, 1.05 );
+					wall.position.set( x, -0.8, y );
+					border.add( wall );
+
+				}
+			scene.add( labyrinth, border );
+		
+		
+			var x = 1; // координатите ни
+			var z = 2; //
+			var dir = 0;	// посока на движение
+			
+			var turnLeft = false; // дали е натисната стрелка наляво
+			var turnRight = false;  // дали е натисната стрелка надясно
+			var goForward = false;  // дали е натисната стрелка нагоре
+			
+			var cos = Math.cos(dir);
+			var sin = Math.sin(dir);
+			
+			// светлини в четирите ъгъла на лабиринта
+			var light = new THREE.PointLight( 'peachpuff', 1/2 );
+			light.position.set( 0, 10, 0 );
+			scene.add( light );
+			
+			light = new THREE.PointLight( 'peachpuff', 1/2 );
+			light.position.set( 2*dW, 10, 0 );
+			scene.add( light );
+			
+			light = new THREE.PointLight( 'peachpuff', 1/2 );
+			light.position.set( 2*dW, 10, 2*dH );
+			scene.add( light );
+			
+			light = new THREE.PointLight( 'peachpuff', 1/2 );
+			light.position.set( 0, 10, 2*dH );
+			scene.add( light );
+			
+			// светлина, която ще носим с нас
+			light = new THREE.SpotLight( 'white', 1, 5, 0.9, 1 );
+			light.target = new THREE.Object3D();
+			scene.add( light );
+			scene.add( light.target );
+			
+			// функция, която обработва натиснат клавиш
+			function onKeyDown( event )
+			{
+				if( event.code=='Space' || event.keyCode==32 )
+				{	// запомняме момента, в който сме поискали скок
+					jumpT = t;
+				}
+				if( event.code=='ArrowLeft' || event.keyCode==37 )
+				{	// искаме завъртане наляво
+					turnLeft = true;
+					turnRight = false;
+				}
+				if( event.code=='ArrowRight' || event.keyCode==39 )
+				{	// искаме завъртане надясно
+					turnLeft = false;
+					turnRight = true;
+				}
+				if( event.code=='ArrowUp' || event.keyCode==38 )
+				{	// искаме ходене напред
+					goForward = true;
+				}
+			}
+
+			// функция, която обработва оттиснат (пуснат(?)) клавиш
+			function onKeyUp( event )
+			{
+				if( event.code=='ArrowLeft' || event.keyCode==37 )
+				{
+					turnLeft = false;
+				}
+				if( event.code=='ArrowRight' || event.keyCode==39 )
+				{
+					turnRight = false;
+				}
+				if( event.code=='ArrowUp' || event.keyCode==38 )
+				{
+					goForward = false;
+				}
+			}
+
+			// функция за проверка дали може да стъпим на
+			// координати (x,y) - прави опипване на 11 точки
+			// по дъга в посока на движението
+			function canWalkTo( x, y )
+			{
+				for( var i=-5; i<=5; i++ )
+				{
+					var nx = Math.round(x+0.3*Math.cos(dir+i/5));
+					var ny = Math.round(y+0.3*Math.sin(dir+i/5));
+					if( isWall(nx,ny) ) return false;
+				}
+				return true;
+			}
+			
+			var t = 0;
+			var jumpT = -1000;
+			function drawFrame()
+			{
+				// ако сме искали завъртане, въртим
+				if( turnLeft ) dir -= 0.01;
+				if( turnRight ) dir += 0.01;
+				cos = Math.cos( dir );
+				sin = Math.sin( dir );
+				
+				// ако сме искали ходене напред, ще се
+				// опитаме - не винаги е възможно
+				if( goForward )
+				{
+					// проверка дали там, където искаме,
+					// може да се отиде
+					if( canWalkTo( x+0.1*cos, z+0.1*sin) )
+					{	// да! може! кеф!
+						x += 0.015*cos;
+						z += 0.015*sin;
+					}
+					else
+					// ако не мож, да направил плъзгане
+					// покрай стената до намиране на дупка.
+					// това се ползва, ако човек завие малко
+					// по-рано и за да не спре, се плъзгаме
+					// малко напред.
+					//
+					// първо пробваме плъзгане по едната ос
+					if( canWalkTo( x-0.1*cos, z+0.05*sin ) )
+					{	// става!
+						z += 0.015*sin;
+					}
+					else
+					// после пробваме плъзгане по другата ос
+					if( canWalkTo( x+0.05*cos, z-0.1*sin ))
+					{	// става!
+						x += 0.015*cos;
+					}
+				}
+				
+				t++;
+				
+				// подвижната светлина я слагаме където сме
+				// в момента и я насочваме в посоката на
+				// движението ни
+				light.position.set( x, 0, z );
+				light.target.position.set( x+cos, -0.1, z+sin );
+
+				// височина на скок - продължава 150 кадъра
+				var height = 0;
+				if( t-jumpT<450 )
+				{
+					// имаме скок - той е гърбицата на cos
+					height = 2+2*Math.cos( (t-jumpT)/450 * 2*Math.PI-Math.PI )
+				}
+				
+				// слагаме и камерата да е където сме ние
+				// (по-скоро малко зад нас) и да гледа напред
+				camera.position.set( x-0.1*cos, 0+height, z-0.1*sin );
+				camera.lookAt( new THREE.Vector3( x+10.4*cos, 0.95*height, z+10.4*sin ) );
+				
+				renderer.render( scene, camera );
+			}
+		</script>
+	</body>
+</html>

@@ -1,0 +1,64 @@
+﻿<html>
+	<head>
+		<style>
+			body { margin: 0; }
+			canvas { width: 100%; height: 100% }
+		</style>
+	</head>
+	<body>
+		<script src="three.min.js"></script>
+		<script>
+			// Този файл само демонстрира обектите, които са използвани
+			// в решението, но без да прилага CSG над тях ... ако трябва
+			// да съм честен, така си направих и илюстрацията в решението
+
+			
+			var renderer = new THREE.WebGLRenderer();
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			renderer.setAnimationLoop( drawFrame );
+			document.body.appendChild( renderer.domElement );
+
+			var scene = new THREE.Scene();
+			scene.background = new THREE.Color( 'white' );
+			
+			var aspect = window.innerWidth/window.innerHeight;
+			camera = new THREE.PerspectiveCamera( 30, aspect );
+			camera.position.set( 0, 0, 16 );
+			camera.lookAt( new THREE.Vector3() );
+
+
+			var group = new THREE.Group();
+			scene.add(group);
+			
+			group.add(
+				new THREE.Mesh(
+					new THREE.CylinderGeometry( 1.5, 1.5, 7, 80 ),
+					new THREE.MeshLambertMaterial({
+						color: 'crimson',
+						transparent: true,
+						opacity: 0.75 })
+			));
+			
+			group.add(
+				new THREE.Mesh(
+					new THREE.CylinderGeometry( 1, 1, 8, 80 ),
+					new THREE.MeshLambertMaterial({ color:'white' })
+			));
+
+						
+			var light = new THREE.PointLight();
+			light.position.set( 0, 5, 10 );
+			scene.add( light );
+			
+			
+			function drawFrame()
+			{
+				group.rotation.x += 0.005;
+				group.rotation.y += 0.003;
+				group.rotation.z += 0.010;
+				
+				renderer.render( scene, camera );
+			}
+		</script>
+	</body>
+</html>

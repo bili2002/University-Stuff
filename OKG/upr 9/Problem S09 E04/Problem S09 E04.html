@@ -1,0 +1,136 @@
+﻿<html>
+	<head>
+		<style>
+			body { margin: 0; }
+			canvas { width: 100%; height: 100% }
+		</style>
+	</head>
+	<body>
+		<script src="three.min.js"></script>
+		<script>
+			// Задача: Направете гледната точка да мине през
+			// всичките дупки на геомаркерите, без да напуска
+			// рамките на клетката.  Минаването да е заднишком.		
+	
+			var renderer = new THREE.WebGLRenderer({antialias:true});
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			renderer.setAnimationLoop( drawFrame );
+			document.body.appendChild( renderer.domElement );
+
+			var scene = new THREE.Scene();
+
+			var aspect = window.innerWidth/window.innerHeight;
+			var camera = new THREE.PerspectiveCamera( 30, aspect );			camera.position.set( 0, 50, 200 );
+			camera.lookAt( new THREE.Vector3( 0, 10, 0 ) );
+
+			// зелена платформа
+			var platform = new THREE.Mesh(
+				new THREE.BoxGeometry( 100, 2, 100 ),
+				new THREE.MeshPhongMaterial( {color: 'green'} )
+			);
+			platform.position.set( 0, -1, 0 );
+			scene.add( platform );
+
+			
+			// профил на геомаркер
+			var shape = new THREE.Shape();
+			shape.moveTo(  0, 0 );
+			shape.quadraticCurveTo(  4, 8, 0, 8.2 );
+			shape.quadraticCurveTo( -4, 8, 0, 0 );
+
+			// кръгла дупка в геомаркера
+			var hole = new THREE.Path();
+			hole.moveTo(  1.7, 6.1 );
+			hole.absarc( 0, 6.1, 1.7, 0, Math.PI*2, false );
+			shape.holes.push( hole );
+			
+			// създаване на 3D формата на геомаркера
+			var extrudeSettings = {
+				depth: 0.2,
+				bevelEnabled: true,
+				bevelSegments: 4,
+				steps: 2,
+				bevelSize: 0.1,
+				bevelThickness: 0.3,
+				curveSegments: 60 };
+			var geometry = new THREE.ExtrudeGeometry( shape, extrudeSettings );
+
+			// функция, създаваща геомеркер на конкретно място
+			// и светлинния ефект под него
+			function marker( x, z, roty, scale )
+			{
+				// геомаркер
+				var geoMarker = new THREE.Mesh( geometry, new THREE.MeshPhongMaterial( {color: 'yellowgreen'} ) );
+				geoMarker.position.set( x, 5, z-scale*0.1 );
+				geoMarker.scale.set( scale, scale, scale );
+				geoMarker.rotation.y = roty;
+				scene.add( geoMarker );
+				
+				// обект в основата му (светлината го ползва)
+				var tar = new THREE.Group();
+				tar.position.set( x, 0, z );
+				scene.add( tar );
+				
+				// насочена надолу светлина
+				var light = new THREE.SpotLight( 'white', 7*scale );
+				light.angle = 1.2*Math.PI;
+				light.position.set( x, 1, z );
+				light.target = tar;
+				light.penumbra = 1;
+				scene.add( light );
+			}
+			marker( -40,  0, 0, 3 );
+			marker(  40,  0, 0, 5 );
+			marker(   0, 40, Math.PI/2, 2 );
+			marker(   0,-40, Math.PI/2, 2 );
+			
+
+			// клетката - кутия със случайно отместени върхове
+			var box = new THREE.Mesh(
+				new THREE.BoxGeometry( 110, 60, 110, 10, 12, 12 ),
+				new THREE.MeshNormalMaterial( {wireframe: true, transparent: true, opacity: 0.3} )
+			);
+			var pos = box.geometry.getAttribute( 'position' );
+			for(var i=0; i<pos.count; i++)
+			{
+				var x = pos.getX( i ),
+					y = pos.getY( i ),
+					z = pos.getZ( i );
+					
+				x += 3-6*Math.random();
+				y += 20+3-6*Math.random();
+				z += 3-6*Math.random();
+				
+				pos.setXYZ( i, x, y, z );
+			}
+			scene.add(box);
+			
+			// общи светлини - от четирите посоки
+			light = new THREE.PointLight( 'orange', 1 );
+			light.position.set( 0, 0, 200 );
+			scene.add( light );
+			
+			light = new THREE.PointLight( 'orange', 1 );
+			light.position.set( 0, 0, -200 );
+			scene.add( light );
+
+			light = new THREE.PointLight( 'orange', 1 );
+			light.position.set( 200, 0, 0 );
+			scene.add( light );
+			
+			light = new THREE.PointLight( 'orange', 1 );
+			light.position.set( -200, 0, 0 );
+			scene.add( light );
+			
+			var clock = new THREE.Clock();
+			
+			function drawFrame()
+			{
+				var t = clock.getElapsedTime();
+				scene.rotation.y = t/5;
+				
+				renderer.render( scene, camera );
+			}
+		</script>
+	</body>
+</html>

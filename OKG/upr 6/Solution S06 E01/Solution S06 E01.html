@@ -1,0 +1,97 @@
+﻿<html>
+	<head>
+		<style>
+			body { margin: 0; }
+			canvas { width: 100%; height: 100% }
+		</style>
+	</head>
+	<body>
+		<script src="three.min.js"></script>
+		<script>
+			// Задача: Създайте четиъгълна пирамида с един
+			// вертикален ръб
+			
+			var renderer = new THREE.WebGLRenderer();
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			renderer.setAnimationLoop( drawFrame );
+			document.body.appendChild( renderer.domElement );
+			
+			var scene = new THREE.Scene();
+			scene.background = new THREE.Color( 'lavender' );
+			
+			var aspect = window.innerWidth/window.innerHeight;
+			var camera = new THREE.PerspectiveCamera( 30, aspect );
+			camera.position.set( 0, 30, 60 );
+			camera.lookAt( new THREE.Vector3() );
+
+			// Макет на пирамидата и номерацията на върховете
+			// (като масив, последователни индекси, от 0 нагоре)
+			//
+			//               4
+			//               +  _
+			//              /| \ \ _
+			//             | |  \   \ _
+			//             / |   \     \
+			//            | 3+----\-----+ 2
+			//            / /      \   /
+			//            |/        \ /
+			//          0 +----------+ 1
+			//
+			
+			// създаваме най-обща форма (геометрия)
+			var geometry = new THREE.BufferGeometry();
+			
+			// в масива vertices[] слагаме координати на върховете
+			// на триъгълници, понеже върховете ще се срещат по
+			// няколко пъти, за удобство правим масива v[]
+			var v = [[-10,-10,+10],  // връх 0
+					 [+10,-10,+10],  // 1
+					 [+10,-10,-10],  // 2
+					 [-10,-10,-10],  // 3
+					 [-10,+10,-10]]; // 4
+					 
+			var vertices = new Float32Array([
+				...v[0],...v[2],...v[1], // половината под
+				...v[0],...v[3],...v[2], // другата половина на пода
+				...v[0],...v[1],...v[4], // преда стена
+				...v[1],...v[2],...v[4], // дясна стена
+				...v[2],...v[3],...v[4], // задна стена
+				...v[3],...v[0],...v[4], // лява стена
+			]);
+
+			// записваме данните за върховете в геометрията
+			// числото 3 означава, че три последователни
+			// стойности определят един връх
+			geometry.setAttribute( 'position', new THREE.BufferAttribute( vertices, 3 ) );
+
+			// за правилно оцветяване молим Three.js
+			// да изчисли нормалните вектори
+			geometry.computeVertexNormals();
+			
+			// общия обект пирамида
+			var pyramid = new THREE.Group();
+			scene.add( pyramid );
+			
+			// към него добавяме три обекта, като ползваме
+			// една и съща форма
+			//    (1) самите стени (обект-мрежа)
+			//    (2) страните на всички триъгълници
+			//    (3) точки във върховете
+			pyramid.add( new THREE.Mesh( geometry, new THREE.MeshPhongMaterial({side:THREE.DoubleSide}) ));
+			pyramid.add( new THREE.Mesh( geometry, new THREE.MeshBasicMaterial({color:'red', wireframe:true}) ));
+			pyramid.add( new THREE.Points( geometry, new THREE.PointsMaterial({color:'black', size:1}) ));
+
+			
+			scene.add( new THREE.HemisphereLight( 'yellow', 'lightsalmon' ) );
+			
+			function drawFrame()
+			{
+				pyramid.rotation.x += 0.005;
+				pyramid.rotation.y += 0.004;
+				pyramid.rotation.z += 0.003;
+				
+				renderer.render( scene, camera );
+			}
+		</script>
+	</body>
+</html>

@@ -1,0 +1,65 @@
+﻿<html>
+	<head>
+		<style>
+			body { margin: 0; }
+			canvas { width: 100%; height: 100% }
+		</style>
+	</head>
+	<body>
+		<script src="three.min.js"></script>
+		<script>
+			// Задача: създайте равнина от кубове - те са
+			// NxN, разположени са равномерно в квадрат и
+			// не се допират помежду си
+			
+			var N = 10; // 10x10 куба
+			
+			var renderer = new THREE.WebGLRenderer();
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			renderer.setAnimationLoop( drawFrame );
+			document.body.appendChild( renderer.domElement );
+
+			var scene = new THREE.Scene();
+			
+			var aspect = window.innerWidth/window.innerHeight;
+			var camera = new THREE.PerspectiveCamera( 30, aspect );
+			camera.position.set( 6, 7, 20 );
+			camera.lookAt( new THREE.Vector3() );
+
+			
+			// отместване, за да може центърът на цялата
+			// конструкция да се окаже в точката (0,0,0)
+			var d = (N-1)/2;
+			
+			// кубове - форма и размер
+			var geometry = new THREE.BoxGeometry( 0.9, 0.9, 0.9 );
+			var material = new THREE.MeshPhongMaterial();
+			
+			// двоен цикъл по X и Z за генериране на квадрата
+			// от кубове, като прави отместване на всеки куб
+			for( var x=0; x<N; x++ )
+			for( var z=0; z<N; z++ )
+			{
+				var cube = new THREE.Mesh( geometry, material );
+				cube.position.set( x-d, 0, z-d );
+				scene.add( cube );
+			}
+
+
+			var light = new THREE.PointLight( );
+			light.position.set( 3, 2, 5 );
+			scene.add( light );
+
+			light = new THREE.PointLight( );
+			light.position.set( -3, 2, -5 );
+			scene.add( light );
+
+			
+			function drawFrame()
+			{
+				scene.rotation.y += 0.005;
+				renderer.render( scene, camera );
+			}
+		</script>
+	</body>
+</html>

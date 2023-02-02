@@ -1,0 +1,87 @@
+﻿<html>
+	<head>
+		<style>
+			body { margin: 0; }
+			canvas { width: 100%; height: 100% }
+		</style>
+	</head>
+	<body>
+		<script src="three.min.js"></script>
+		<script>
+			// Задача: конструирайте порцеланова чаша със
+			// загладени ръбове. 
+
+			
+			var renderer = new THREE.WebGLRenderer();
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			renderer.setAnimationLoop( drawFrame );
+			document.body.appendChild( renderer.domElement );
+
+			var scene = new THREE.Scene();
+			scene.background = new THREE.Color( 'white' );
+			
+			var aspect = window.innerWidth/window.innerHeight;
+			camera = new THREE.PerspectiveCamera( 30, aspect );
+			camera.position.set( 0, 0, 13 );
+			camera.lookAt( new THREE.Vector3() );
+			
+
+			var mug = new THREE.Group();
+			scene.add( mug );
+			
+			var material = new THREE.MeshLambertMaterial({
+				color: 'crimson',
+				transparent: true,
+				opacity: 0.75 });
+			
+			var hole = new THREE.Mesh(
+				new THREE.CylinderGeometry( 0.9, 0.9, 3.0, 80 ),
+				new THREE.MeshLambertMaterial({
+					transparent: true,
+					opacity: 0.75 }));
+			mug.add( hole );
+			
+			mug.add(
+				new THREE.Mesh(
+					new THREE.CylinderGeometry( 1.1, 1.1, 2.5, 80 ),
+					material )
+			);
+			
+			var edge = new THREE.Mesh( new THREE.TorusGeometry( 1, 0.1, 20, 80 ), material );
+			edge.position.x = -2.5;
+			edge.position.y = 1.25;
+			edge.rotation.x = Math.PI/2;
+			mug.add( edge );
+			
+			var bottomEdge = edge.clone();
+			bottomEdge.position.y = -1.25;
+			mug.add( bottomEdge );
+
+			var bottom = new THREE.Mesh( new THREE.CylinderGeometry( 1, 1, 0.2, 80 ), material );
+			bottom.position.x = +2.5;
+			bottom.position.y = -1.25;
+			mug.add( bottom );
+
+			var handle = new THREE.Mesh( new THREE.TorusGeometry( 0.7, 0.2, 10, 80, 4 ), material );
+			handle.material.side = THREE.DoubleSide;
+			handle.position.x = 1.3+2.5;
+			handle.rotation.z = -2;
+			mug.add( handle );
+
+						
+			var light = new THREE.PointLight();
+			light.position.set( 0, 5, 10 );
+			scene.add( light );
+			
+			
+			function drawFrame()
+			{
+				// въртим чашата
+				mug.rotation.x = 0.3;
+				mug.rotation.y += 0.005;
+				
+				renderer.render( scene, camera );
+			}
+		</script>
+	</body>
+</html>

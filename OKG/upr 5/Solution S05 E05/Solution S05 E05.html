@@ -1,0 +1,124 @@
+﻿<html>
+	<head>
+		<style>
+			body { margin: 0; }
+			canvas { width: 100%; height: 100% }
+		</style>
+	</head>
+	<body>
+		<script src="three.min.js"></script>
+		<script src="CSG.js"></script>
+		<script>
+			// Задача: конструирайте ... зарче, от дупките
+			// на което струи светлина
+
+			
+			var renderer = new THREE.WebGLRenderer();
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			renderer.setAnimationLoop( drawFrame );
+			document.body.appendChild( renderer.domElement );
+
+			renderer.shadowMap.enabled = true;
+			renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+			var scene = new THREE.Scene();
+			
+			var aspect = window.innerWidth/window.innerHeight;
+			camera = new THREE.PerspectiveCamera( 30, aspect );
+			camera.position.set( 0, 10, 30 );
+			camera.lookAt( new THREE.Vector3( 0, -2, 0 ) );
+
+			// Основно тяло на зарчето - куб 4х4х4, от който
+			// изваждаме малко по-малък куб и така получаваме
+			// кухо зарче
+			var csg = new CSG();
+			var body = new THREE.Mesh( new THREE.BoxGeometry( 4, 4, 4 ) );
+			var inner = new THREE.Mesh( new THREE.BoxGeometry( 3.8, 3.8, 3.8 ) );
+			csg.subtract( [body, inner] );
+
+
+			// Правене на отворите (всеки е продупчен с цилиндър)
+			var d = 0.9; // разстояние между отворите
+			var hole = new THREE.Mesh( new THREE.CylinderGeometry(0.4,0.4,0.5,20) );
+			
+			// перфорираме 2
+			hole.position.set( -d,  2, -d ); csg.subtract( [hole] );
+			hole.position.set(  d,  2,  d ); csg.subtract( [hole] );
+			// перфорираме 5
+			hole.position.set( -d, -2, -d ); csg.subtract( [hole] );
+			hole.position.set( -d, -2,  d ); csg.subtract( [hole] );
+			hole.position.set(  d, -2,  d ); csg.subtract( [hole] );
+			hole.position.set(  d, -2, -d ); csg.subtract( [hole] );
+			hole.position.set(  0, -2,  0 ); csg.subtract( [hole] );
+			
+			// перфорираме 1
+			hole.rotation.z = Math.PI/2;
+			hole.position.set(  2,  0,  0 ); csg.subtract( [hole] );
+			// перфорираме 6
+			hole.position.set( -2, -d, -d ); csg.subtract( [hole] );
+			hole.position.set( -2, -d,  0 ); csg.subtract( [hole] );
+			hole.position.set( -2, -d,  d ); csg.subtract( [hole] );
+			hole.position.set( -2,  d, -d ); csg.subtract( [hole] );
+			hole.position.set( -2,  d,  0 ); csg.subtract( [hole] );
+			hole.position.set( -2,  d,  d ); csg.subtract( [hole] );
+			// перфорираме 3
+			hole.rotation.y = Math.PI/2;
+			hole.position.set( -d, -d,  2 ); csg.subtract( [hole] );
+			hole.position.set(  0,  0,  2 ); csg.subtract( [hole] );
+			hole.position.set(  d,  d,  2 ); csg.subtract( [hole] );
+			// перфорираме 4
+			hole.position.set( -d, -d, -2 ); csg.subtract( [hole] );
+			hole.position.set( -d,  d, -2 ); csg.subtract( [hole] );
+			hole.position.set(  d, -d, -2 ); csg.subtract( [hole] );
+			hole.position.set(  d,  d, -2 ); csg.subtract( [hole] );
+
+			// Преобразуваме обратно до Three.js обект
+			var die = csg.toMesh();
+			die.material = new THREE.MeshLambertMaterial( {color: 'oldlace' } );
+			die.castShadow = true;
+			scene.add( die );
+			
+			// широка платформа, която ще бъде осветявана
+			var geometry = new THREE.BoxGeometry( 100, 1, 100)
+			var material = new THREE.MeshPhongMaterial();
+			platform = new THREE.Mesh( geometry, material );
+			platform.position.set( 0, -5, 0 );
+			platform.receiveShadow = true;
+			scene.add( platform );
+
+			// светлина вътре в куба, свети надолу през
+			// дупките на зарчето
+			light1 = new THREE.SpotLight( 'white' );
+			light1.position.set( 0, 1, 0 );
+			light1.target = platform;
+			light1.angle = 1.3; // полуъгъл на светлинния конус
+			light1.penumbra = 1; // мекост на контура на светлинния конус
+			light1.castShadow = true; // тази светлина генерира сянка
+			scene.add( light1 );
+			
+			// втора слаба светлина, която прави жълтото
+			// петно на платформата
+			light2 = new THREE.SpotLight( 'yellow', 0.5 ); // интензитет 0.5
+			light2.position.set( 0, 1, 0 );
+			light2.angle = 1.3;
+			light2.penumbra = 1;
+			scene.add( light2 );
+			
+			// трета светлина - отгоре много слаба бяла,
+			// а отдолу по-силна керемидена - нужна ни е,
+			// за да видим външните стени на зарчето
+			light3 = new THREE.HemisphereLight( 0x202020, 0xA04040 );
+			scene.add( light3 );
+
+			function drawFrame()
+			{
+				// въртим зарчето
+				die.rotation.x += 0.015;
+				die.rotation.y += 0.010;
+				die.rotation.z += 0.005;
+				
+				renderer.render( scene, camera );
+			}
+		</script>
+	</body>
+</html>

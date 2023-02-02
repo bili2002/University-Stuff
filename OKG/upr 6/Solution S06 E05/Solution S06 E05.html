@@ -1,0 +1,69 @@
+﻿<html>
+	<head>
+		<style>
+			body { margin: 0; }
+			canvas { width: 100%; height: 100% }
+		</style>
+	</head>
+	<body>
+		<script src="three.min.js"></script>
+		<script>
+			// Задача: направете ... биберон от синусоида.
+
+			
+			var renderer = new THREE.WebGLRenderer({antialias:true});
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			renderer.setAnimationLoop( drawFrame );
+			document.body.appendChild( renderer.domElement );
+
+			var scene = new THREE.Scene();
+			scene.background = new THREE.Color( 'seagreen' );
+			
+			var aspect = window.innerWidth/window.innerHeight;
+			var camera = new THREE.PerspectiveCamera( 30, aspect );
+			camera.position.set( 0, 10, 40 );
+			camera.lookAt( new THREE.Vector3() );
+
+
+			// профил на биберона
+			var profile = [];
+			for ( var i=0.01; i<540+180; i+=20 )
+			{
+				// точка от оригинална синусоида
+				var t = Math.PI*i/180; // t в радиани
+				var x = t;
+				var y = Math.sin(t);
+				
+				// точка от завъртяна синусоида - по принцип
+				// трябва x и y да умножим по sqrt(2)/2, за
+				// да се запази мащаба, но не ги умножаваме
+				// и получаваме малко по-голяма синусоида
+				profile.push( new THREE.Vector2( y+x, y-x+8 ) );
+				// sqrt(2)/2 е стойността на sin 45° и cos 45°
+			}
+
+			// създаване на 3D формата на биберона
+			var geometry = new THREE.LatheGeometry( profile, 60 );
+			var pacifier = new THREE.Mesh( geometry, new THREE.MeshPhongMaterial( {specular: 'linen', side: THREE.DoubleSide} ) );
+			scene.add( pacifier );
+			
+			// светлини
+			var light = new THREE.PointLight( 'white' );
+			light.position.set( 100, 50, 0 );
+			scene.add( light );
+			
+			light = new THREE.PointLight( 'white' );
+			light.position.set( -100, 50, 0 );
+			scene.add( light );
+			
+			function drawFrame()
+			{
+				pacifier.rotation.x += 0.003;
+				pacifier.rotation.y += 0.003;
+				pacifier.rotation.z += 0.003;
+				
+				renderer.render( scene, camera );
+			}
+		</script>
+	</body>
+</html>

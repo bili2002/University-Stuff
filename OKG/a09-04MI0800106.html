@@ -1,0 +1,67 @@
+﻿<html>
+	<head>
+		<style>
+			body { margin: 0; }
+			canvas { width: 100%; height: 100% }
+		</style>
+	</head>
+	<body>
+		<script src="three.min.js"></script>
+		<script>
+			var renderer = new THREE.WebGLRenderer({antialias:true});
+			renderer.setSize( window.innerWidth, window.innerHeight );
+
+			renderer.setAnimationLoop( drawFrame );
+			document.body.appendChild( renderer.domElement );
+			
+			renderer.shadowMap.enabled = true;
+			renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+			var scene = new THREE.Scene();
+			scene.background = new THREE.Color( 'black' );
+			//scene.fog = new THREE.Fog( 'black', 0, 30 );
+
+			var aspect = window.innerWidth/window.innerHeight;
+			var camera = new THREE.PerspectiveCamera( 30, aspect );
+
+			var field = new THREE.Mesh(new THREE.BoxGeometry( 100, 1, 100 ), new THREE.MeshPhongMaterial({color:'green'}));
+			field.position.set(0, 0, 0);	
+			field.receiveShadow = true;		
+
+			scene.add( field );
+
+			var box = new THREE.Mesh(new THREE.BoxGeometry( 1, 1, 1), new THREE.MeshPhongMaterial({color:'pink'}));
+			box.position.set(0, 1, 0);	
+			box.castShadow = true;
+			scene.add(box);
+			
+			box = new THREE.Mesh(new THREE.BoxGeometry( 1, 3, 1), new THREE.MeshPhongMaterial({color:'purple'}));
+			box.position.set(6, 1, 0);	
+			box.castShadow = true;		
+			scene.add(box);
+
+			box = new THREE.Mesh(new THREE.BoxGeometry( 1, 2, 1), new THREE.MeshPhongMaterial({color:'darkblue'}));
+			box.position.set(17, 1, 0);			
+			box.castShadow = true;	
+			scene.add(box);
+	
+			var light = new THREE.PointLight( 'white', 0.5);
+			light.position.set(-10, 20, -10);
+			light.castShadow = true;
+			scene.add(light);
+
+			var clock = new THREE.Clock();
+			
+			function drawFrame()
+			{
+				var t = clock.getElapsedTime()/3;
+				
+				camera.position.set( 5*t - 5, 1, 3*Math.sin(2*t) );
+				camera.lookAt( new THREE.Vector3( 5*t, 1, 0 ) );
+			
+				renderer.render( scene, camera );
+
+			}
+		</script>
+	</body>
+</html>

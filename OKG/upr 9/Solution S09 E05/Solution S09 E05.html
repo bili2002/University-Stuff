@@ -1,0 +1,118 @@
+﻿<html>
+	<head>
+		<style>
+			body { margin: 0; }
+			canvas { width: 100%; height: 100% }
+		</style>
+	</head>
+	<body>
+		<script src="three.min.js"></script>
+		<script>
+			// Задача: Направете гледната точка да гледа
+			// фронтално срещу "Я"-то, без да променяте
+			// случайната позиция и ориентация на буквата
+	
+			var renderer = new THREE.WebGLRenderer({antialias:true});
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			renderer.setAnimationLoop( drawFrame );
+			document.body.appendChild( renderer.domElement );
+
+		
+			var scene = new THREE.Scene();
+			scene.background = new THREE.Color( 'gray' );
+
+			var aspect = window.innerWidth/window.innerHeight;
+			var camera = new THREE.PerspectiveCamera( 30, aspect );
+			camera.position.set( 0, 0, 150 );
+			camera.lookAt( new THREE.Vector3( 0, 10, 0 ) );
+
+			
+			// обграждащ куб
+			var box = new THREE.Mesh( new THREE.BoxGeometry( 100, 100, 100 ) );
+			scene.add( new THREE.BoxHelper( box, 'black' ) );
+			
+			
+			// обектът "Я" със случайна позиция в рамките
+			// на обграждащия куб и случайна ориентация
+			var ya = new THREE.Group();
+			ya.position.set( 50-100*Math.random(), 50-100*Math.random(), 50-100*Math.random() );
+			ya.rotation.set( 2*Math.PI*Math.random(), 2*Math.PI*Math.random(), 2*Math.PI*Math.random() );
+			ya.updateMatrixWorld(); // без това тук, стрелките по-долу се объркват
+			scene.add( ya );
+			
+			// плочка с буквата "Я" 
+			var platform = new THREE.Mesh(
+				new THREE.BoxGeometry( 1, 20, 20 ),
+				new THREE.MeshBasicMaterial({
+					color: 'white',
+					map: new THREE.TextureLoader().load( 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAMAAACdt4HsAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAAzUExURUBAQICAgL+/v+/v7xAQEN/f3zAwMGBgYJ+fnyAgIHBwcK+vr1BQUM/Pz4+PjwAAAP///2v4XLUAAAFsSURBVHja7JfbssIgDEVJgAK98v9fa5VUKeCUwJnxOGMe1S6TTbJTxNYZ4g8AviN+gP8PQAswizQAVl0BkOvwvnngGjCpZ6eBxT0OnBKw4nUJhn7urKRPQssrrNNgzFIlpK0TESnbJWMudQC35X8XSqg7xonU860AUhCbAeHEnG8GhARMLwA+CBC9JYy9Iuqt0HUcAKVg2gFyyDuJBSDCaZh4AC/nBwFkK2CfqMdIKmMx7m+Wqdqnqw27lW58gLe5m/IA5CsGX6bKKyE8PzaK6KU7+RIfAGdfYgN0YitswBwAuhWAqatwAUFB1dzKkK0W5jSGLh6ap7GwWlgAUnBuNhSRHCEXsJYWAwNACjpZAOgaAPXgVCoLKwDFtwMGgArIkq0F0Eo4bCTduJeAhZ5XMhHWFIVJAZPJX0Xv1mDnw6AHlO8AeoxuT/FmBpdekgQsJQBEESuo7568xt8i6jpb/91Yvgrw4dv7TYABABwg7/And1PuAAAAAElFTkSuQmCC' )
+				})
+			);
+			ya.add( platform );
+
+			// гръб на плочката с "Я"
+			var frame = new THREE.Mesh(
+				new THREE.BoxGeometry( 2, 22, 22 ),
+				new THREE.MeshPhongMaterial( {color: 'coral'} )
+			);
+			frame.position.x = -1;
+			ya.add( frame );
+			
+			
+			// създаване на три помощни стрелки, които можеха
+			// да са пъхнати в ya и да са завъртяни автоматично
+			// с обекта, но са нарочно написани като самостоятелни
+			// обекти, извън ya, за да видите как се намират
+			// локалните оси на обект и евентуално да ги използвате
+			scene.add( new THREE.ArrowHelper( ya.localToWorld(new THREE.Vector3(1,0,0)).sub(ya.position), ya.position, 10, 'blue', 5, 3 ) );
+			scene.add( new THREE.ArrowHelper( ya.localToWorld(new THREE.Vector3(0,1,0)).sub(ya.position), ya.position, 20, 'blue', 5, 3 ) );
+			scene.add( new THREE.ArrowHelper( ya.localToWorld(new THREE.Vector3(0,0,1)).sub(ya.position), ya.position, 20, 'blue', 5, 3 ) );
+
+			
+			// разни светлини - отгоре и отдолу
+			light = new THREE.PointLight( 'white', 1 );
+			light.position.set( 0, 100, 0 );
+			scene.add( light );
+			
+			light = new THREE.PointLight( 'white', 1 );
+			light.position.set( 0, -100, 0 );
+			scene.add( light );
+
+			
+			var clock = new THREE.Clock();
+			
+			function drawFrame()
+			{
+				// въртене на сцената
+				var t = clock.getElapsedTime();
+				
+				// позиция pos, от която гледаме, е на 200
+				// единици напред по локалния вектор X, но
+				// ни интересуват координатите в глобалната
+				// координатна сстема
+				var pos = ya.localToWorld( new THREE.Vector3( 200, 0, 0 ) );
+
+				// вектор up за посоката нагоре, получен пак
+				// чрез глобална координата на точка на разстояние
+				// единица по Y, но вадим позицията на "Я",
+				// за да получим чист вектор от "центъра" на
+				// обекта в посока "нагоре"
+				var up = ya.localToWorld( new THREE.Vector3( 0, 1, 0 ) ).sub( ya.position );
+				
+				// даваме им малко отклонение, за да се
+				// люлее кадъра (не се искаше в задачата)
+				pos = pos.add( new THREE.Vector3( Math.sin(2.3*t), Math.cos(2.1*t), Math.sin(2.6*t) ).multiplyScalar(5) );
+				up = up.add( new THREE.Vector3( Math.sin(1.8*t), Math.sin(2.5*t), Math.cos(1.5*t) ).multiplyScalar(0.1) );
+				
+				// слагаме камерата на място pos, обърната
+				// към позицията на ya и с определена посока
+				// "нагоре"
+				camera.position.copy( pos );
+				camera.up.copy( up );
+				camera.lookAt( ya.position );
+				
+				renderer.render( scene, camera );
+			}
+		</script>
+	</body>
+</html>

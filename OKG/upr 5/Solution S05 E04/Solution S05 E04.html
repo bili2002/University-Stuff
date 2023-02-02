@@ -1,0 +1,79 @@
+﻿<html>
+	<head>
+		<style>
+			body { margin: 0; }
+			canvas { width: 100%; height: 100% }
+		</style>
+	</head>
+	<body>
+		<script src="three.min.js"></script>
+		<script src="CSG.js"></script>
+		<script>
+			// Задача: конструирайте ... хипербола
+
+			
+			var renderer = new THREE.WebGLRenderer();
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			renderer.setAnimationLoop( drawFrame );
+			document.body.appendChild( renderer.domElement );
+
+			var scene = new THREE.Scene();
+			
+			var aspect = window.innerWidth/window.innerHeight;
+			camera = new THREE.PerspectiveCamera( 30, aspect );
+			camera.position.set( 0, 0, 200 );
+			camera.lookAt( new THREE.Vector3() );
+
+			// Създаваме форма на голям конус.
+			// Май има бъг в CSG.js, понеже с конуси не
+			// става обединението - получава се празен
+			// обект, затова ползвам цилиндър с едната
+			// основа почти 0 - така прилича на конус
+			var coneG = new THREE.CylinderGeometry( 0.01, 100, 80, 64, 32 );
+
+			// Създаваме два обекта-конуса с върхове,
+			// докосващи се един срещу друг
+			var cone1 = new THREE.Mesh( coneG );
+			cone1.position.y = -50;
+			var cone2 = new THREE.Mesh( coneG );
+			cone2.position.y = 50;
+			cone2.rotation.z = Math.PI;
+
+			// Обединяваме двата конуса в един CSG обект
+			var csg = new CSG();
+			csg.union( [cone1, cone2] );
+			
+			// Създаваме изрязваща равнина под формата на
+			// тънка вертикална плоскост
+			var mesh = new THREE.Mesh( new THREE.BoxGeometry( 1/2, 300, 300 ) );
+			mesh.position.x = 10;
+			
+			// Намираме сечението на тази равнина и обединението
+			// на двата конуса ... то трябва да е хипербола
+			csg.intersect( [mesh] );
+			var hyperbola = csg.toMesh();
+			hyperbola.material = new THREE.MeshPhongMaterial( {color: 'crimson' } );
+			hyperbola.position.x = -10;
+			scene.add( hyperbola );
+
+			// Добавяме две светлини
+			light1 = new THREE.PointLight( 'lightblue' );
+			light1.position.set( 0, 50, 100 );
+			scene.add( light1 );
+			
+			light2 = new THREE.PointLight( 'white' );
+			light2.position.set( 0, -50, 100 );
+			scene.add( light2 );
+
+			function drawFrame()
+			{
+				// въртим хиперболата
+				hyperbola.rotation.x += 0.005;
+				hyperbola.rotation.y += 0.004;
+				hyperbola.rotation.z += 0.003;
+				
+				renderer.render( scene, camera );
+			}
+		</script>
+	</body>
+</html>

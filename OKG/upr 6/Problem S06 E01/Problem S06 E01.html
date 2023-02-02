@@ -1,0 +1,71 @@
+﻿<html>
+	<head>
+		<style>
+			body { margin: 0; }
+			canvas { width: 100%; height: 100% }
+		</style>
+	</head>
+	<body>
+		<script src="three.min.js"></script>
+		<script>
+			// Задача: Създайте четиъгълна пирамида с един
+			// вертикален ръб
+			
+			var renderer = new THREE.WebGLRenderer();
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			renderer.setAnimationLoop( drawFrame );
+			document.body.appendChild( renderer.domElement );
+			
+			var scene = new THREE.Scene();
+			scene.background = new THREE.Color( 'lavender' );
+			
+			var aspect = window.innerWidth/window.innerHeight;
+			var camera = new THREE.PerspectiveCamera( 30, aspect );
+			camera.position.set( 0, 30, 60 );
+			camera.lookAt( new THREE.Vector3() );
+
+			// създаваме най-обща форма (геометрия)
+			var geometry = new THREE.BufferGeometry();
+			
+			// в масива vertices[] слагаме координати на върховете
+			// на триъгълници
+			var vertices = new Float32Array([
+				-10,  0, 0, // връх 0
+				 10, -5, 0, // 1
+				  0, 10, 5, // 2
+			]);
+	
+			// записваме данните за върховете в геометрията
+			// числото 3 означава, че три последователни
+			// стойности определят един връх
+			geometry.setAttribute( 'position', new THREE.BufferAttribute( vertices, 3 ) );
+	
+			// за правилно оцветяване молим Three.js
+			// да изчисли нормалните вектори
+			geometry.computeVertexNormals();
+			
+			// общия обект
+			var object = new THREE.Group();
+			scene.add( object );
+			
+			// ползваме една и съща форма за три различни
+			// обекта - един със стени, един с ръбове и
+			// един само с върхове
+			object.add( new THREE.Mesh( geometry, new THREE.MeshPhongMaterial({side:THREE.DoubleSide}) ));
+			object.add( new THREE.Mesh( geometry, new THREE.MeshBasicMaterial({color:'red', wireframe:true}) ));
+			object.add( new THREE.Points( geometry, new THREE.PointsMaterial({color:'black', size:1}) ));
+
+			
+			scene.add( new THREE.HemisphereLight( 'yellow', 'lightsalmon' ) );
+			
+			function drawFrame()
+			{
+				object.rotation.x += 0.005;
+				object.rotation.y += 0.004;
+				object.rotation.z += 0.003;
+
+				renderer.render( scene, camera );
+			}
+		</script>
+	</body>
+</html>

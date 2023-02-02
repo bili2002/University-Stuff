@@ -1,0 +1,83 @@
+﻿<html>
+	<head>
+		<style>
+			body { margin: 0; }
+			canvas { width: 100%; height: 100% }
+		</style>
+	</head>
+	<body>
+		<script src="three.min.js"></script>
+		<script src="labyrinth.js"></script>
+		<script>
+			// Задача: напавете тримерен лабиринт и движение
+			// в него чрез стрелките от клавиатурата (наляво,
+			// надясно и напред), без да ползвате външни модули
+			// и библиотеки за това - т.е. да е изцяло "ръчно"
+			// направено. И още - да се гледа от първо лице,
+			// т.е. като че ли ние самите ходим в лабиринта.
+			// И по-още - с шпация да се скача вертикално.
+			// И най-още - движенията да са плавни - както
+			// завъртане, така и ходене и скачане.
+			
+	
+			var renderer = new THREE.WebGLRenderer({antialias:true});
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			renderer.setAnimationLoop( drawFrame ); // <- с това
+			document.body.appendChild( renderer.domElement );
+			
+			var scene = new THREE.Scene();
+
+			var aspect = window.innerWidth/window.innerHeight;
+			var camera = new THREE.PerspectiveCamera( 30, aspect );
+			camera.position.set( 30, 15, 30 );
+			camera.lookAt( scene.position );
+	
+			
+			// създаване на лабиринта (като структура)
+			generateLabyrinth();
+			
+			// рисуване на лабиринта в 3D
+			var block = new THREE.BoxGeometry( 1, 0.2, 1 ); // единична кутийка
+			var labyrinth = new THREE.Group(); // стени на целия лабиринт
+			var material = new THREE.MeshPhongMaterial( {color: 'peachpuff', shininess: 10} );
+
+			for( var x=0; x<2*dW+1; x++ )
+			for( var y=0; y<2*dH+2; y++ )
+				if( isWall(x,y) )
+				{
+					// за всяка пълна клетка създаваме стена
+					var wall = new THREE.Mesh( block, material );
+					wall.position.set( x, 0, y );
+					labyrinth.add( wall );
+				}
+			scene.add( labyrinth );
+		
+			// светлини в четирите ъгъла на лабиринта
+			var light = new THREE.PointLight( 'peachpuff', 1/2 );
+			light.position.set( -dW, 10, -dH );
+			scene.add( light );
+			
+			light = new THREE.PointLight( 'peachpuff', 1/2 );
+			light.position.set( dW, 10, -dH );
+			scene.add( light );
+			
+			light = new THREE.PointLight( 'peachpuff', 1/2 );
+			light.position.set( dW, 10, dH );
+			scene.add( light );
+			
+			light = new THREE.PointLight( 'peachpuff', 1/2 );
+			light.position.set( -dW, 10, dH );
+			scene.add( light );
+
+			// центрираме лабиринта
+			labyrinth.position.set( -dW+1, 0, -dH-1 );
+			
+			function drawFrame()
+			{
+				scene.rotation.y += 0.002;
+				
+				renderer.render( scene, camera );
+			}
+		</script>
+	</body>
+</html>

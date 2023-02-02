@@ -1,0 +1,84 @@
+﻿<html>
+	<head>
+		<style>
+			body { margin: 0; }
+			canvas { width: 100%; height: 100% }
+		</style>
+	</head>
+	<body>
+		<script src="three.min.js"></script>
+		<script>
+			// Задача: направете полет над кристална планета
+			// с големи, ръбести, лъскави кристали
+			
+			
+			var renderer = new THREE.WebGLRenderer();
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			renderer.setAnimationLoop( drawFrame );
+			document.body.appendChild( renderer.domElement );
+
+			var scene = new THREE.Scene();
+			
+			var aspect = window.innerWidth/window.innerHeight;
+			var camera = new THREE.PerspectiveCamera( 30, aspect );
+			camera.position.set( 0, 10, 50 );
+			camera.lookAt( new THREE.Vector3() );
+
+			// Планетата е с основа икосаедър, който е наситнен
+			// на 10 пъти и вече прилича повече на сфера
+			var geometry = new THREE.IcosahedronGeometry( 40, 10 );
+			var material = new THREE.MeshPhongMaterial({
+				flatShading: true, // плоско осветяване - всяка стена е едноцветна
+				shininess: 50, // степен на лъскавост
+				specular: 'white' // цвят на лъскавината
+			});
+			
+			// Всички върхове (те са по сфера около (0,0,0)
+			// умножаваме със случайно число от 0.9 до 1.
+			// Така всеки връх се приближава малко към (0,0,0)
+			var pos = geometry.getAttribute( 'position' );
+			console.log(pos.count);
+			for (var i=0; i<pos.count; i++)
+			{
+				var x = pos.getX(i),
+					y = pos.getY(i),
+					z = pos.getZ(i),
+					k = 0.95 + 0.05*Math.sin(x*y+z*z*z);
+					
+				pos.setXYZ( i, k*x, k*y, k*z );
+			}
+			
+			// За да има правилно осветяване, трябва да има
+			// правилно ориентирани нормални вектори. Мързи
+			// ни да ги смятаме, затова нека Three.js ги сметне.
+			geometry.computeFaceNormals(); 			
+
+			// Вече можем да създаден планетата, но я
+			// побутваме надолу, за да може горният ѝ край
+			// да е на нивото около средата на прозореца
+			var solid = new THREE.Mesh( geometry, material );
+			solid.position.y = -35;
+			scene.add( solid );
+
+			
+			// Създаваме две светлини - червена и синя -
+			// на фиксирани места
+			var light = new THREE.PointLight( 0xFF4040 );
+			light.position.set( 0, 10, 10 );
+			scene.add( light );
+			
+			light = new THREE.PointLight( 'blue' );
+			light.position.set( 0, 30, 0 );
+			scene.add( light );
+			
+
+			function drawFrame()
+			{
+				// въртене на планетата
+				solid.rotation.x += 0.002;
+				
+				renderer.render( scene, camera );
+			}
+		</script>
+	</body>
+</html>

@@ -1,0 +1,90 @@
+﻿<html>
+	<head>
+		<style>
+			body { margin: 0; }
+			canvas { width: 100%; height: 100% }
+		</style>
+	</head>
+	<body>
+		<script src="three.min.js"></script>
+		<script src="CSG.js"></script> 
+		<script>
+			// Задача: конструирайте ... мистериозния обект
+			// с трите различни профила
+
+			
+			var renderer = new THREE.WebGLRenderer();
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			renderer.setAnimationLoop( drawFrame );
+			document.body.appendChild( renderer.domElement );
+
+			var scene = new THREE.Scene();
+			scene.background = new THREE.Color( 'white' );
+			
+			var aspect = window.innerWidth/window.innerHeight;
+			camera = new THREE.PerspectiveCamera( 30, aspect );
+			camera.position.set( 0, 0, 100 );
+			camera.lookAt( new THREE.Vector3() );
+
+
+			var mystery = new THREE.Group();
+			scene.add( mystery );
+
+				
+			var ring = new THREE.Mesh( new THREE.CylinderGeometry( 9.8, 9.8, 20, 160 ) );
+			var hole = new THREE.Mesh( new THREE.CylinderGeometry( 7, 7, 21, 160 ) );
+			var material = new THREE.MeshLambertMaterial({
+				color: 'crimson',
+				transparent : !true,
+				opacity: 0.75});
+				
+			var csg = new CSG();
+			csg.subtract( [ring, hole] );
+			var body = csg.toMesh();
+			body.material = material;
+			mystery.add( body );
+
+
+			material = new THREE.MeshLambertMaterial({
+				color: 'white',
+				transparent: true,
+				opacity: 0.75,
+				side: THREE.DoubleSide });
+				
+			var bar1 = new THREE.Mesh( new THREE.BoxGeometry( 9, 10, 20 ), material );
+				bar1.position.set( 6, 6.5, 0 );
+			var bar2 = new THREE.Mesh( new THREE.BoxGeometry( 9, 10, 20 ) );
+				bar2.position.set( -6, 6.5, 0 );
+			var bar3 = new THREE.Mesh( new THREE.BoxGeometry( 9, 10, 10 ) );
+				bar3.position.set( 0, 6.5, -5 );
+			csg = new CSG();
+			csg.union( [bar1, bar2, bar3] );
+			mystery.add( csg.toMesh() );
+
+			var bar1 = new THREE.Mesh( new THREE.BoxGeometry( 9, 10, 20 ), material );
+				bar1.position.set( 6, -6.5, 0 );
+			var bar2 = new THREE.Mesh( new THREE.BoxGeometry( 9, 10, 20) );
+				bar2.position.set( -6, -6.5, 0 );
+			var bar3 = new THREE.Mesh( new THREE.BoxGeometry( 9, 10, 10 ) );
+				bar3.position.set( 0, -6.5, 5 );
+			csg = new CSG();
+			csg.union( [bar1, bar2, bar3] );
+			mystery.add( csg.toMesh() );
+
+
+			var light = new THREE.PointLight();
+			light.position.set( 0, 50, 100 );
+			scene.add( light );
+			
+			function drawFrame()
+			{
+				// въртим обекта
+				mystery.rotation.x += 0.005;
+				mystery.rotation.y += 0.004;
+				mystery.rotation.z += 0.003;
+				
+				renderer.render( scene, camera );
+			}
+		</script>
+	</body>
+</html>

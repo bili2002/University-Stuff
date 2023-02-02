@@ -1,0 +1,530 @@
+﻿<!DOCTYPE html>
+
+<html>
+	<head>
+		<script src="three.min.js"></script>
+		<script src="mannequin.js"></script>
+		<style>	
+			body {color: black; text-shadow: 0 0 4px gray; font-family: Calibri;}
+			h1   {position: fixed; z-index: 10; top: 0; left: 0; text-align: center; width: 100%;}
+			.stih  {position: fixed; z-index: 10; bottom: 1em; left: 1em; font-size: 1.5em; font-style: italic;}
+			.text-center{
+				color:black;
+				text-transform:uppercase;
+				font-size: 23px;
+				margin: -50px 0 80px 0;
+				display: block;
+				text-align: center;
+			}
+
+			.input-container{
+				position:relative;
+				margin-bottom:25px;
+				left:-30px
+			}
+
+			.input-container label{
+				position: absolute;
+				width: 200px;
+				top: 0px;
+				left: 0px;
+				font-size: 16px;
+				color: black;
+				pointer-event: none;
+				transition: all 0.1s ease-in-out;
+			}
+
+			.input-container input{
+				border: 0;
+				border-bottom: 2px solid #555;
+				background: transparent;
+				width: 200px;
+				padding: 8px 0 5px 0;
+				font-size: 16px;
+				color: black;
+			}
+
+			.input-container input:focus {
+				outline:none;
+				border-width: 2px;
+				border-image: linear-gradient(to right, #e66465, #9198e5);
+				border-image-slice: 1;
+			}
+
+			.input-container input:focus ~ label,
+			.input-container input:valid ~ label {
+				top:-12px;
+				font-size:12px;
+			}
+
+			.btn {
+				background-color: white;
+				color: black;
+				width: 80px;
+				height: 50px;
+				border-radius: 5px;
+				font-size: 1rem;
+				border-width: 3px;
+				border-image: linear-gradient(to right, #e66465, #9198e5);
+				border-image-slice: 1;
+				margin-left: 30px
+			}
+
+			.btn:hover {
+				background: linear-gradient(to right, #e66465, #9198e5);
+				color: white;
+				border-radius: 10px;
+			}
+
+			.checkbox-container {
+				position: relative;
+				margin-bottom: 25px;
+				left: -30px
+			}
+
+			.checkbox-container label {
+				position: absolute;
+				width: 200px;
+				top: 0px;
+				left: 0px;
+				font-size: 16px;
+				color: black;
+				pointer-event: none;
+				transition: all 0.1s ease-in-out;
+			}
+
+			.checkbox-container input {
+				border: 0;
+				border-bottom: 2px solid #555;
+				background: transparent;
+				width: 200px;
+				padding: 8px 0 5px 0;
+				font-size: 16px;
+				color: black;
+			}
+		</style>
+	</head>
+
+	<body>
+		<h1>Juggling Simulator</h1>  
+		<div style="position: fixed; font-size: 1.25em; width: 6em; top: 30%; left: calc(50% - 3em);" id="toHide1">
+			<form>
+				<span class="text-center">Settings</span>
+
+				<div class="input-container">
+					<input type="text" required="" name="numHands" id='numHands'/>
+					<label for="numHands">Number of hands (1 or 2)</label>
+				</div>
+
+				<div class="input-container">
+					<input type="number" required="" id="numBalls" name="numBalls"/>
+					<label for="numBalls">Number of balls per hand</label>
+				</div>
+
+				<div class="input-container">
+					<input type="number" required="" id="slowdown" name="slowdown"/>
+					<label for="slowdown">Slow motion factor (1 - 10)</label>
+				</div>
+
+				<div class="checkbox-container">
+                 	<input type="checkbox" id="sync" name="sync"/>
+                	<label for="sync">Synchronized</label>
+               	</div>
+
+				<button type="button" class="btn" onclick="start()">Enter</button>
+			</form>
+		</div>
+
+		<audio id="music"><source src="CircusMusic.mp3" type="audio/mpeg"></audio>
+		
+		<!-- Хайку -->
+		<div id="toHide2" class="stih">
+			Жонгльор сред хора<br>
+			Светлини го огряват<br>
+			Мъгла наоколо
+		</div>
+
+		<script>
+			const numApplauders = 10;
+			const angleApplauders = 180;
+			const densityApplauders = 1/120;
+			const distsApplauderRows = [50, 80, 110, 140, 170];
+
+			const femaleClapAngle = -32;
+			const maleClapAngle = -39;
+
+			// red, yellow, green, blue, purple, orange, cyan, neon
+			const cols = ["#FF1610", "#FFFF00", "#1EBE52", "#3500FF", "#BF2BFF", "#FF8510", "#00F9FF", "#83F52C"];
+
+			const baseTSpeed = 1.3; // base time speed
+
+			const g = 70; // gravity
+
+			const x0 = 6; // parabola center
+			const y0 = 12; // throw height
+
+			const baseVx0 = 10; // initial x speed
+			const baseVy0 = 35; // initial y speed
+
+			var tSpeed; // time speed
+			var numBalls;
+			var numHands;
+			var synchroned;
+
+			var man;
+			var balls;
+			var clock;
+
+			var spotLight;
+			var spotLight2;
+			var spotLight3;
+
+			function start() {
+				document.getElementById('music').play();
+				document.getElementById('toHide1').style.display = "none";
+				document.getElementById('toHide2').style.display = "none";
+
+				clock = new THREE.Clock();
+				createScene();
+
+				createJuggler();
+				createApplauders();
+				
+				numHands = Math.max(1, Math.min(2, Math.round(document.getElementById('numHands').value)));
+				numBalls = numHands * Math.max(0, Math.round(document.getElementById('numBalls').value));
+				balls = createBalls(numBalls);
+
+				var dist = 140 + 18 * Math.max(numBalls, 4);
+				camera.position.set(0, 5 + 4.2 * Math.max(numBalls, 4), dist);
+				scene.fog = new THREE.Fog('gainsboro', dist, 400 + dist);
+				light.intensity = 0;
+
+				tSpeed = baseTSpeed / Math.max(1, document.getElementById('slowdown').value);
+
+				spotLight = new THREE.SpotLight(0xff0000);
+				spotLight2 = new THREE.SpotLight(0x00ff00);
+				spotLight3 = new THREE.SpotLight(0x0000ff);
+
+				spotLight.castShadow = true;
+				spotLight.angle = 0.1;
+				spotLight.target.position.set(0, 20, 10);
+
+				spotLight2.castShadow = true;
+				spotLight2.angle = 0.1;
+				spotLight2.target = man;
+
+				spotLight3.castShadow = true;
+				spotLight3.angle = 0.1;
+				spotLight3.target = man;
+
+				scene.add(spotLight);
+				scene.add(spotLight2);
+				scene.add(spotLight3);
+
+				synchroned = document.getElementById('sync').checked;
+				console.log(synchroned);
+			}
+
+			function createJuggler() {
+				Mannequin.colors = [ '#E8BEAC', 'orange', 'green', '#E8BEAC', '#E8BEAC', 'red'];
+
+				man = new Male();
+				man.turn = 270;
+				man.head.nod = -30;
+				man.head.turn = 0;
+				man.l_ankle.turn = 10;
+				man.r_ankle.turn = 10;
+
+				man.torso.recolor('red');
+				man.l_leg.recolor('green');
+				man.r_leg.recolor('green');
+				man.l_arm.recolor('yellow');
+				man.r_arm.recolor('yellow');
+				man.neck.recolor('yellow');
+
+				
+				var ball = new THREE.Mesh(new THREE.SphereGeometry( 1 ), new THREE.MeshPhongMaterial({color:"red"}));
+				ball.position.y = 29.5;
+				ball.castShadow = true;
+				scene.add(ball);
+			}
+
+			function createApplauder(angle, dist) {
+				var feminine = Math.random() > 0.5,
+					height = THREE.Math.randFloat(0.5, 1),
+					applauder = new Mannequin(feminine, height);
+
+				applauder.position.x = dist * cos(angle + 180);
+				applauder.position.y += (-29.5 + 67.5 * height/2);
+				applauder.position.z = dist * sin(angle + 180);
+				applauder.turn = - angle;
+
+				var angle = Math.random() * 50 + 80;
+				applauder.l_elbow.bend = angle;
+				applauder.r_elbow.bend = angle;
+
+				if (feminine) {
+					applauder.l_wrist.bend = femaleClapAngle;
+					applauder.r_wrist.bend = femaleClapAngle;
+				} else {
+					applauder.l_wrist.bend = maleClapAngle;
+					applauder.r_wrist.bend = maleClapAngle;
+				}
+
+				return applauder;
+			}
+
+			function createApplaudersRow(dist) {
+				var n = Math.floor(dist * Math.PI * 2 * densityApplauders);
+				var offset = Math.random() / n  - 0.5 / n;
+				
+				var applaudersRow = [];	
+				for (var i=0; i<=n; i++) {
+					var angle = (offset + i / n + Math.random() / (2 * n)) * angleApplauders;
+					if (angle > 10 + angleApplauders || angle < -10) {
+						continue;
+					}
+
+					var applauder = createApplauder(angle, dist);
+					applaudersRow.push(applauder);
+				}
+
+				return applaudersRow;
+			}
+
+			var applauders = [];
+			var applaudersOffset = [];
+			var applaudersSpeed = [];
+
+			function createApplauders() {
+				Mannequin.colors = ['grey', 'grey', 'grey', 'grey', 'grey', 'grey'];
+
+				applauders = [];
+
+				for (var i=0; i<distsApplauderRows.length; i++) {
+					applauders = applauders.concat(createApplaudersRow(distsApplauderRows[i]))
+				}
+				setApplaudersSpeed();
+			}
+
+			function setApplaudersSpeed() {
+				for (var i=0; i<applauders.length; i++) {
+					applaudersOffset[i] = Math.random() * Math.PI * 2;
+					applaudersSpeed[i] = Math.random() * 3.5 + 3.5;
+				}
+			}
+
+			function animateApplauding(t) {
+				for (var i=0; i<applauders.length; i++) {
+					var clapAngle;
+					if (applauders[i].feminine) {
+						clapAngle = femaleClapAngle/2;
+					} else {
+						clapAngle = maleClapAngle/2;
+					}
+
+					var angle = clapAngle * Math.sin(applaudersSpeed[i] * t + applaudersOffset[i]) + clapAngle;
+					applauders[i].l_arm.turn = angle;
+					applauders[i].r_arm.turn = angle;
+				}
+			}
+
+			function createBall(col) {
+				var ball = new THREE.Mesh(new THREE.SphereGeometry( 1.5 ), new THREE.MeshPhongMaterial({color:col}));
+				ball.castShadow = true;
+				scene.add(ball);
+				
+				return ball;
+			}
+
+			function createBalls(cnt) {
+				var balls = []
+				for (var i = 0; i < cnt; i++) {
+					var ball = createBall(cols[i % cols.length]);
+					balls.push(ball);
+				}
+				return balls;
+			}
+
+			function animateHand(t, arm, elbow, offset) {
+				var time1 = Math.cos(3 * t + offset) / 3,
+					time2 = Math.sin(3 * t + offset) / 3;
+					
+				arm.straddle = time2 * 10;
+				arm.turn = 15 - 30 * time2;
+				elbow.bend = 40 - 60 * time1;
+			}
+
+			function animateHandL(t) {
+				animateHand(t, man.l_arm, man.l_elbow, 0);
+			}
+			function animateHandR(t) {
+				animateHand(t, man.r_arm, man.r_elbow, Math.PI/2);
+			}
+			function animateHandB(t) {
+				animateHandL(t);
+				animateHandR(t);
+			}
+
+			function getFallTime(vy0) {
+				return 2 * vy0 / g;
+			}
+
+			function getHoldPos(vx0, vy0) {
+				vx0 = Math.abs(vx0);
+				var ang = Math.atan2(-vx0, -vy0);
+				if (ang < - Math.PI / 2) {
+					ang = ang + 2 * Math.PI;
+				}
+				return ang;
+			}
+
+			function getFallRadius(vx0, vy0) {
+				return getFallTime(vy0) * vx0 / 2;
+			}
+
+			function getHoldRadius(vx0, vy0) {
+				return getFallRadius(vx0, vy0) / Math.cos(getHoldPos(vx0, -vy0));
+			}
+
+			function getHoldTime(vx0, vy0) {
+				var holdStart = getHoldPos(vx0, -vy0);
+				var holdStop = getHoldPos(vx0, vy0);
+				var v0 = Math.sqrt(vx0 * vx0 + vy0 * vy0);
+				return Math.abs(getHoldRadius(vx0, vy0)) * (holdStop - holdStart) / v0;
+			}
+
+			function getHoldSpeed(vx0, vy0) {
+				var v0 = Math.sqrt(vx0 * vx0 + vy0 * vy0);
+				return v0 / Math.abs(getHoldRadius(vx0, vy0));
+			}
+
+			function getPeriod(vx0, vy0) {
+				return getFallTime(vy0) + getHoldTime(vx0, vy0);
+			}
+
+			function animateOneHandBall(t, joints, ball, x0, y0, vx0, vy0) {
+				var fallTime = getFallTime(vy0);
+				var holdTime = getHoldTime(vx0, vy0);
+				var holdRadius = getHoldRadius(vx0, vy0);
+
+				t = t % getPeriod(vx0, vy0);
+
+				var offsetX, offsetY;
+				if (t < fallTime) {
+					offsetX = - getFallRadius(vx0, vy0) + vx0 * t;
+					offsetY = vy0 * t - t * t * g / 2;
+					ball.position.z = 9.7;
+				} else {
+					var holdStart = getHoldPos(vx0, -vy0);
+					var newTime = (t - fallTime) * getHoldSpeed(vx0, vy0) + holdStart;
+					offsetX = Math.cos(newTime) * holdRadius;
+					offsetY = Math.sign(vx0) * (- Math.sin(newTime) * holdRadius + Math.sin(holdStart) * holdRadius);
+					ball.position.z = joints[3].point(0, 0, 0).z + 1;
+				}
+				ball.position.x = x0 + offsetX;
+				ball.position.y = y0 + offsetY;
+			}
+
+			function animateOneHand(t, joints, numBalls, x0, y0, vx0, vy0) {
+				if (numBalls <= 0) {
+					return;
+				}
+
+				var period = getPeriod(vx0, vy0) / numBalls;
+				var holdTime = getHoldTime(vx0, vy0);
+				var moveTime = period - holdTime;
+				var holdRadius = getHoldRadius(vx0, vy0);
+				console.assert(moveTime > 0)
+
+				t = t % period;
+
+				var offsetX, offsetY;
+				if (t < moveTime) {
+					offsetX = - getFallRadius(vx0, vy0) + vx0 * t * getFallTime(vy0) / moveTime;
+					var moveStart = getHoldPos(vx0, vy0);
+					var moveStop = getHoldPos(vx0, -vy0) + 2 * Math.PI;
+					var upArc = (moveStop - moveStart);
+					var newTime = t * upArc / moveTime + moveStart;
+					offsetY = Math.sign(vx0) * (- Math.sin(newTime) * holdRadius + Math.sin(moveStop) * holdRadius);
+				} else {
+					var holdStart = getHoldPos(vx0, -vy0);
+					var newTime = (t - moveTime) * getHoldSpeed(vx0, vy0) + holdStart;
+					offsetX = Math.cos(newTime) * holdRadius;
+					offsetY = Math.sign(vx0) * (- Math.sin(newTime) * holdRadius + Math.sin(holdStart) * holdRadius);
+				}
+
+				offsetX *= Math.sign(vx0);
+
+				joints[0].turn = -9 + 5 * offsetX;
+				joints[1].bend = 90 + 5 * offsetY - offsetX * 0.4;
+				joints[2].turn = 90 - 2 * offsetX;
+				joints[3].bend = 15 - 4 * Math.min(offsetY, 0);
+			}
+
+			function animateOneHandBalls(t, joints, balls, x0, y0, vx0, vy0) {
+				animateOneHand(t, joints, balls.length, x0, y0, vx0, vy0);
+				for (var i = 0; i < balls.length; i++) {
+					animateOneHandBall(t + getPeriod(vx0, vy0) * i / balls.length, joints, balls[i], x0, y0, vx0, vy0);
+				}
+			}
+
+			function animateTwoHandEvenBalls(t, jointsL, jointsR, balls, x0, y0, vx0, vy0) {
+				var ballsL = [];
+				var ballsR = [];
+				for (var i = 0; i < balls.length; i++) {
+					if (i % 2 == 0) {
+						ballsL.push(balls[i]);
+					} else {
+						ballsR.push(balls[i]);
+					}
+				}
+				animateOneHandBalls(t, jointsL, ballsL, x0, y0, vx0, vy0);
+				if (synchroned == true) {
+					animateOneHandBalls(t, jointsR, ballsR, -x0, y0, -vx0, vy0);
+				} else {
+					animateOneHandBalls(t + getPeriod(vx0, vy0) / balls.length, jointsR, ballsR, -x0, y0, -vx0, vy0);
+				}
+			}
+
+			function animateTwoHandOddBalls(t, jointsL, jointsR, balls, x0, y0, vx0, vy0) {
+				// TO DO
+				for (var i = 0; i < balls.length; i++) {
+					animateTwoHandBall(t + getPeriod(vx0, vy0) * i / balls.length, balls[i], x0, y0, vx0, vy0);
+				}
+			}
+
+			function animateBallsMain(t, balls, numHands) {
+				var jointsL = [man.l_arm, man.l_elbow, man.l_wrist, man.l_fingers];
+				var jointsR = [man.r_arm, man.r_elbow, man.r_wrist, man.r_fingers];
+				var vx0 = baseVx0 / Math.sqrt(balls.length);
+				var vy0 = baseVy0 * Math.sqrt(balls.length);
+				if (numHands == 1) {
+					animateOneHandBalls(t, jointsL, balls, x0, y0, vx0, vy0);
+				} else if (numHands == 2 && balls.length % 2 == 0) {
+					animateTwoHandEvenBalls(t, jointsL, jointsR, balls, x0, y0, vx0, vy0);
+				} else if (numHands == 2 && balls.length % 2 == 1) {
+					animateTwoHandOddBalls(t, jointsL, jointsR, balls, x0, y0, vx0, vy0);
+				}
+			}
+
+			function animateApplause(person) {
+
+			}
+
+			function animate(_) {
+				var t = clock.getElapsedTime() * tSpeed;
+
+				var angle = t / 3;
+				var radius = 100;
+				var dist = 0;
+				spotLight.position.set( radius * Math.cos(angle), 300, dist + radius * Math.sin(angle) );
+				spotLight2.position.set( radius * Math.cos(angle + 2 * Math.PI / 3), 300, dist + radius * Math.sin(angle + 2 * Math.PI / 3) );
+				spotLight3.position.set( radius * Math.cos(angle + 4 * Math.PI / 3), 300, dist + radius * Math.sin(angle + 4 * Math.PI / 3) );
+
+				animateBallsMain(t, balls, numHands);
+				animateApplauding(t);
+			}
+		</script>
+	</body>
+</html>

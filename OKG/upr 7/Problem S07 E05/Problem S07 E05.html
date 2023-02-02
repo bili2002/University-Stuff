@@ -1,0 +1,71 @@
+﻿<html>
+	<head>
+		<style>
+			body { margin: 0; }
+			canvas { width: 100%; height: 100% }
+		</style>
+	</head>
+	<body>
+		<script src="three.min.js"></script>
+		<script>
+			// Задача: Направете топка да се движи на спираловиндо
+			// по протежението на тор
+			
+			
+			var renderer = new THREE.WebGLRenderer({antialias: true});
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			renderer.setAnimationLoop( drawFrame );
+			document.body.appendChild( renderer.domElement );
+			
+			// включваме генерирането на меки сенки
+			renderer.shadowMap.enabled = true;
+			renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+			var scene = new THREE.Scene();
+			scene.background = new THREE.Color( 'indigo' );
+			
+			var aspect = window.innerWidth/window.innerHeight;
+			var camera = new THREE.PerspectiveCamera( 30, aspect );
+			camera.position.set( 250, 80, 0 );
+			camera.lookAt( new THREE.Vector3());
+
+			
+			// създаване на топка
+			var ball = new THREE.Mesh(
+				new THREE.SphereGeometry( 6, 32, 32 ),
+				new THREE.MeshPhongMaterial( {color: 'red', shininess: 50, specular: 'white'} )
+			);
+			ball.castShadow = true;
+			scene.add( ball );
+
+
+			// създаване на тора
+			var ground = new THREE.Mesh(
+				new THREE.TorusGeometry( 40, 10, 64, 64 ),
+				new THREE.MeshPhongMaterial( {color: 'honeydew', shininess: 0, specular: 'white'} )
+			);
+			ground.receiveShadow = true;
+			scene.add( ground );
+		
+			
+			// светлина
+			var light = new THREE.PointLight();
+			light.castShadow = true;
+			scene.add( light );
+			
+			scene.add( new THREE.AmbientLight( 'navy', 0.2 ) );
+			
+			var clock = new THREE.Clock();
+			
+			function drawFrame()
+			{
+				var t = clock.getElapsedTime();
+				
+				scene.rotation.y += 0.01;
+				light.position.set( 100*Math.cos(scene.rotation.y-0.5), 30, 100*Math.sin(scene.rotation.y-0.5) );
+				
+				renderer.render( scene, camera );
+			}
+		</script>
+	</body>
+</html>

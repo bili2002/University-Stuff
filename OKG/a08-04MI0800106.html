@@ -1,0 +1,117 @@
+﻿<html>
+	<head>
+		<style>
+			body { margin: 0; }
+			canvas { width: 100%; height: 100% }
+		</style>
+	</head>
+	<body>
+		<script src="three.min.js"></script>
+		<script>
+			var renderer = new THREE.WebGLRenderer({antialias:true});
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			renderer.setAnimationLoop( drawFrame );
+			document.body.appendChild( renderer.domElement );
+
+			renderer.shadowMap.enabled = true;
+			renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+			var scene = new THREE.Scene();
+			scene.background = new THREE.Color( 'skyblue' );
+			
+			var aspect = window.innerWidth/window.innerHeight;
+			var camera = new THREE.PerspectiveCamera( 30, aspect );
+			camera.position.set( 0, 120, 200 );
+			camera.lookAt( new THREE.Vector3( 0, -10, 0 ) );
+
+			var cap = new THREE.Mesh(
+				new THREE.CylinderGeometry( 2, 3, 10, 32 ),
+				new THREE.MeshPhongMaterial( {color: 'brown', shininess: 10, specular: 'white', emissive: 'firebrick'} )
+			);
+			cap.position.set(0, -2, 0);
+			cap.rotation.set(0, 0, Math.PI);
+			cap.castShadow = true;
+			scene.add( cap );
+			
+			var material = new THREE.MeshPhongMaterial( {color: 'grey', shininess: 2, transparent: true, opacity: 0.9})
+			var group = new THREE.Group();
+			var bottleMain = new THREE.Mesh(new THREE.CylinderGeometry( 10, 10, 30, 32 ), material);
+			group.add( bottleMain );
+			
+			var bottleUp = new THREE.Mesh(new THREE.CylinderGeometry( 5, 5, 10, 32 ), material);
+			bottleUp.position.set(0, -20, 0);
+			group.add( bottleUp );
+			
+			group.position.set(0, -30, 0);
+			group.rotation.set(0, 0, Math.PI);
+			group.castShadow = true;
+			scene.add( group );
+
+			var light = new THREE.PointLight("white", 0.4, 400);
+			light.position.set( 20, 40, 0 );
+			light.castShadow = true;
+			
+			var lamp = new THREE.Mesh(
+				new THREE.BoxGeometry( 20, 10, 20 ),
+				new THREE.MeshPhongMaterial( {color: 'grey', shininess: 2, specular: 'white'} )
+			);
+			lamp.add(light);
+			lamp.position.set(20, 40, 0);
+			
+			scene.add(lamp);
+
+			var ground = new THREE.Mesh(
+				new THREE.BoxGeometry( 160.2, 2.2, 100.2 ),
+				new THREE.MeshPhongMaterial( {color: 'blue', shininess: 2, specular: 'white'} )
+			);
+			ground.position.y = -50;
+			ground.receiveShadow = true;
+			scene.add( ground );
+			
+			var v = new THREE.Vector3( 20, 40, 0 );
+			v.setLength( 0.5 );
+			
+			var maxY = 40 - 5 - 2.5;
+			var minY = -50 + 5 + 1.1;
+			
+			var maxX = 28;
+			
+			var up = true;
+			var rotating = false;
+			
+			function drawFrame()
+			{
+				scene.rotation.y += 0.001;
+			
+				if (!rotating) {
+					cap.position.add( v );
+					
+					if (up) {
+						cap.rotation.z -= Math.PI/500;
+					} else {
+						cap.rotation.z += Math.PI/500;
+					}
+							
+					if( cap.position.y >= maxY )
+					{
+						up = false;
+						v.y = -v.y;
+					}
+					if( cap.position.y <= minY )
+					{
+						rotating = true;
+						v = new THREE.Vector3( -1, 0, 0 );
+						v.setLength( 0.2 );
+					}
+				} else {
+					if (cap.position.x > maxX) {
+						cap.position.add(v);
+						cap.rotation.z += Math.PI/100;
+					}
+				}
+
+				renderer.render( scene, camera );
+			}
+		</script>
+	</body>
+</html>

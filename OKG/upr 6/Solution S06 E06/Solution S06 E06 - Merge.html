@@ -1,0 +1,91 @@
+﻿<html>
+	<head>
+		<style>
+			body { margin: 0; }
+			canvas { width: 100%; height: 100% }
+		</style>
+	</head>
+	<body>
+		<script src="three.min.js"></script>
+		<script src="BufferGeometryUtils.js"></script>
+		<script src="Stats.js"></script> <!-- Искаме малко статистики -->
+		<script>
+			// Задача: измерете скоростта на работа, когато
+			// графичните обекти са много и са като отделни
+			// обекти в рамките на един групов обект. После
+			// пак измерете скоростта, но при слети обекти в
+			// един единствен графичен обект.
+
+			
+			var renderer = new THREE.WebGLRenderer();
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			renderer.setAnimationLoop( drawFrame );
+			document.body.appendChild( renderer.domElement );
+
+			// Създаване на малко панелче със статистика на
+			// броя кадри в секунда и времето за генериране
+			// на един кадър
+			var stats = new Stats();
+			stats.showPanel( 0 ); // 0: fps, 1: ms, 2: mb, 3+: custom
+			document.body.appendChild( stats.dom );
+			
+			var scene = new THREE.Scene();
+			scene.background = new THREE.Color( 'gainsboro' );
+			
+			var aspect = window.innerWidth/window.innerHeight;
+			var camera = new THREE.PerspectiveCamera( 30, aspect );
+			camera.position.set( 0, 0, 140 );
+			camera.lookAt( new THREE.Vector3() );
+
+			var material = new THREE.MeshPhongMaterial( {color: 'steelblue'} );
+
+			// обект, в който всички сгради ще са слети в едно
+			
+			// брой обекти
+			var N = 8192;
+			var geometries = [];
+			for (var i=0; i<N; i++)
+			{
+				var geometry = new THREE.BoxGeometry( 1, 1, 30+20*Math.random() );
+				geometry.rotateX( 2*Math.PI*Math.random() );
+				geometry.rotateY( 2*Math.PI*Math.random() );
+				geometry.rotateZ( 2*Math.PI*Math.random() );
+				
+				// добавя се към масива от геометрии
+				geometries.push( geometry );
+			}
+			var planet = THREE.BufferGeometryUtils.mergeBufferGeometries( geometries );
+			
+			// до момента планетата е само форма (geometry)
+			// затова накрая все пак я правим на мрежа, за да
+			// ѝ сложим материал и за да я включим в сцената
+			planet = new THREE.Mesh( planet, material );
+			scene.add( planet );
+			
+			
+			// светлини
+			var light = new THREE.PointLight( 'white' );
+			light.position.set( 100, 50, 0 );
+			scene.add( light );
+			
+			light = new THREE.PointLight( 'white' );
+			light.position.set( -100, 50, 0 );
+			scene.add( light );
+			
+			function drawFrame()
+			{
+				scene.rotation.y += 0.01;
+				
+				// засичаме началото
+				stats.begin();
+				
+				// извършваме операцията, която измерваме -
+				// в случая това е генерирането на кадър
+				renderer.render( scene, camera );
+				
+				// засичаме края
+				stats.end();
+			}
+		</script>
+	</body>
+</html>

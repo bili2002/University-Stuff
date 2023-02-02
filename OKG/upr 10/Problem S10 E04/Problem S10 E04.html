@@ -1,0 +1,112 @@
+﻿<html>
+	<head>
+		<style>
+			body { margin: 0; }
+			canvas { width: 100%; height: 100% }
+		</style>
+	</head>
+	<body>
+		<script src="three.min.js"></script>
+		<script>
+			// Задача: намерете какво е "orbit controls" и го
+			// използвайте за въртене и мащабиране на сцената
+			// с мишката
+			
+	
+			var renderer = new THREE.WebGLRenderer({antialias:true});
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			renderer.setAnimationLoop( drawFrame );
+			document.body.appendChild( renderer.domElement );
+
+			var scene = new THREE.Scene();
+			scene.background = new THREE.Color( 0x101010 );
+			scene.fog = new THREE.Fog( 0x101010, 10, 100 );
+
+			var aspect = window.innerWidth/window.innerHeight;
+			var camera = new THREE.PerspectiveCamera( 30, aspect );
+			camera.position.set( 0, 0, 30 );
+
+			// основа
+			var base = new THREE.Mesh(
+				new THREE.PlaneGeometry( 140, 140 ),
+				new THREE.MeshPhongMaterial( {color: 0x202030, shininess: 70} )
+			);
+			base.lookAt( new THREE.Vector3( 0, 1, 0 ) );
+			base.position.y = -2;
+			scene.add( base );
+			
+			var N = 20; // брой топки
+			var balls = []; // масив с всички топки
+			var lights = []; // масив с всички светлини
+			
+			function rand(a,b)
+			{
+				var r = (Math.random()+Math.random())/2;
+				return a+(b-a)*r;
+			}
+			
+			// създаване на топките
+			var obj = new THREE.DodecahedronGeometry( 1 );
+			for( var i=0; i<N; i++ )
+			{
+				var color = new THREE.Color( rand(0,1), rand(0,1), rand(0,1) );
+				var material = new THREE.MeshPhongMaterial( {
+						color: color,
+						shininess: 200,
+						flatShading: true,
+						transparent: true,
+						opacity: 0.5,
+						side: THREE.DoubleSide
+					} );
+				
+				var ball = new THREE.Mesh( obj, material );
+				ball.position.set( rand(-10,10), 0, rand(-10,10) );
+				ball.offset = rand( 0, 2*Math.PI );
+				ball.speed = rand( 0.01, 0.02 );
+				
+				var s = Math.round( Math.random() );
+				ball.rot = new THREE.Vector3( s*Math.round(rand(1,5)), 0, (1-s)*Math.round(rand(1,5)) );
+				
+				balls.push( ball );
+				scene.add( ball );
+				
+				// всяка топка си има светлина
+				var light = new THREE.PointLight( color, 0.5 );
+				light.position.copy( ball.position );
+				lights.push( light );
+				scene.add( light );
+			}
+		
+			// общата светлина за сцената
+			var light = new THREE.HemisphereLight( 'white', 'black' );
+			scene.add( light );
+			
+			var t = 0;
+			function drawFrame()
+			{
+				t++;
+				
+				// топане (самото движение)
+				for( var i=0; i<N; i++ )
+				{
+					var s = balls[i].speed;
+					var o = balls[i].offset;
+					balls[i].position.y = Math.abs(8*Math.sin(t*s+o))-2+1/2;
+					lights[i].position.y = balls[i].position.y;
+					
+					balls[i].rotation.x = balls[i].rot.x*(t*s+o)/2;
+					balls[i].rotation.y = balls[i].rot.y*(t*s+o)/2;
+					balls[i].rotation.z = balls[i].rot.z*(t*s+o)/2;
+
+					if( Math.sign(Math.sin(t*s+o)) != Math.sign(Math.sin((t-1)*s+o)) )
+					{
+						var s = Math.round(Math.random());
+						balls[i].rot = new THREE.Vector3( s*Math.round(rand(1,5)), 0, (1-s)*Math.round(rand(1,5)) );
+					}
+				}
+		
+				renderer.render( scene, camera );
+			}
+		</script>
+	</body>
+</html>

@@ -1,0 +1,51 @@
+﻿<html>
+	<head>
+		<style>
+			body { margin: 0; }
+			canvas { width: 100%; height: 100% }
+		</style>
+	</head>
+	<body>
+		<script src="three.min.js"></script>
+		<script>
+			// Задача: конструирайте порцеланова чаша със
+			// загладени ръбове. 
+
+			
+			var renderer = new THREE.WebGLRenderer();
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			renderer.setAnimationLoop( drawFrame );
+			document.body.appendChild( renderer.domElement );
+
+			var scene = new THREE.Scene();
+			scene.background = new THREE.Color( 'pink' );
+			
+			var aspect = window.innerWidth/window.innerHeight;
+			camera = new THREE.PerspectiveCamera( 30, aspect );
+			camera.position.set( 0, 0, 10 );
+			camera.lookAt( new THREE.Vector3() );
+
+	
+			// начален стадий на чаша
+			var material = new THREE.MeshPhongMaterial( {color: 'purple',shininess: 100, specular: 'white'} );
+			var mug = new THREE.Mesh( new THREE.CylinderGeometry( 1.1, 1.1, 2.5, 40 ), material );
+			scene.add( mug );
+		
+			
+			var light = new THREE.PointLight();
+			light.position.set( 0, 5, 10 );
+			scene.add( light );
+			
+			
+			function drawFrame()
+			{
+				// въртим чашата
+				mug.rotation.x += 0.005;
+				mug.rotation.z = Math.sin(2*mug.rotation.x)/2;
+				mug.rotation.y += 0.003;
+				
+				renderer.render( scene, camera );
+			}
+		</script>
+	</body>
+</html>

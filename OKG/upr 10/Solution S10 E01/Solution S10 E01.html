@@ -1,0 +1,113 @@
+﻿<html>
+	<head>
+		<style>
+			body { margin: 0; }
+			canvas { width: 100%; height: 100% }
+		</style>
+	</head>
+	<body>
+		<script src="three.min.js"></script>
+		<script src="dat.gui.min.js"></script> <!-- зареждане на dat.GUI -->
+		<script>
+			// Задача: направете чрез dat.GUI възможност да
+			// се контролира както размерът, така и скоростта
+			// на въртене на N случайни кубчета
+			
+	
+			var renderer = new THREE.WebGLRenderer({antialias:true});
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			renderer.setAnimationLoop( drawFrame );
+			document.body.appendChild( renderer.domElement );
+
+			var scene = new THREE.Scene();
+
+			var aspect = window.innerWidth/window.innerHeight;
+			var camera = new THREE.PerspectiveCamera( 30, aspect );
+			camera.position.set( 0, 0, 20 );
+
+			var N = 200; // брой кубове
+			var speed = 1; // скорост
+			var cubes = []; // масив с всички кубове
+			
+			function rand(a,b)
+			{
+				// случайно число, което скупчва повечето 
+				// числа по средата на интервала [a,b], 
+				// докато по периферията са по-малко числа
+				var r = (Math.random()+Math.random()+Math.random()+Math.random())/4;
+				return a+(b-a)*r;
+			}
+			
+			// създаване на кубовете
+			var obj = new THREE.BoxGeometry(1 , 1, 1 );
+			for( var i=0; i<N; i++ )
+			{
+				var color = new THREE.Color( Math.random(), Math.random(), Math.random());
+				var material = new THREE.MeshPhongMaterial( {color: color, shininess: 100} );
+				
+				var cube = new THREE.Mesh( obj, material );
+				cube.position.set( rand(-10,10), rand(-10,10), rand(-10,10) );
+				cube.rotation.set( 10*Math.random(), 10*Math.random(), 10*Math.random() );
+				
+				cubes.push( cube );
+				scene.add( cube );
+			}
+		
+			// светлини
+			var light = new THREE.PointLight();
+			light.position.set( 0, 0, 10 );
+			scene.add( light );
+
+			light = new THREE.PointLight();
+			light.position.set( -10, 0, 0 );
+			scene.add( light );
+
+			light = new THREE.PointLight();
+			light.position.set( 10, 0, 0 );
+			scene.add( light );
+
+			// слагаме български текстове на бутона за
+			// отваряне и затваряне на панела
+			dat.GUI.TEXT_CLOSED = 'Затвори';
+			dat.GUI.TEXT_OPEN = 'Отвори';
+
+			// създаване на миниатюрния графичен интерфейс
+			// за интерактивна промяна както на размера,
+			// така и на скоростта на въртене на кубчетата
+			var params = {speed: 1, size: 1}; // параметри за контролиране
+			
+			// създаваме панела
+			var gui = new dat.GUI();
+			
+			// добавяме контроли за двата параметъра, като
+			// указваме съответното име от параметрите,
+			// позволеният диапазон на промяна и някакво
+			// човешко име - в резултат трябва да се създаде
+			// по един ред за всеки параметър, като този ред
+			// съдържа името, интерактивен слайд-бар и текстово
+			// поле за ръчна промяна на стойността
+			gui.add( params, 'speed', 0.3, 10 ).name( 'Скорост' );
+			gui.add( params, 'size', 0.2, 2 ).name( 'Размер' );
+			
+
+			function drawFrame()
+			{
+				// при всяко рисуване на кадър променяме
+				// размера и ориентацията на всички кубчета
+				// според текущите параметри в params
+				for (var i=0; i<N; i++)
+				{
+					cubes[i].rotation.x += params.speed*0.003;
+					cubes[i].rotation.y += params.speed*0.005;
+					cubes[i].rotation.z += params.speed*0.008;
+					
+					cubes[i].scale.x = params.size;
+					cubes[i].scale.y = params.size;
+					cubes[i].scale.z = params.size;
+				}
+				
+				renderer.render( scene, camera );
+			}
+		</script>
+	</body>
+</html>

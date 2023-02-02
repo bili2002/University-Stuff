@@ -1,0 +1,47 @@
+﻿<html>
+	<head>
+		<!-- С каскадни стилове - CSS (Cascading Style Sheets) се настройва
+			 рисувателното пле да покрива цялата страница на браузъра. -->
+		<style>
+			body { margin: 0; }
+			canvas { width: 100%; height: 100% }
+		</style>
+	</head>
+	<body>
+		<!-- Включване на библиотеката -->
+		<script src="three.min.js"></script>
+		<script>
+			// Рендиращият обект "проявява" всеки кадър
+			var renderer = new THREE.WebGLRenderer();
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			document.body.appendChild( renderer.domElement );
+				
+			// Сцената е глобалният обект, който обхваща всичко
+			var scene = new THREE.Scene();
+			
+			// Камерата определя гледната точка - слагаме я на координати
+			// (3,3,8) и я обръщаме към центъра на сцената
+			var aspect = window.innerWidth/window.innerHeight;
+			var camera = new THREE.PerspectiveCamera( 30, aspect );
+			camera.position.set( 3, 3, 8 );
+			camera.lookAt( new THREE.Vector3() );
+
+			// Обектите са "мрежи" (mesh) от елементи - за да направим обект,
+			// трябва да дефинираме неговата форма (geometry) и външен вид
+			// (material), а после и да го добавим в сцената
+			var geometry = new THREE.BoxGeometry( 2, 2, 2 );
+			var material = new THREE.MeshPhongMaterial();
+			var cube = new THREE.Mesh( geometry, material );
+			scene.add( cube );
+
+			// Чрез светлината се осветяват обектите, иначе няма да успеем
+			// да ги видим; светлината също се добавя към сцената
+			var light = new THREE.PointLight( );
+			light.position.set( 2, 2, 3 );
+			scene.add( light );
+
+			// Накрая предизвикваме самото рисуване на сцената, видяна през камерата
+			renderer.render( scene, camera );
+		</script>
+	</body>
+</html>

@@ -1,0 +1,61 @@
+﻿<html>
+	<head>
+		<style>
+			body { margin: 0; }
+			canvas { width: 100%; height: 100% }
+		</style>
+	</head>
+	<body>
+		<script src="three.min.js"></script>
+		<script src="CSG.js"></script> <!-- Включване на библиотека за CSG -->
+		<script>
+			// Задача: конструирайте цилиндрична тръба като
+			// стената ѝ има дебелина
+
+			
+			var renderer = new THREE.WebGLRenderer();
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			renderer.setAnimationLoop( drawFrame );
+			document.body.appendChild( renderer.domElement );
+
+			var scene = new THREE.Scene();
+			scene.background = new THREE.Color( 'lavenderblush' );
+			
+			var aspect = window.innerWidth/window.innerHeight;
+			camera = new THREE.PerspectiveCamera( 30, aspect );
+			camera.position.set( 0, 0, 16 );
+			camera.lookAt( new THREE.Vector3() );
+
+		
+			// Широк цилиндър (външната част на тръбата)
+			var outer = new THREE.Mesh( new THREE.CylinderGeometry( 1.5, 1.5, 7, 80 ) );
+			
+			// Тесен цилиндър, малко по-дълъг (дупката на тръбата)
+			var inner = new THREE.Mesh( new THREE.CylinderGeometry( 1, 1, 8, 80 ) );
+
+			var csg = new CSG();
+			csg.subtract( [outer, inner] );
+			
+			// Преобразуваме обратно BSP тръбата до Three.js тръба
+			var tube = csg.toMesh();
+			tube.material = new THREE.MeshLambertMaterial({color:'crimson'});
+			scene.add(tube);
+			
+			
+			var light = new THREE.PointLight();
+			light.position.set( 0, 5, 10 );
+			scene.add( light );
+			
+			
+			function drawFrame()
+			{
+				// въртим тръбата
+				tube.rotation.x += 0.005;
+				tube.rotation.y += 0.003;
+				tube.rotation.z += 0.010;
+				
+				renderer.render( scene, camera );
+			}
+		</script>
+	</body>
+</html>

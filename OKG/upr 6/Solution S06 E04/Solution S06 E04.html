@@ -1,0 +1,83 @@
+﻿<html>
+	<head>
+		<style>
+			body { margin: 0; }
+			canvas { width: 100%; height: 100% }
+		</style>
+	</head>
+	<body>
+		<script src="three.min.js"></script>
+		<script>
+			// Задача: направете геомаркер чрез плъзгане на
+			// форма. Геомаркерът да има кръгъл отвор.
+
+			
+			var renderer = new THREE.WebGLRenderer({antialias:true});
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			renderer.setAnimationLoop( drawFrame );
+			document.body.appendChild( renderer.domElement );
+
+			var scene = new THREE.Scene();
+			scene.background = new THREE.Color( 'crimson' );
+		
+			var aspect = window.innerWidth/window.innerHeight;
+			var camera = new THREE.PerspectiveCamera( 30, aspect );
+			camera.position.set( 0, 10, 100 );
+			camera.lookAt( new THREE.Vector3() );
+
+
+			// профил на геомаркер
+			var shape = new THREE.Shape();
+			shape.moveTo(  0, 0 );
+			shape.quadraticCurveTo(  4, 8, 0, 8.2 );
+			shape.quadraticCurveTo( -4, 8, 0, 0 );
+
+			// кръгла дупка в геомаркера
+			var hole = new THREE.Path();
+			hole.moveTo(  1.7, 6.1 );
+			hole.absarc( 0, 6.1, 1.7, 0, Math.PI*2, false );
+			shape.holes.push( hole );
+			
+			// създаване на 3D формата на геомаркера
+			var extrudeSettings = { depth: 1, bevelEnabled: true, bevelSegments: 2, steps: 2, bevelSize: 0.1, bevelThickness: 0.1, curveSegments: 60 };
+			var geometry = new THREE.ExtrudeGeometry( shape, extrudeSettings );
+			
+			// създаване на много геомаркери
+			for (var i=0; i<200; i++)
+			{
+				// геомаркер
+				var geoMarker = new THREE.Mesh( geometry, new THREE.MeshPhongMaterial( {specular: 'white'} ) );
+				geoMarker.position.set( 140*Math.random()-70, 0, 140*Math.random()-70 );
+				var scale = 1/2+Math.random();
+				geoMarker.scale.set( scale, scale, scale );
+				geoMarker.rotation.set( 0, 2*Math.PI*Math.random(), 0 );
+				scene.add( geoMarker );
+			}
+
+
+			// светлини
+			var light = new THREE.PointLight( 'dodgerblue', 0.75 ); // интензитет 0.75
+			light.position.set( 200, 50, 0 );
+			scene.add( light );
+			
+			light = new THREE.PointLight( 'dodgerblue', 0.75 ); // интензитет 0.75
+			light.position.set( -200, 50, 0 );
+			scene.add( light );
+			
+			light = new THREE.PointLight( 'hotpink', 0.75 ); // интензитет 0.75
+			light.position.set( 0, 50, 200 );
+			scene.add( light );
+			
+			light = new THREE.PointLight( 'fuchsia', 0.75 ); // интензитет 0.75
+			light.position.set( 0, 50, -200 );
+			scene.add( light );
+			
+			function drawFrame()
+			{
+				scene.rotation.y += 0.002;
+				
+				renderer.render( scene, camera );
+			}
+		</script>
+	</body>
+</html>
