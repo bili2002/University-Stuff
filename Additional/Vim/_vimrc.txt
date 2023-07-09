@@ -15,9 +15,7 @@ endfunction
 function! LeavingCmd()
   let excluded = index(g:excluded_commands, split(histget(':', -1))[0]) != -1
   if !excluded
-    let g:keystroke_count += g:temp_keystroke_count + 1
-  else 
-    let g:keystroke_count -= 1
+    let g:keystroke_count += g:temp_keystroke_count + 2
   endif
   
   let g:temp_keystroke_count = 0
@@ -27,7 +25,7 @@ endfunction
 augroup KeystrokeCounter
   autocmd!
   autocmd CmdlineChanged  * call KeystrokeCounterCommand()
-  autocmd CursorMoved,CursorMovedI,InsertEnter,CmdlineEnter * call KeystrokeCounter()
+  autocmd CursorMoved,CursorMovedI,InsertEnter * call KeystrokeCounter()
   autocmd CmdlineLeave * call LeavingCmd()
   autocmd ModeChanged *:[vV\x16]* call KeystrokeCounter()
   autocmd Modechanged [vV\x16]*:* call KeystrokeCounter()
@@ -71,9 +69,11 @@ function! LoadCopyFile(filename)
   let target_path_ks = target_directory . '/' . a:filename . "_ks"
 
   if filereadable(target_path)
-    silent execute 'edit! ' . target_path
 	let g:keystroke_count = str2nr(readfile(target_path_ks)[0])
 	
+    silent execute "normal! ggVGd"
+    call setline(1, readfile(target_path))
+
 	echohl MoreMsg
     echo 'Loaded checkpoint: ' . a:filename
     echohl None
