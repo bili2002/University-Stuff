@@ -1,0 +1,79 @@
+*ksc.txt* Keystroke Counter
+
+
+Author: Bilyana Indzheva
+For Vim version 9.0 and above
+Last change: July 9, 2023
+
+==============================================================================
+CONTENTS                                                     *ksc-contents*
+
+    1. Overview ................................. |ksc-overview|
+    2. Usage .................................... |ksc-usage|
+    3. Settings ................................. |ksc-settings|
+    4. Implementation ........................... |ksc-implementation|
+    5. Installation ............................. |ksc-installation|
+
+==============================================================================
+1. Overview					*ksc-overview*
+
+The Keystroke Counter (KSC) plugin counts your keystrokes in real time and displays them.
+It also allows you to |SaveCheckpoint| and |LoadCheckpoint|.
+
+==============================================================================
+2. Usage					*ksc-usage*
+
+The following commands are provided:
+
+:|SaveCheckpoint| [filename] - Saves a checkpoint (copy) of the current file to the hidden 
+								directory with the provided filename. It also saves the 
+								current keystroke count in a separate file.
+:|LoadCheckpoint| [filename] - Loads a checkpoint (copy) of a file from the hidden directory
+								with the provided filename. It replaces the content of 
+								the current file with the content of the loaded file and 
+								restores the saved keystroke count.
+:|GetCurrent| 			 	 - Displays the current keystrokes number.
+								
+==============================================================================
+3. Settings				 	*ksc-settings*
+
+:laststatus=2 - Always shows the status line at the bottom of the window.
+:statusline - Configures the status line to display the keystroke count.
+
+==============================================================================
+4. Implementation			*ksc-implementation*
+
+Variables:
+----------
+- g:keystroke_count: A global variable to store the total count of keystrokes.
+- g:temp_keystroke_count: A temporary variable to store the count of keystrokes during command-line mode.
+
+Functions:
+----------
+- KeystrokeCounterCommand(): A function called during command-line mode to increment the temporary keystroke count.
+- KeystrokeCounter(): A function called in other modes (normal, insert, visual) to increment the keystroke count.
+- LeavingCmd(): A function called when leaving command-line mode to update the total keystroke count.
+
+Autocommands:
+-------------
+- CmdlineChanged: Triggered when the command-line changes to call KeystrokeCounterCommand().
+- CursorMoved, CursorMovedI, InsertEnter: Triggered when the cursor moves or enters insert mode to call KeystrokeCounter().
+- CmdlineLeave: Triggered when leaving the command-line mode to call LeavingCmd().
+- ModeChanged, Modechanged: Triggered when entering or changing modes to call KeystrokeCounter().
+
+Commands:
+---------
+- *GetCurrent*: Displays the current value of the g:keystroke_count variable.
+- *SaveCheckpoint* [filename]: Saves a copy of the current file to the hidden directory with the provided filename. It also saves the current keystroke count in a separate file.
+- *LoadCheckpoint* [filename]: Loads a checkpoint (copy) of a file from the hidden directory with the provided filename. It replaces the content of the current file with the content of the loaded file and restores the saved keystroke count.
+
+Please note that the hidden directory used in the code is $HOME/.hidden_directory. Make sure to adjust the target directory path as per your requirements.
+
+
+==============================================================================
+5. Installation		   		*ksc-installation*
+
+
+1. Copy plugin/ksc.vim to your vimfiles/plugin folder
+2. Restart Vim or source the configuration file.
+3. You can now use the keystroke counter and checkpoint management commands.
