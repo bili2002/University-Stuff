@@ -49,6 +49,6 @@ int main() {
     int iter;
 
     std::cin >> n >> iter;
-    std::cout << (MillerRabin(n, iter) ? "prime" : "composite") << std::endl;
+    std::cout << (MillerRabin(n, iter) ? "probably prime" : "composite") << std::endl;
     return 0;
 }
