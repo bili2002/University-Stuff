@@ -10,7 +10,7 @@ int main(int argc, char *argv[]) {
 
     int port = std::atoi(argv[1]);
   
-    Server server(port);
+    ServerSelector server(port);
     server.start();
 
     return 0;
