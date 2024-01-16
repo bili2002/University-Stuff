@@ -58,6 +58,8 @@
         "variant": "cpp",
         "vector": "cpp",
         "algorithm": "cpp",
-        "chrono": "cpp"
+        "chrono": "cpp",
+        "set": "cpp",
+        "__tree": "cpp"
     }
 }

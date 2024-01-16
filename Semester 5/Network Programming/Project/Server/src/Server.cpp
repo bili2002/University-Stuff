@@ -104,6 +104,8 @@ void ServerParallel::clientHandler(const int new_socket) {
 
 
 /* ServerSelector */
+const int ServerSelector::MAX_CLIENTS = 4;
+
 void ServerSelector::handleSelectFD(int fd, fd_set& ready_fds) {
     if (FD_ISSET(fd, &ready_fds)) {
         if (fd == server_fd) {
@@ -118,14 +120,29 @@ void ServerSelector::handleSelectFD(int fd, fd_set& ready_fds) {
             fd_max = std::max(fd_max, client_fd);                    
             FD_SET(client_fd, &current_sockets);
         } else {
-            // Data to read
-            clientHandler(fd);
+            // Data to read 
+
+            // if we want one client at a time
+            // clientHandler(fd);
+
+            mtx.lock();
+            if (current_threads < MAX_CLIENTS && current_calc_fd.find(fd) == current_calc_fd.end()) {
+                current_calc_fd.insert(fd);
+                current_threads++;
+
+                std::thread clientThread = std::thread(&ServerSelector::clientHandler, this,  fd);
+                clientThread.detach();
+            }
+            mtx.unlock();
         }
     }
 }
 
 void ServerSelector::start() {
     setupServer();
+
+    current_threads = 0;
+    mtx.unlock();
 
     // Setuping socket sets
     FD_ZERO(&current_sockets);
@@ -187,4 +204,9 @@ void ServerSelector::clientHandler(const int new_socket) {
     }
 
     delete[] buffer;
+
+    mtx.lock(); 
+    current_calc_fd.erase(new_socket);
+    current_threads--;
+    mtx.unlock();
 }

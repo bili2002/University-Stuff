@@ -130,7 +130,7 @@ void Client::sendData() const {
     } else {
         std::string response(buffer);
         std::cout << "Received from server: ";
-        // std::cout << response << std::endl;
+        std::cout << response << std::endl;
     }
 
     delete[] buffer;

@@ -1,6 +1,8 @@
 #pragma once
 #include <string>
 #include <arpa/inet.h>
+#include <mutex>
+#include <set>
 
 class Server {
 public:
@@ -31,8 +33,14 @@ public:
     void start() override;
 
 protected:
+    static const int MAX_CLIENTS;
+    int current_threads;
+
     fd_set current_sockets;
     int fd_max;
+
+    std::mutex mtx;
+    std::set<int> current_calc_fd; 
     
     void handleSelectFD(int fd, fd_set& ready_fds);
     void clientHandler(const int new_socket) override;

@@ -6,7 +6,7 @@
 #include <utility>
 #include <chrono>
 
-const int ArrayProcessor::threadCount = 32;
+const int ArrayProcessor::threadCount = 4;
 
 ArrayProcessor::ArrayProcessor(const std::string& str) {
     parseArray(str);
