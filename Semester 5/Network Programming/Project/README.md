@@ -1,8 +1,14 @@
-Проектът се състои от следните части - Server, Client и Maketest (всяко във отделна папка).
 
-В класа за сървъра се пази дискриптора за сокет и struct sockaddr_in address. Може да отговаря на няколко клиента едновременно като създава нова нишка за всеки. 
-Самият сървър отговря на въпроса колко зони има в матрица с 0 и 1 като брои зоните от единици. Извършва се паралелно дфс, държим в стек върховете, които трябва да разгледаме и с мютекс предотвратяваме race conditioning.
+The project consists of three runnable parts - Server, Client and CreateTest each in a seperate folder. The server recieves an array from the client, sorts it multhithreadedly with merge sort and returns it to the client.
 
-Клиентът подава данните към сървъра, като може да се нагласи порта, IP-то и входния файл.
+The client-server communication is implemented with the Selector paradigm.
 
-В Timing.xlsx съм записала времета на изпълнение за различни нишки, като е измерено с time и е взето средното от 10 изпълнения.
+Also there is a comparison between the number of threads and the runtime of the communication, you can look at in Timing.xlsx.
+
+You can compile each part by using the Makefiles in the folders.
+
+To run the Server:
+```./Server [Port]```
+
+To run the Client:
+```./Client [FileWithData][Port][IP]```

@@ -1,5 +1,5 @@
 #include "Server.h"
-#include "MatrixProcessor.h"
+#include "ArrayProcessor.h"
 #include <iostream>
 #include <sys/socket.h>
 #include <netinet/in.h>
@@ -7,8 +7,8 @@
 #include <string.h>
 #include <thread>
 
-const int Server::MAXBUF = 5e5;
-
+const int Server::MAX_BUFF_SIZE = 5e8 + 100;
+const int Server::BUFF_STEP = 1e5;
 
 Server::Server(int serverPort) {
     // Creating socket file descriptor
@@ -40,6 +40,7 @@ void Server::stop() {
 }
 
 
+/* ServerParallel */
 void ServerParallel::start() {
     setupServer();
 
@@ -53,38 +54,56 @@ void ServerParallel::start() {
         std::cerr << "Connected" << std::endl;
         
         // Create a new thread for this client and detach it so it can operate independently
-        std::thread clientThread([this, new_socket]() { this->clientHandler(new_socket); });
+        std::thread clientThread = std::thread(&ServerParallel::clientHandler, this,  new_socket);
         clientThread.detach();
     }
 }
 
 void ServerParallel::clientHandler(const int new_socket) {
-    char buffer[MAXBUF] = {0};
+    char* buffer = new char[MAX_BUFF_SIZE];
     
-    // Read the incoming matrix
-    ssize_t bytesRead = recv(new_socket, buffer, MAXBUF, 0);
+    // Read the incoming array
+    int totalBytes = 0;
+    int newBytes = 0;
+    do {
+        newBytes = recv(new_socket, buffer + totalBytes, BUFF_STEP - totalBytes, 0);
+        totalBytes += newBytes;
+    }
+    while (newBytes > 0 && buffer[totalBytes - 1] != '\n');
 
-    if (bytesRead <= 0) {        
+    if (newBytes < 0) {   
+        delete[] buffer;
         throw std::runtime_error("Read failed");
     }
+    
+    auto arrayString = std::string(buffer);
 
-    auto strMatrix = std::string(buffer);
-
-    // Count the zones using MatrixProcessor
-    MatrixProcessor mp(strMatrix);
-    auto count = mp.countZones();
+    // Sort the array using ArrayProcessor
+    ArrayProcessor arrayProcessor(arrayString);
+    arrayProcessor.mergeSortZones();
     
     // Send the count back to the client
-    auto strCount = std::to_string(count);
-    if (send(new_socket, strCount.c_str(), strCount.size(), 0) == -1) {
-        std::cerr << "Couldn't send the message" << std::endl;
+    arrayString = arrayProcessor.getString();
+    auto arrayCstr = arrayString.c_str();
+
+    totalBytes = 0;
+    newBytes = 0;
+    do {
+        newBytes = send(new_socket, arrayCstr + totalBytes, std::min(BUFF_STEP, (int)strlen(arrayCstr) - totalBytes), 0);
+        totalBytes += newBytes;
+    }
+    while (newBytes > 0 && totalBytes < strlen(arrayCstr));
+
+    if (newBytes < 0) {
+        throw std::runtime_error("Send failed.");
     }
 
+    delete[] buffer;
     close(new_socket);
 }
 
 
-
+/* ServerSelector */
 void ServerSelector::handleSelectFD(int fd, fd_set& ready_fds) {
     if (FD_ISSET(fd, &ready_fds)) {
         if (fd == server_fd) {
@@ -100,8 +119,7 @@ void ServerSelector::handleSelectFD(int fd, fd_set& ready_fds) {
             FD_SET(client_fd, &current_sockets);
         } else {
             // Data to read
-            std::thread clientThread = std::thread(&ServerSelector::clientHandler, this,  fd);
-            clientThread.detach();
+            clientHandler(fd);
         }
     }
 }
@@ -128,26 +146,45 @@ void ServerSelector::start() {
 }
 
 void ServerSelector::clientHandler(const int new_socket) {
-    char buffer[MAXBUF] = {0};
+    char* buffer = new char[MAX_BUFF_SIZE];
     
-    // Read the incoming matrix
-    ssize_t bytesRead = recv(new_socket, buffer, MAXBUF, 0);
+    // Read the incoming array
+    int totalBytes = 0;
+    int newBytes = 0;
+    do {
+        newBytes = recv(new_socket, buffer + totalBytes, BUFF_STEP, 0);
+        totalBytes += newBytes;
+    }
+    while (newBytes > 0 && buffer[totalBytes - 1] != '\n');
 
-    if (bytesRead <= 0) {
+    if (totalBytes <= 0) {
+        delete[] buffer;
         shutdown(new_socket, 2);
         FD_CLR(new_socket, &current_sockets);
         return;
     }
 
-    auto strMatrix = std::string(buffer);
+    auto arrayString = std::string(buffer);
 
-    // Count the zones using MatrixProcessor
-    MatrixProcessor mp(strMatrix);
-    auto count = mp.countZones();
+    // Sort the array using ArrayProcessor
+    ArrayProcessor arrayProcessor(arrayString);
+    arrayProcessor.mergeSortZones();
     
     // Send the count back to the client
-    auto strCount = std::to_string(count);
-    if (send(new_socket, strCount.c_str(), strCount.size(), 0) == -1) {
-        std::cerr << "Couldn't send the message" << std::endl;
+    arrayString = arrayProcessor.getString();
+    auto arrayCstr = arrayString.c_str();
+
+    totalBytes = 0;
+    newBytes = 0;
+    do {
+        newBytes = send(new_socket, arrayCstr + totalBytes, std::min(BUFF_STEP, (int)strlen(arrayCstr) - totalBytes), 0);
+        totalBytes += newBytes;
     }
+    while (newBytes > 0 && totalBytes < strlen(arrayCstr));
+
+    if (newBytes < 0) {
+        throw std::runtime_error("Send failed.");
+    }
+
+    delete[] buffer;
 }

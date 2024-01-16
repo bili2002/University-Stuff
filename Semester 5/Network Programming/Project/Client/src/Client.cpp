@@ -9,6 +9,8 @@
 #include <iostream>
 #include <cstdlib>
 
+const int Client::MAX_BUFF_SIZE = 5e8 + 100;
+const int Client::BUFF_STEP = 1e5;
 const std::string Client::DefaultServerInfo = "inf/DefaultServerInfo.txt";
 
 Client::Client() {
@@ -99,23 +101,37 @@ void Client::sendData() const {
     std::string data;    
     getDataFromFile(data);
 
-    if (send(sock, data.c_str(), data.size(), 0) == -1) {
-        throw std::runtime_error("Send failed");
+    auto dataCstr = data.c_str();
+
+    int totalBytes = 0;
+    int newBytes = 0;
+    do {
+        newBytes = send(sock, dataCstr + totalBytes, std::min(BUFF_STEP, (int)strlen(dataCstr) - totalBytes), 0);
+        totalBytes += newBytes;
     }
+    while (totalBytes < strlen(dataCstr));
 
     std::cerr << "Data sent" << std::endl;
 
     // Buffer to hold the response
-    char buffer[1024] = {0};
+    char* buffer = new char[MAX_BUFF_SIZE];
 
     // Receive the response from the server
-    int bytesRead = recv(sock, buffer, sizeof(buffer) - 1, 0);
-    if (bytesRead < 0) {
+    totalBytes = 0;
+    newBytes = 0;
+    do {
+        newBytes = recv(sock, buffer + totalBytes, BUFF_STEP, 0);
+        totalBytes += newBytes;
+    }
+    while (newBytes > 0 && buffer[totalBytes - 1] != '\n');
+
+    if (newBytes < 0) {
         std::perror("recv failed");
-    } else if (bytesRead == 0) {
-        std::cout << "Connection closed by server" << std::endl;
     } else {
         std::string response(buffer);
-        std::cout << "Received from server: " << response << std::endl;
+        std::cout << "Received from server: ";
+        // std::cout << response << std::endl;
     }
+
+    delete[] buffer;
 }

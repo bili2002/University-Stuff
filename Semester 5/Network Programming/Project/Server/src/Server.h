@@ -10,7 +10,8 @@ public:
     virtual void start() = 0;
 
 protected:
-    static const int MAXBUF;
+    static const int MAX_BUFF_SIZE;
+    static const int BUFF_STEP;
 
     bool running;
     int server_fd;

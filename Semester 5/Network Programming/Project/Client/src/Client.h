@@ -14,6 +14,8 @@ public:
     void sendData() const;
 
 private:
+    static const int MAX_BUFF_SIZE;
+    static const int BUFF_STEP;
     static const std::string DefaultServerInfo;
 
     std::string dataFileName;
