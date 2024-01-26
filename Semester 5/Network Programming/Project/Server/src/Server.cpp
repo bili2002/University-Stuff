@@ -149,7 +149,7 @@ void ServerSelector::start() {
     FD_SET(server_fd, &current_sockets);
     fd_max = server_fd;
 
-    while (true) {
+    while (running) {
         fd_set ready_fds = current_sockets;
 
         if (select(fd_max + 1, &ready_fds, NULL, NULL, NULL) < 0) {

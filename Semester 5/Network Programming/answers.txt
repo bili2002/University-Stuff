@@ -1,0 +1,44 @@
+1. Технология клиент-сървър
+
+
+
+2. UDP сокети
+3. TCP сокети
+4. Winsock API
+
+5. Използване на сокети в Java
+- Как работят сокетите?
+- Разликата между UDP и TCP връзките в Java? a
+
+
+6. Remote Procedure Call
+- Какво е RPC?
+- Как работи?
+- Какво са stub-ове?
+
+
+7. Remote Method Invocation
+- Какво е RMI?
+- Как работи комуникацията?
+- Какво са stub-овете в Java?
+
+
+8. SGML, HTML и XML
+- Какво е SGML и какво се съдържа в документите?
+- Какво е HTML (спрямо SGML) и кога не бихме го ползвали?
+- Какво е XML и
+
+9 JavaScript
+10 Common Gateway Interface, FastCGI
+11 Internet Server API
+12 Java servlet
+13 Active Server Pages
+14 PHP
+15 Java Server Pages
+16 CORBA OMG
+17 Java Enterprise Edition
+18 Microsoft NET Framework
+19 Service-Oriented Architecture
+20 GRID технологии
+21 Облачни изчисления
+22 Архитектури на информационните системи
