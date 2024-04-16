@@ -1,0 +1,131 @@
+---
+title: "ВС практикум: Домашно задание 1"
+author: "Биляна Инджева"
+date: "`r format(Sys.time(), '%d.%m.%Y')`"
+output:
+  html_document:
+    theme: readable
+    df_print: paged
+    toc: false
+    toc_float: true
+    number_sections: false
+  pdf_document: default
+  word_document: default
+---
+
+### Задача 1
+
+Имаме $24$ ябълки, от които $4$ са червиви. Разпределяме ябълките в $4$ кутии, така че да са с равен брой ябълки. С помощта на симулации намерете приближение на вероятността във всяка кутия да има по една червива ябълка.
+
+##### Константи
+
+```{r}
+set.seed(42)
+
+total_apples <- 24
+n_red_apples <- 4
+n_non_red_apples <- total_apples - n_red_apples
+n_boxes <- 4
+n_simulations <- 10000
+
+red_apples_distribution <- integer()
+```
+
+##### Една симулация
+
+```{r}
+sim.apples <- function(n_red_apples, n_non_red_apples, n_boxes) {
+  apples <- c(rep(1, n_red_apples), rep(0, n_non_red_apples))
+  shuffled_apples <- sample(apples)
+  
+  boxes <- matrix(shuffled_apples, nrow=n_boxes)
+  red_apples_per_box <- apply(boxes, 1, sum)
+  
+  all(red_apples_per_box >= 1)
+}
+```
+
+##### Всички симулации
+
+```{r}
+prob.apples <- function(n_simulations, n_red_apples, n_non_red_apples, n_boxes) {
+  res <- replicate(n_simulations, sim.apples(n_red_apples, n_non_red_apples, n_boxes))
+  sum(res) / length(res)
+}
+```
+
+##### Отговор
+
+```{r}
+approx_probability <- prob.apples(n_simulations, n_red_apples, n_non_red_apples, n_boxes)
+print(approx_probability)
+```
+
+### Задача 2
+
+За $\,n=30, 120, 200\,$ генерирайте случайни числа $\,x_1, \ldots, x_n\,$ от експоненциално разпределение с параметър $\,\lambda=1/5\,$ и пресметнете $\,\overline{x} = (x_1 + \ldots + x_n)/n$. Повторете $\,N=10000\,$ пъти и ще получите $\,\overline{x}_1, \ldots, \overline{x}_{10000}$. Нека
+
+$$ \widehat{F}(t) = \frac{1}{N} \sum_{i=1}^{N} \mathbb{I}(\overline{x}_i \leq t) ,$$ където $\,\mathbb{I}(a)\,$ е единица, ако $\,a\,$ е вярно и нула, в противен случай.
+
+-   Направете графика на $\,\widehat{F}(t)$. Може да използвате функцията `plot(x, y, type="l")`.
+
+-   На същата картинка добавете графика на функцията на разпределение на $\,\mathcal{N}(\mu=5, \, \sigma=5/\sqrt{n})$. Двете графики трябва да са с различен цвят или едната да е с пунктирана линия.
+
+-   Трябва да получите три картинки -- по една за всяка стойност на $\,n$.
+
+
+##### Константи
+
+```{r}
+set.seed(42)
+
+lambda <- 1/5
+n_values <- c(30, 120, 200)
+n_simulation <- 10000
+```
+
+##### Симулация
+
+```{r}
+sim.n <- function(n, n_simulation, lambda) {
+  average_x <- numeric(n_simulation)
+  
+  for (i in 1:n_simulation) {
+    x <- rexp(n, rate=lambda)
+    average_x[i] <- mean(x)
+  }
+
+  list(t_values = sort(average_x), 
+       F_hat_values = seq_along(average_x) / n_simulation)
+}
+```
+
+
+##### Графика
+
+```{r}
+plot.n <- function(n, sim_res) {
+  plot(sim_res$t_values, sim_res$F_hat_values, type="l",
+       xlab="t", ylab="F(t)",
+       col="red", lwd=2)
+
+  F_values <- pnorm(sim_res$t_values, mean=5, sd=5/sqrt(n))
+  lines(sim_res$t_values, F_values, col="blue", lwd=2, lty="dashed")
+
+  legend("bottomright", legend=c("Our distribution", "Normal distribution"),
+         col=c("red", "blue"), lty=c(1,2))
+}
+```
+
+##### Отговор
+
+```{r}
+plot.simulation <- function(n_values, n_simulation, lambda) {
+  for (n in n_values) {
+    sim_res <- sim.n(n, n_simulation, lambda)
+    plot.n(n, sim_res)
+  }
+}
+
+plot.simulation(n_values, n_simulation, lambda)
+```
