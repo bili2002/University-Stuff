@@ -1,0 +1,367 @@
+1. Hello, world of concurrency in C++!
+
+Task switching 
+- One thread multiple jobs
+
+Concurrency 
+- Multiple threads and jobs
+
+Hardware concurrency 
+- Multicore
+
+Context switch 
+- When one thread changes its pointers for memory, functions and so on
+
+Hardware threads 
+- How many independant jobs can hardware run
+
+Multithread vs Multiprocess - pros and cons 
+- Pros for multiprocess: easy to implement and to handle
+- Cons for multiprocess: hard to communicate - can be done with signaling, sockets, files, pipes
+- Pros for multithread: easy communication - share the same global variables, pointers to data
+- Cons for multithread: hard to implement because of raceconditions, mutexes can slow down etc
+
+Why use concurrency? 
+- Two reasons: concerns and performance
+
+Task parallelism 
+- Different tasks for different thread and no communication is needed most of the time
+
+Data parallelism 
+- Seperating data into chunks or another way and processing it the same way but with different threads
+
+When not to use concurrency?
+- The gain may not be larger than the lost e.g. creating a thread takes a lot of time so the saved time may be less than that
+- Also if there are a lot of mutexes, the waiting time may be too long
+
+Using too many threads can exhaust the available memory or address space for a process, because each thread requires a separate stack space. This is particularly a problem for 32-bit processes with a flat architecture where there’s a 4 GB limit in the available address space: if each thread has a 1 MB stack (as is typical on many systems), then the address space would be all used up with 4096 threads, with- out allowing for any space for code or static data or heap data. Although 64-bit (or larger) systems don’t have this direct address-space limit, they still have finite resources: if you run too many threads, this will eventually cause problems. 
+
+RAII (resource acquisataion is initialized)
+Concurrency in C++98
+- Everything is low level, ahrd to implement and OS specific
+
+Concurrency in C++11
+- High level internal libraries that try to generilize for all OS and architecutres
+
+Abstraction penalty
+- Sometimes they me give you more functionally than you need in this case some functions may ignore this but others may slowed down
+- In the above case you may have implement it yourself, more low level
+
+Why use C++ Standard Library concurrency?
+- Easier to implement and more scalable 
+
+By its very nature, any operations performed using the native_handle() are entirely platform dependent and out of the scope of this book
+
+Simple example:
+- #include <thread>
+- std::thread t(funciton());
+- t.join();
+
+
+
+
+
+2. Managing threads
+
+Creating a thread with class with a function call operator
+- std::thread t1((class()))
+- std::thread t1{class()}
+
+Creating a thread with lambda function
+- std::thread t([x]{f(x)}) 
+- should be detached or joined
+
+Copy data to thread - pros 
+- if object is destroyed, the program won't be terminated
+
+t.join()
+- waits for the thread to be joined
+
+t.detach()
+- doesn't wait for the thread
+
+t.joinable()
+- check if the thread can be joined, if the above are used it will return false
+
+Using RAII to wait for a thread to complete
+- create a class as a thread manager, in its destructor add a join
+
+Daemon thread
+- detached thread
+
+Passing arguments to a thread function
+- std::thread t1(func, arg1, arg2)
+
+Passing reference to a thread function
+- std::thread t1(func, arg1, std::ref(arg2))
+
+Passing a function of a class to a thread function
+- std::thread t1(X::func, X_instance)
+
+Passing non-copyable argument to a thread function
+- std::thread t1(func, std::move(unique_pointer))
+
+std::ref()
+- pass a reference
+
+std::move()
+- moves ownership
+
+std::bind()
+- for a given function, fill some arguments and leave others to be filled
+- f2 = std::bind(func, _2, "tge", _1, arg)
+- f2("arg3", 5)
+- this will call func(5, "tge", "arg3", arg)
+
+Transferring ownership of a thread
+- auto t3 = std::move(t1)
+
+Returning a std::thread from a function
+- this is also valid it will do a move
+
+Spawn some threads and wait for them to finish
+- std::vector<std::thread> vt;
+- std::for_each(vvt.begin(), vt.end(), std::mem_fn(&std::thread::join));
+
+std::mem_fn()
+- Apply a function for a pointer
+- auto temp = mem_fn(X::do_sth())
+- temp(X_instance)
+
+std::thread::hardware_ concurrency()
+- Get the number of thread your hardware can support
+
+std::accumulate()
+- Do binary operation in range with initialize value
+- std::accumulate(v.begin(), v.end(), 0, op)
+
+std::advance()
+- For iterator ++ N times 
+- std::advance(ptr, n)
+
+std::this_thread::get_id()
+- Gets the id of the current thread, can be used for logging
+
+
+
+
+
+3. Sharing data between threads
+
+race condition
+- When two threads try writing (or writing and reading) at the same data at the same time
+
+lock-free programming
+- Multithreaded code without mutexes or locks, this can be done with better design choices
+
+STM (software transactional memory)
+- Transactional log is storred for the changes of the structure
+
+mutex
+- Mutex can be locked or unlocked to help with the synchronization of threads
+
+deadlock
+- If for example mutex A unlocks B and B unlocks A, however they are both locked
+
+std::lock_guard
+- std::lock_guard<std::mutex> lg(mt);
+- that would lock mt and it would be unlocked at lg destructor
+
+The below are ways to handle stack structure:
+
+Problem with passing a references
+- You have to first construct the member which can be expensive
+
+std::is_nothrow_copy_constructible
+- Checks if the copy constructor doesn't throw an error
+- std::is_nothrow_copy_constructible<S>
+
+std::is_nothrow_move_constructible
+- Same
+
+Stack shared_pointer implementation
+- Return a shared pointer but this is more memory than required
+
+fine granularity
+- Protects small parts of the data
+
+std::lock()
+- std::lock(mt)
+- Locks the mutex
+
+std::adopt_lock
+- A parameter for lock_guard that says that the mutex is already locked
+- std::lock_guard<std::mutex> lg(mt, std::adopt_lock)
+
+hierarchical_mutex
+- Each mutex had a hierarchical value
+- If a lock with lower value is locked and you try to lock one with higher value, it will throw an error
+- hierarchical_mutex high_level_mutex(10000)
+
+AVOID NESTED LOCKS
+- Can lead to deadlock
+
+AVOID CALLING USER-SUPPLIED CODE WHILE HOLDING A LOCK
+- It may not be able to stop, and again a deadlock can happen if that part of the program expects for the thread to finish safily 
+
+ACQUIRE LOCKS IN A FIXED ORDER
+- Easier to mantain
+
+USE A LOCK HIERARCHY
+- as above
+
+unlock()
+try_lock()
+
+std::unique_lock
+- as lock_guard but can be unlocked
+
+std::defer_lock
+- Parameter for unique_lock to show that mutex would remain unlocked
+
+owns_lock()
+- For unique_lock to check whether it owns the lock, otherwise it cannot unlock
+
+Transferring mutex ownership between scopes
+- You can return mutex
+
+Thread-safe lazy initialization using a mutex
+- Lock before checking if initialized
+
+std::once_flag 
+std::call_once
+- std::once_flag of;
+- std::call_once(of, func)
+
+Protecting rarely updated data structures
+- boost::shared_mutex
+
+std::recursive_mutex
+- Don't use it
+
+
+
+
+4. Synchronizing concurrent operations
+std::condition_variable
+-  Can be used to notify another thread that it can continue, instead of doing a while loop with mutex
+
+std::condition_variable_any
+- Can also work with shared_mutex
+
+std::condition_variable::notify_one()
+std::condition_variable::wait()
+- cv.wait(lg, []{predicate})
+- cv.notify_one()
+- When notified it will check the predicate and if true continue
+
+Building a thread-safe queue with condition variables
+- on push notify and on wait_pop wait
+
+std::future<>
+- A calculation that may be claculated in the future
+
+std::shared_future<>
+- With shared_ptr
+
+std::async
+- Given a function create a "pointer" saying it will be calculated
+- std::future<int> fut = std::async(func)
+
+std::future<>::get
+- Gets the value of the future
+- fut.get()
+
+std::launch::deferred
+- Is not calcualted until wait or get is called
+
+std::launch::async
+- Launched new thread to calculate it
+
+std::packaged_task<>
+std::packaged_task<>::get_future()
+Running code on a GUI thread using std::packaged_task
+- Holds functions that are to be calculated
+- std::packaged_task<void()> task(f);
+- res = task.get_future()
+- do_sth_with_task()
+- return res
+
+
+std::promise<>
+std::promise<>::get_future()
+std::promise<>::set_value()
+std::promise<>::set_exception()
+- std::promise<payload_type>& p = get_promise(id)
+- p.set_value(5)
+- Now the future of p has the value of the calculation
+
+-https://stackoverflow.com/questions/17729924/when-to-use-promise-over-async-or-packaged-task
+
+std::fucture<>::valid()
+- Checks if the future is valid and its value is not muved e.g.
+
+std::shared_future<>
+- Like shared_ptr may have multiple references
+
+std::future<>::share()
+- Gives you shared_future
+
+std::condition_variable::wait_for()
+std::condition_variable::wait_until()
+- Waits until the predicate or until the time 
+
+std::chrono::system_clock::now() 
+- Returns the current time
+
+std::chrono::system_clock::is_steady
+- Steady means it has a tack every X seconds and the above checks if the times is steady
+
+std::chrono::steady_clock
+- Steady clock
+
+std::chrono::high_resolution_clock
+- Clock that have high detail
+
+std::chrono::duration<>
+- First is the type, then is how often it changes
+- std::chrono::duration<int, ratio(60, 1)>
+
+std::chrono::duration_cast<>
+- e.g. change miliseconds to seconds etc
+
+std::chrono::time_point<>
+
+std::timed_mutex
+std::recursive_timed_mutex
+- These also count time
+
+std::timed_mutex::try_lock_for()
+std::timed_mutex::try_lock_until()
+- If not unlocked until the time, it will become unlocked
+
+Functional programming with futures
+
+
+
+
+
+5. The C++ memory model and operations on atomic types
+
+atomic operation
+std::atomic_flag
+std::atomic_flag::clear(flag)
+std::atomic_flag::test_and_set()
+
+std::memory_order_release
+std::memory_order_acquire
+
+std::atomic<> can be not lock free
+
+std::atomic<>::load
+std::atomic<>::store
+std::atomic<>::exchange
+std::atomic<>::compare_exchange_weak
+std::atomic<>::compare_exchange_strong
+
+std::atomic<T*>
