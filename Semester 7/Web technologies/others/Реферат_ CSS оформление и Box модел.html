@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<!-- saved from url=(0087)https://w23ref.w3c.fmi.uni-sofia.bg/referat/85611_1_4/index.php?action=view&back=review -->
+<html lang="bg"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="./Реферат_ CSS оформление и Box модел_files/main.css" rel="stylesheet">
+    <title>Реферат: CSS оформление и Box модел</title>
+<script src="./Реферат_ CSS оформление и Box модел_files/jquery.min.1.7.1.js" type="text/javascript"></script><style type="text/css">/* background-image: unset; padding: unset; span:not([data-htextrainfo]), div:not([data-htextrainfo]) { padding: 0; height: auto; width: auto; margin: 0; border-radius: 0; border: none; background: none; } //not working span:not([data-htextrainfo]), div:not([data-htextrainfo]), div:not([data-htextrainfobo]), not(.__ht__blockquote) { padding: 2; height: auto; width: auto; margin: 0; border-radius: 0; border: none; background: none; } background-image: url("../img/background.png"); background-repeat: repeat; background-size: 100%; */ span:not([data-htextrainfo]), div:not([data-htextrainfo]) { padding: 0; height: auto; width: auto; margin: 0; border-radius: 0; border: none; background: none; font-family: "Helvetica", cursive; } .__ht__btn { border-radius: 3px; padding: 3px 7px; text-decoration: none; color: #fff; position: relative; display: inline-block; } .__ht__btn:active { transform: translate(0px, 5px); -webkit-transform: translate(0px, 5px); box-shadow: 0px 1px 0px 0px; } .__ht__green { background-color: #2ecc71; box-shadow: 0px 3px 0px 0px #15B358; } .__ht__green:hover { background-color: #48E68B; } .__ht__red { background-color: #e74c3c; box-shadow: 0px 3px 0px 0px #CE3323; } .__ht__red:hover { background-color: #FF6656; } .__ht__orange { background-color: #e67e22; box-shadow: 0px 3px 0px 0px #CD6509; } .__ht__orange:hover { background-color: #FF983C; } div.__ht__blockquote { border-left: 1px solid #ccc; border-left: 10px solid #ccc; margin: 1.5em 10px; padding: 0.5em 10px; } div.__ht__blockquote p { display: inline; } .#__ht__elementcomment, #__ht__score, #__ht__finalcomment { color: black; } .__ht__bottomPadding{ padding-bottom: 155px; }</style></head>
+<body data-new-gr-c-s-check-loaded="14.1209.0" data-gr-ext-installed="">
+    <div class="navigation" data-htextrainfo="1">
+        <ul data-htextrainfo="2">
+            <li data-htextrainfo="3"><a href="https://w23ref.w3c.fmi.uni-sofia.bg/referat/85611_1_4/index.php?action=view&amp;back=review#intro" data-htextrainfo="4">Увод</a></li>
+            <li data-htextrainfo="5"><a href="https://w23ref.w3c.fmi.uni-sofia.bg/referat/85611_1_4/index.php?action=view&amp;back=review#layout" data-htextrainfo="6">CSS оформление</a></li>
+            <li data-htextrainfo="7"><a href="https://w23ref.w3c.fmi.uni-sofia.bg/referat/85611_1_4/index.php?action=view&amp;back=review#box-model" data-htextrainfo="8">Box модел</a></li>
+            <li data-htextrainfo="9"><a href="https://w23ref.w3c.fmi.uni-sofia.bg/referat/85611_1_4/index.php?action=view&amp;back=review#sources" data-htextrainfo="10">Източници</a></li>
+        </ul>
+    </div>
+    <main data-htextrainfo="11">
+        <header data-htextrainfo="12">
+            <h1 data-htextrainfo="13">CSS оформление и Box модел</h1>
+        </header>
+
+        <section id="intro" data-htextrainfo="14">
+            <h2 data-htextrainfo="15">Увод</h2>
+            <p data-htextrainfo="16">CSS (Cascading Style Sheets) е основен инструмент за оформление на уеб страници. Той позволява стилове като цветове, шрифтове, разстояния и позициониране на елементите да бъдат зададени, за да се подобри визуалното въздействие и функционалността на уебсайта.</p>
+        </section>
+
+        <section id="layout" data-htextrainfo="17">
+            <h2 data-htextrainfo="18">CSS оформление</h2>
+            <p data-htextrainfo="19">CSS оформлението на уебсайта играе решаваща роля при определянето на неговата <b data-htextrainfo="20">визуална структура</b>, <b data-htextrainfo="21">организация</b> и <b data-htextrainfo="22">отзивчивост</b> при проектирането на уебсайт. В тозо реферат ще покажа различни CSS техники за създаване на ефективни оформления на уебсайтове с CSS.</p>
+            <p data-htextrainfo="23">Един уебсайт може да бъде разделен на различни секции, състоящи се от заглавка, менюта, съдържание и долен колонтитул, въз основа на които има много различни дизайни на оформление, достъпни за разработчиците. Различни оформления могат да бъдат създадени чрез използване на div таг и използване на CSS свойство за стилизиране.</p>
+        </section>
+
+        <section id="box-model" data-htextrainfo="24">
+            <h2 data-htextrainfo="25">Box модел</h2>
+            <p data-htextrainfo="26">CSS Box Model е основен концепт, който обяснява как елементите в уеб страница се разглеждат като правоъгълни кутии и как браузърът изчислява размерите им. Тази концепция е критична за разбирането и изграждането на всякакви уеб оформления, като предоставя контрола върху пространствата между елементите и визуалните им граници.</p>
+            
+            <div style="text-align: center; margin: 20px 0;" data-htextrainfo="27">
+                <img src="./Реферат_ CSS оформление и Box модел_files/box_model.png" alt="Диаграма на CSS Box Model" style="max-width: 70%; height: auto;" data-htextrainfo="28">
+                <p data-htextrainfo="29"><em data-htextrainfo="30">Фигура 1: Компоненти на Box Model [<a href="https://w23ref.w3c.fmi.uni-sofia.bg/referat/85611_1_4/index.php?action=view&amp;back=review#sources" data-htextrainfo="31">1</a>]</em></p>
+            </div>
+
+            <div id="box-model-components" data-htextrainfo="32">
+                <h3 data-htextrainfo="33">Основни компоненти на Box Model</h3>
+                <ol data-htextrainfo="34">
+                    <li data-htextrainfo="35">
+                        <strong data-htextrainfo="36">Content (Съдържание)</strong>
+                        <p data-htextrainfo="37">Това е вътрешната част на елемента, която съдържа текста, изображенията или другите медии. Това е ядрото на кутията, което се определя от свойствата <span class="code-highlight" data-htextrainfo="38">width</span> (ширина) и <span class="code-highlight" data-htextrainfo="39">height</span> (височина).</p>
+                        <ul data-htextrainfo="40">
+                            <li data-htextrainfo="41">
+                                <strong data-htextrainfo="42">Свойства:</strong>
+                                <ul data-htextrainfo="43">
+                                    <li data-htextrainfo="44"><span class="code-highlight" data-htextrainfo="45">width</span>: Задава ширината на съдържанието, но не включва padding, border или margin.</li>
+                                    <li data-htextrainfo="46"><span class="code-highlight" data-htextrainfo="47">height</span>: Задава височината на съдържанието.</li>
+                                </ul>
+                            </li>
+                            <li data-htextrainfo="48">
+                                <strong data-htextrainfo="49">Бележки:</strong>
+                                <p data-htextrainfo="50">Ако размерите не са зададени (например<span class="code-highlight" data-htextrainfo="51">width: auto</span>), браузърът автоматично ще изчисли ширината на елемента според съдържанието.</p>
+                            </li>
+                            <li data-htextrainfo="52">
+                                <strong data-htextrainfo="53">Пример:</strong>
+                                <br data-htextrainfo="54">
+                                <div class="code-highlight-examle" data-htextrainfo="55">
+                                    <pre data-htextrainfo="56">div {
+    width: 200px;
+    height: 100px;
+}</pre>
+                                </div>
+                                <p data-htextrainfo="57">Това създава кутия със съдържание, което е точно 200px по ширина и 100px по височина.</p>
+                            </li>
+                        </ul>
+                    </li>
+                    <li data-htextrainfo="58">
+                        <strong data-htextrainfo="59">Padding (Подложка)</strong>
+                        <p data-htextrainfo="60">Пространството между съдържанието и границата на елемента. Padding увеличава вътрешното разстояние и добавя визуално пространство около съдържанието.</p>
+                        <ul data-htextrainfo="61">
+                            <li data-htextrainfo="62">
+                                <strong data-htextrainfo="63">Свойства:</strong> 
+                                <ul data-htextrainfo="64">
+                                    <li data-htextrainfo="65"><spam class="code-highlight" data-htextrainfo="66">padding-top:</spam> Разстояние отгоре.</li>
+                                    <li data-htextrainfo="67"><spam class="code-highlight" data-htextrainfo="68">padding-right:</spam> Разстояние отдясно.</li>
+                                    <li data-htextrainfo="69"><spam class="code-highlight" data-htextrainfo="70">padding-bottom:</spam> Разстояние отдолу.</li>
+                                    <li data-htextrainfo="71"><spam class="code-highlight" data-htextrainfo="72">padding-left:</spam> Разстояние отляво.</li>
+                                    <li data-htextrainfo="73"><spam class="code-highlight" data-htextrainfo="74">padding</spam> Кратка нотация за задаване на всички страни наведнъж.</li>
+                                </ul>
+                            </li>
+                            <li data-htextrainfo="75">
+                                <strong data-htextrainfo="76">Бележки:</strong>
+                                <p data-htextrainfo="77">Padding може да бъде оцветен с фона на елемента и е важен за създаване на по-четливи и визуално приятни разстояния около съдържанието.</p>
+                            </li>
+                            <li data-htextrainfo="78">
+                                <strong data-htextrainfo="79">Пример:</strong>
+                                <br data-htextrainfo="80">
+                                <div class="code-highlight-examle" data-htextrainfo="81">
+                                    <pre data-htextrainfo="82">div {
+    padding: 20px;
+    background-color: lightblue;
+ }</pre>
+                                </div>
+                                <p data-htextrainfo="83">
+                                    Този код създава подложка от 20px от всички страни.
+                                </p>
+                            </li>
+                        </ul>
+                    </li>
+                    <li data-htextrainfo="84">
+                        <strong data-htextrainfo="85">Border (Граница)</strong>
+                        <p data-htextrainfo="86">Границата е рамката около padding и съдържанието. Тя придава визуален акцент и може да се стилизира по различни начини.</p>
+                        <ul data-htextrainfo="87">
+                            <li data-htextrainfo="88">
+                                <strong data-htextrainfo="89">Свойства:</strong> 
+                                <ul data-htextrainfo="90">
+                                    <li data-htextrainfo="91"><spam class="code-highlight" data-htextrainfo="92">border-width:</spam> Дебелината на границата.</li>
+                                    <li data-htextrainfo="93"><spam class="code-highlight" data-htextrainfo="94">border-style:</spam> Типът линия (напр. <spam class="code-highlight" data-htextrainfo="95">solid</spam>, <spam class="code-highlight" data-htextrainfo="96">dashed</spam>, <spam class="code-highlight" data-htextrainfo="97">dotted</spam>).</li>
+                                    <li data-htextrainfo="98"><spam class="code-highlight" data-htextrainfo="99">border-color:</spam> Цветът на границата.</li>
+                                    <li data-htextrainfo="100"><spam class="code-highlight" data-htextrainfo="101">border:</spam> Комбинирано свойство за задаване на всичките три по-горе.</li>
+                                </ul>
+                            </li>
+                            <li data-htextrainfo="102">
+                                <strong data-htextrainfo="103">Бележки:</strong> 
+                                <p data-htextrainfo="104">Границата може да бъде зададена индивидуално за всяка страна (напр. <spam class="code-highlight" data-htextrainfo="105">border-top</spam>) или наведнъж.</p>
+                            </li>
+                            <li data-htextrainfo="106">
+                                <strong data-htextrainfo="107">Пример:</strong>
+                                <br data-htextrainfo="108">
+                                <div class="code-highlight-examle" data-htextrainfo="109">
+                                    <pre data-htextrainfo="110">div {
+    border: 2px solid #000;
+}</pre>
+                                </div>
+                                <p data-htextrainfo="111">Този код създава граница с дебелина 2px, солидна линия и черен цвят.</p>
+                            </li>
+                        </ul>
+                    </li>
+                    <li data-htextrainfo="112">
+                        <strong data-htextrainfo="113">Margin (Външно отстояние)</strong>
+                        <p data-htextrainfo="114">Пространството между елемента и съседните елементи.</p>
+                        <ul data-htextrainfo="115">
+                            <li data-htextrainfo="116">
+                                <strong data-htextrainfo="117">Свойства:</strong> 
+                                <ul data-htextrainfo="118">
+                                    <li data-htextrainfo="119"><spam class="code-highlight" data-htextrainfo="120">margin-top:</spam> Разстояние над елемента.</li>
+                                    <li data-htextrainfo="121"><spam class="code-highlight" data-htextrainfo="122">margin-right:</spam> Разстояние вдясно.</li>
+                                    <li data-htextrainfo="123"><spam class="code-highlight" data-htextrainfo="124">margin-bottom:</spam> Цветът на границата.</li>
+                                    <li data-htextrainfo="125"><spam class="code-highlight" data-htextrainfo="126">margin-left:</spam> Разстояние вляво.</li>
+                                    <li data-htextrainfo="127"><spam class="code-highlight" data-htextrainfo="128">margin</spam> Кратка нотация за задаване на всички страни наведнъж.</li>
+                                </ul>
+                            </li>
+                            <li data-htextrainfo="129">
+                                <strong data-htextrainfo="130">Бележки:</strong> 
+                                <p data-htextrainfo="131">Margin не може да има фон или съдържание. Това пространство често се използва за отделяне на елементите един от друг.</p>
+                            </li>
+                            <li data-htextrainfo="132">
+                                <strong data-htextrainfo="133">Пример:</strong>
+                                <br data-htextrainfo="134">
+                                <div class="code-highlight-examle" data-htextrainfo="135">
+                                    <pre data-htextrainfo="136">div {
+    margin: 10px;
+}</pre>
+                                </div>
+                                <p data-htextrainfo="137">Това добавя външно разстояние от 10px от всички страни.</p>
+                            </li>
+                        </ul>
+                    </li>
+                </ol>
+            </div>
+            <div id="box-model-components" data-htextrainfo="138">
+                <h3 data-htextrainfo="139">Оразмеряване на кутията</h3>
+                <p data-htextrainfo="140">В CSS, точният размер на елемента се определя не само от зададените стойности на ширина (width) и височина (height), но и от допълнителните компоненти на Box Model като граници, вътрешни отстояния (padding) и външни отстояния (margin). За по-добро управление на тези размери, свойството box-sizing в CSS3 променя начина, по който браузърът изчислява размерите на елементите.</p>
+                <div class="box-submodel" data-htextrainfo="141">
+                <strong data-htextrainfo="142">Пример:</strong>
+                <br data-htextrainfo="143">
+                <div class="code-highlight-examle" data-htextrainfo="144">
+                    <pre data-htextrainfo="145">div {
+    width: 400px;
+    padding: 20px;
+    border: 10px solid;
+    margin: 0;
+}</pre>
+                </div>
+                <p data-htextrainfo="146">Обща ширина=0px(margin-left)+10px(border-left)+20px(padding-left)+400px(width)+20px(padding-right)+10px(border-right)+0px(margin-right)</p>
+                <strong data-htextrainfo="147">Видове стойности, които може да приеме <span class="code-highlight" data-htextrainfo="148">box-sizing</span>:</strong>
+                <ol data-htextrainfo="149">
+                    <li data-htextrainfo="150">
+                        <strong data-htextrainfo="151">Content-box</strong>(По подразбиране)
+                        <p data-htextrainfo="152">При тази стойност ширината и височината се отнасят само за съдържанието на елемента. Всички допълнителни компоненти като padding и граница се добавят към зададените стойности.</p>
+                        <p data-htextrainfo="153"><b data-htextrainfo="154">Пример:</b></p>
+                        <div class="code-highlight-examle" data-htextrainfo="155">
+                            <pre data-htextrainfo="156">div {
+    width: 400px;
+    padding: 20px;
+    border: 10px solid;
+    box-sizing: content-box;
+}</pre>
+                        </div>
+                        <p data-htextrainfo="157">Общата ширина: 400px(съдържание)+40px(подложка)+20px(граници)=460px</p>
+                    </li>
+                    <li data-htextrainfo="158">
+                        <strong data-htextrainfo="159">Padding-box</strong>
+                        <p data-htextrainfo="160">При тази стойност ширината и височината включват съдържанието и padding, но не и границите. Ако зададете вътрешни отстояния, те ще намалят пространството, достъпно за съдържанието, без да променят общия размер на кутията.</p>
+                        <p data-htextrainfo="161"><b data-htextrainfo="162">Пример:</b></p>
+                        <div class="code-highlight-examle" data-htextrainfo="163">
+                            <pre data-htextrainfo="164">div {
+    width: 400px;
+    padding: 20px;
+    box-sizing: padding-box;
+}</pre>
+                        </div>
+                        <p data-htextrainfo="165">Общата ширина: 400px(съдържание + padding)+20px(граници)=400px</p>
+                    </li>
+                    <li data-htextrainfo="166">
+                        <strong data-htextrainfo="167">Border-box</strong>
+                        <p data-htextrainfo="168">При тази стойност ширината и височината включват съдържанието, padding и границите. Това е най-интуитивният подход, тъй като позволява на разработчиците да задават фиксирани размери за елементи, без да се притесняват, че padding или границите ще увеличат техния размер.</p>
+                        <p data-htextrainfo="169"><b data-htextrainfo="170">Пример:</b></p>
+                        <div class="code-highlight-examle" data-htextrainfo="171">
+                            <pre data-htextrainfo="172">div {
+    width: 400px;
+    padding: 20px;
+    border: 10px solid;
+    box-sizing: border-box;
+}</pre>
+                        </div>
+                        <p data-htextrainfo="173">Общата ширина: 400px (включва съдържание, padding и граници).</p>
+                    </li>
+                </ol>
+            </div>
+            </div>
+            <div id="box-model-components" data-htextrainfo="174">
+                <h3 data-htextrainfo="175">Инструменти за разработчика (Developer tools)</h3>
+                <p data-htextrainfo="176">Повечето браузъри имат това, което се нарича <span class="code-highlight" data-htextrainfo="177">инструменти за разработчика (Developer tools)</span>. Те позволяват да се инспектира елемент от дадена уеб страница, да се види къде "живее" елементът в рамките на HTML документа, който създава страницата, и какви CSS характеристики и стойности са зададени. И тук <span class="code-highlight" data-htextrainfo="178">box моделът</span> намира своето приложение, като чрез него се извеждат като диаграма пресметнатите разстояния, освен това позволява и по-задълбочения им анализ.</p>
+                <div style="text-align: center; margin: 20px 0;" data-htextrainfo="179">
+                    <img src="./Реферат_ CSS оформление и Box модел_files/developer_tools.png" alt="Диаграма на CSS Box Model в инструмент за разработчика" style="max-width: 70%; height: auto;" data-htextrainfo="180">
+                    <p data-htextrainfo="181"><em data-htextrainfo="182">Фигура 2: Показване на диаграма на box модел в инструмент за разработчика [<a href="https://w23ref.w3c.fmi.uni-sofia.bg/referat/85611_1_4/index.php?action=view&amp;back=review#sources" data-htextrainfo="183">2</a>]</em></p>
+                </div>
+            </div>
+        </section>
+
+        <section id="sources" data-htextrainfo="184">
+            <h2 data-htextrainfo="185">Източници</h2>
+            <div data-htextrainfo="186"> 
+                [1] Basic CSS - The CSS Box Model, 
+                [<a href="https://edu.gcfglobal.org/en/basic-css/the-css-box-model/1/" data-htextrainfo="187">https://edu.gcfglobal.org/en/basic-css/the-css-box-model/1/</a>], 
+                последно посетен на 30.11.2024 г. 
+            </div>
+            <div data-htextrainfo="188">
+                [2] Learn to Code, HTML &amp; CSS, Lesson 4: Opening the Box Model,
+                [<a href="http://learn.shayhowe.com/html-css/opening-the-box-model/" data-htextrainfo="189">http://learn.shayhowe.com/html-css/opening-the-box-model/</a>], 
+                последно посетен на 30.11.2024 г. 
+            </div>
+        </section>
+
+        <footer data-htextrainfo="190">
+            <div data-htextrainfo="191">...</div>
+        </footer>
+    </main>
+<script data-htextrainfo="192">	var __ht__currentlyHoveredElements = [];
+	var __ht__currentHoverElement;
+	var __ht__hoverBorder;
+	var __ht__selectedBorder;
+	var __ht__bottomGrader;
+	var __ht__bottomGrader1stHalf;
+	var __ht__bottomGrader2ndHalf;
+
+	var __ht__backLabelLink;
+
+	var __ht__selectedElementID;
+	var __ht__submitButton;
+	var __ht__saveCommentButton;
+	var __ht__deleteCommentButton;
+
+	var __ht__highlightedID = -1;
+
+	var __ht__finalVerdicts = [];
+	
+
+	var __ht__currentComments = {};
+	
+	var __ht__currentCommentsPositions = {};
+	const __ht__action = 'view';
+
+	var __ht__loadingDiv;
+	var __ht__loadingDivInfo;
+
+	function __ht__updateTextInput() {
+      	$('#__ht__score').val( $('#__ht__scoreslider').val() );
+    }
+
+	(function() {
+    if (window.addEventListener) {
+        // Standard
+        window.addEventListener('load', __ht__jQueryCheck, false);
+    }
+    else if (window.attachEvent) {
+        // Microsoft
+        window.attachEvent('onload', __ht__jQueryCheck);
+    }
+
+    function __ht__changeViewBox(id) {
+    	if (id != __ht__highlightedID) {
+    		if (__ht__highlightedID != -1) {
+    			 $('#__ht__comment'+__ht__highlightedID.toString()).css('background', '#ff00ff');
+    			 $('.__ht__bottomComment'+__ht__highlightedID.toString()).css('background-color','transparent');
+    		}
+    		__ht__highlightedID = id;
+    		if (id != -1) {
+	    		 $('#__ht__comment'+id.toString()).css('background', '#0000ff');
+	    		 $('.__ht__bottomComment'+id.toString()).css('background', '#e67e22');
+	    	}
+    	}
+
+    	if (id != -1) {
+			$('html, body').animate({
+		        scrollTop: $('#__ht__comment'+id.toString()).offset().top
+		    }, 1000);
+
+			__ht__bottomGrader2ndHalf.animate({
+		        scrollTop: __ht__bottomGrader2ndHalf.scrollTop() + $('.__ht__bottomComment'+id.toString()).first().position().top
+		    }, 1000);
+		}
+    }
+
+    function __ht__hoveredElement(obj) {
+    	__ht__currentlyHoveredElements.push(obj);
+    	__ht__updateHoveredElement();
+    }
+
+    function __ht__unhoveredElement(obj) {
+    	__ht__currentlyHoveredElements.splice(__ht__currentlyHoveredElements.indexOf(obj), 1);
+    	__ht__updateHoveredElement();
+    }
+
+    function __ht__getElementPositionInfo(elem) {
+        var __ht__tempWidth = elem.width() + parseInt(elem.css('padding-left').replace('px', '')) + parseInt(elem.css('padding-right').replace('px', ''));
+        var __ht__tempHeight = elem.height() + parseInt(elem.css('padding-top').replace('px', '')) + parseInt(elem.css('padding-bottom').replace('px', ''));
+        var __ht__tempLeft = elem.offset().left;
+        var __ht__tempTop = elem.offset().top;
+        var __ht__tempPosition = 'absolute';
+
+		__ht__fixedparents = elem.parents().filter(function() {
+		    return $(this).css('position') == 'fixed';
+		  });
+		if ( __ht__fixedparents.length )
+		{
+			__ht__tempPosition = 'fixed';
+		}
+		else if (elem.css('position') == 'fixed')
+		{
+			__ht__tempPosition = 'fixed';
+		}
+
+		return {width: __ht__tempWidth, height: __ht__tempHeight, left: __ht__tempLeft, top: __ht__tempTop, position: __ht__tempPosition};
+    }
+
+    function __ht__updateHoveredElement() {
+    	var __ht__len = __ht__currentlyHoveredElements.length;
+    	var __ht__oldHoverElement = __ht__currentHoverElement;
+    	var __ht__maxID = -1;
+
+    	if (__ht__len == 0)
+    	{
+    		__ht__currentHoverElement = undefined;
+    	}
+    	else if (__ht__len == 1)
+    	{
+    		__ht__currentHoverElement = $(__ht__currentlyHoveredElements[0]);
+    	}
+
+    	for (i = 0; i < __ht__len; i++)
+    	{
+    		if (parseInt($(__ht__currentlyHoveredElements[i]).attr('data-htextrainfo')) > __ht__maxID)
+    		{
+    			__ht__maxID = parseInt($(__ht__currentlyHoveredElements[i]).attr('data-htextrainfo'));
+				__ht__currentHoverElement = $(__ht__currentlyHoveredElements[i]);
+    		}
+    	}
+
+    	if (__ht__currentHoverElement !== undefined)
+		{
+			var __ht__postinfos = __ht__getElementPositionInfo(__ht__currentHoverElement);
+			__ht__hoverBorder.show();
+			__ht__hoverBorder.width(__ht__postinfos.width);
+			__ht__hoverBorder.height(__ht__postinfos.height);
+			__ht__hoverBorder.css('position', __ht__postinfos.position);
+			__ht__hoverBorder.offset({ top: __ht__postinfos.top, left: __ht__postinfos.left });
+		}else{
+			__ht__hoverBorder.hide();
+		}
+    }
+
+    function __ht__addNewComment(commentID) {
+        var commentIdFullName='__ht__comment'+commentID.toString();
+
+        // If a div element has already been positioned over the commented
+        // element, then don't create a new div.
+        if(document.getElementById(commentIdFullName)){
+            return;
+        }
+
+        var __ht__temptemptemp = $('<div id='+commentIdFullName+'></div>');
+	    __ht__temptemptemp.width(__ht__currentCommentsPositions[commentID].width);
+		__ht__temptemptemp.height(__ht__currentCommentsPositions[commentID].height);
+		__ht__temptemptemp.css('position', __ht__currentCommentsPositions[commentID].position);
+		if (__ht__currentCommentsPositions[commentID].position == 'fixed')
+		{
+			__ht__temptemptemp.offset({ top: __ht__currentCommentsPositions[commentID].top - $(window).scrollTop(), left: __ht__currentCommentsPositions[commentID].left - $(window).scrollLeft() });
+		}
+		else
+		{
+			__ht__temptemptemp.offset({ top: __ht__currentCommentsPositions[commentID].top, left: __ht__currentCommentsPositions[commentID].left });
+		}
+		__ht__temptemptemp.css('background', '#ff00ff');
+		__ht__temptemptemp.css('opacity', '0.42');
+		__ht__temptemptemp.css('z-index', '10004');
+		if (__ht__action == 'review')
+		{
+			__ht__temptemptemp.css('pointer-events', 'none');
+		}
+
+		__ht__temptemptemp.attr('data-htextrainfobox', commentID);
+
+		if (__ht__action == 'view')
+		{
+			__ht__temptemptemp.bind('click', function(e) {
+		        e.preventDefault();
+
+		        __ht__bottomGrader.show();
+		        __ht__changeViewBox($(this).attr('data-htextrainfobox'));
+		    });
+		}
+
+	    $('body').append(__ht__temptemptemp);
+    }
+
+    function __ht__hookwe() {
+
+    	$('head').append('<style type="text/css">/* background-image: unset; padding: unset; span:not([data-htextrainfo]), div:not([data-htextrainfo]) { padding: 0; height: auto; width: auto; margin: 0; border-radius: 0; border: none; background: none; } //not working span:not([data-htextrainfo]), div:not([data-htextrainfo]), div:not([data-htextrainfobo]), not(.__ht__blockquote) { padding: 2; height: auto; width: auto; margin: 0; border-radius: 0; border: none; background: none; } background-image: url("../img/background.png"); background-repeat: repeat; background-size: 100%; */ span:not([data-htextrainfo]), div:not([data-htextrainfo]) { padding: 0; height: auto; width: auto; margin: 0; border-radius: 0; border: none; background: none; font-family: "Helvetica", cursive; } .__ht__btn { border-radius: 3px; padding: 3px 7px; text-decoration: none; color: #fff; position: relative; display: inline-block; } .__ht__btn:active { transform: translate(0px, 5px); -webkit-transform: translate(0px, 5px); box-shadow: 0px 1px 0px 0px; } .__ht__green { background-color: #2ecc71; box-shadow: 0px 3px 0px 0px #15B358; } .__ht__green:hover { background-color: #48E68B; } .__ht__red { background-color: #e74c3c; box-shadow: 0px 3px 0px 0px #CE3323; } .__ht__red:hover { background-color: #FF6656; } .__ht__orange { background-color: #e67e22; box-shadow: 0px 3px 0px 0px #CD6509; } .__ht__orange:hover { background-color: #FF983C; } div.__ht__blockquote { border-left: 1px solid #ccc; border-left: 10px solid #ccc; margin: 1.5em 10px; padding: 0.5em 10px; } div.__ht__blockquote p { display: inline; } .#__ht__elementcomment, #__ht__score, #__ht__finalcomment { color: black; } .__ht__bottomPadding{ padding-bottom: 155px; }</style>');
+
+    	var i = 0;
+	    $('body *').each(function() {
+	    	i++;
+		    $(this).attr('data-htextrainfo', i);
+		    if (i.toString() in __ht__currentComments)
+		    {
+		    	__ht__currentCommentsPositions[i.toString()] = __ht__getElementPositionInfo($(this));
+		    }
+		});
+
+		if (__ht__action == 'review') {
+			$('body *').click(function(event) {
+				// Check whether the click event is triggered from event propagation (bubbling or capturing).
+				// We don't want to execute this function if the event is triggered from propagation.
+				// We want the function to be executed just once for a selected element.
+				if(event.target !== event.currentTarget){
+					return;
+				}
+
+				if (__ht__saveComment()) {
+					__ht__bottomGrader.show();
+					document.getElementById('__ht__elementcomment').focus();
+					__ht__selectedBorder.show();
+					__ht__selectedBorder.css('position', __ht__hoverBorder.css('position'));
+					__ht__selectedBorder.width(__ht__hoverBorder.width());
+					__ht__selectedBorder.height(__ht__hoverBorder.height());
+					__ht__selectedBorder.offset(__ht__hoverBorder.offset());
+					__ht__selectedElementID = __ht__currentHoverElement.attr('data-htextrainfo');
+					if (__ht__selectedElementID.toString() in __ht__currentComments)
+					{
+						$( '#__ht__elementcomment' ).val(__ht__currentComments[__ht__selectedElementID.toString()]);
+					}
+					else
+					{
+						$( '#__ht__elementcomment' ).val('');
+					}
+				}
+			});
+
+			$('body *').hover(
+				function() {
+				  	__ht__hoveredElement($( this )[0]);
+				},
+				function() {
+			  		__ht__unhoveredElement($( this )[0]);
+				}
+			);
+		}
+
+		for (var __ht__prop in __ht__currentCommentsPositions) {
+		    __ht__addNewComment(__ht__prop);
+		}
+
+		__ht__bottomGraderSpacer = $('<div>Коментари</div>');
+		__ht__bottomGraderSpacer.css('width', '100px');
+		__ht__bottomGraderSpacer.css('height', '30px');
+		__ht__bottomGraderSpacer.css('position', 'fixed');
+		__ht__bottomGraderSpacer.css('top', '40%');
+		__ht__bottomGraderSpacer.css('left', '0');
+		
+		//__ht__bottomGraderSpacer.css('padding', '0');
+		//__ht__bottomGraderSpacer.css('max-width:', '100');
+		//__ht__bottomGraderSpacer.css('margin', '0');
+
+		__ht__bottomGraderSpacer.css('background', '#00A693');
+		__ht__bottomGraderSpacer.css('color', 'white');
+		__ht__bottomGraderSpacer.css('text-align', 'center');
+		__ht__bottomGraderSpacer.css('font-size', '16px');
+
+		__ht__bottomGraderSpacer.css('line-height', '30px');
+		__ht__bottomGraderSpacer.css('cursor', 'default');
+		__ht__bottomGraderSpacer.css('z-index', '11000');
+		__ht__bottomGraderSpacer.click(function() {
+            __ht__bottomGrader.toggle();
+		});
+		$('body').append(__ht__bottomGraderSpacer);
+
+		__ht__backLabelLink = $('<div>Назад</div>');
+		__ht__backLabelLink.css('width', '100px');
+		__ht__backLabelLink.css('height', '30px');
+		__ht__backLabelLink.css('position', 'fixed');
+		__ht__backLabelLink.css('top', '60%');
+		__ht__backLabelLink.css('left', '0');
+		__ht__backLabelLink.css('background', '#A60000');
+		__ht__backLabelLink.css('color', 'white');
+		__ht__backLabelLink.css('text-align', 'center');
+		__ht__backLabelLink.css('font-size', '16px');
+
+		__ht__backLabelLink.css('line-height', '30px');
+		__ht__backLabelLink.css('cursor', 'default');
+		__ht__backLabelLink.css('z-index', '11000');
+		__ht__backLabelLink.click(function() {
+	    	window.location = 'https://w23ref.w3c.fmi.uni-sofia.bg/review.php';
+		});
+		$('body').append(__ht__backLabelLink);
+
+		if (__ht__action == 'review') {
+			__ht__hoverBorder = $('<div  class="pfn2" style="float: left;"></div>');
+			__ht__hoverBorder.hide();
+			__ht__hoverBorder.css('border', '1px solid red');
+			__ht__hoverBorder.css('font-size', '16px'); //??
+			__ht__hoverBorder.css('pointer-events', 'none');
+			//__ht__hoverBorder.css('position', 'absolute');
+			__ht__hoverBorder.css('z-index', '10003');
+			$('body').append(__ht__hoverBorder);
+
+			__ht__selectedBorder = $('<div></div>');
+			__ht__selectedBorder.hide();
+			__ht__selectedBorder.css('border', '1px solid #FDBCB4');
+			__ht__selectedBorder.css('background', '#FDBCB4');
+			__ht__selectedBorder.css('opacity', '0.60');
+			__ht__selectedBorder.css('pointer-events', 'none');
+			__ht__selectedBorder.css('position', 'absolute');
+			__ht__selectedBorder.css('z-index', '10002');
+			
+			$('body').append(__ht__selectedBorder);
+		}
+
+		__ht__bottomGrader = $('<div class="pfn1"  style="background: #red; float: left; "></div>');
+		// The webkit prefix is needed for Safari to work properly with the sticky position
+		__ht__bottomGrader.css('position', '-webkit-sticky');
+		__ht__bottomGrader.css('position', 'sticky ');
+		__ht__bottomGrader.css('width', '100%');
+		__ht__bottomGrader.css('bottom', '0');
+		__ht__bottomGrader.css('left', '0');
+		__ht__bottomGrader.css('height', '150px');
+		__ht__bottomGrader.css('background', '#555555');
+		__ht__bottomGrader.css('color', 'white');
+		__ht__bottomGrader.css('z-index', '10042');
+		__ht__bottomGrader.css('text-align', 'left');//MP:2017-01-04 (merge-back)	
+		__ht__bottomGrader.css('font-size', '16px'); //??
+		//__ht__bottomGrader.css('max-width', '100%'); 
+		__ht__bottomGrader.css('margin', '0'); 
+
+		//__ht__bottomGrader.css('font-size', '16px');		
+		//__ht__bottomGrader.css('margin', '0px');//MP:2017-01-04 (merge-back)	
+		//__ht__bottomGrader.css('margin', '0%');//MP:2017-01-04 (merge-back)	
+		//__ht__bottomGrader.css('margin-left', '0%');//MP:2017-01-04 (merge-back)	
+		//__ht__bottomGrader.css('margin-right', '0%');//MP:2017-01-04 (merge-back)	
+		__ht__bottomGrader.css('padding', '0');//MP:2018-05-03 (merge-back)	
+		__ht__bottomGrader.css('border-radius', '0px');//MP:2018-05-03 (merge-back)
+		//__ht__bottomGrader.css('background-color', 'transparent');//MP:2018-05-03 (merge-back)		
+		
+        __ht__bottomGrader.hide();
+		$('body').append(__ht__bottomGrader);
+
+		if (__ht__action == 'review') {
+			__ht__bottomGrader1stHalf = $('<div><div style="width:80%; height:100%; float:left; text-align:center; "><textarea id="__ht__finalcomment" placeholder="Напишете финалния си коментар тук. Той ще се запази заедно с оценката." style="resize: none;  margin: 5px; width: 95%; height: 90%; color:black; background-color: white;"></textarea></div><div style="width:20%; height:100%; float:left; text-align:center;"><span style="margin: 5px; width: 90%; float: left; text-align: center;">Оценка</span><input id="__ht__score" style="margin: 5px; width: 90%; float: left; color:black; background-color: white;" type="text" value="5" disabled><input id="__ht__scoreslider" type="range" name="rangeInput" min="0" max="10" step="1" value="5" style="margin: 5px; width: 90%; float: left;" onchange="__ht__updateTextInput();"></div></div>');
+
+			__ht__submitButton = $('<a href="#" style="margin:auto; width:80%;height: auto; font-size:16px" class="__ht__btn __ht__orange">Запази оценка</a>');
+			__ht__bottomGrader1stHalf.find( "div:eq(1)" ).append(__ht__submitButton);
+
+			__ht__submitButton.bind('click', function(e) {
+			        e.preventDefault();
+
+			        if ( $( '#__ht__finalcomment' ).val() !== '' ) {
+
+			        	__ht__startLoading();
+
+			            $.ajax({
+			                url : 'https://w23ref.w3c.fmi.uni-sofia.bg/savescore.php',
+			                type: 'POST',
+			                //dataType: 'json',
+			                data : {
+			                    comment: $( '#__ht__finalcomment' ).val(),
+			                    user_id: 85654,
+			                    referat_id: '85611_1_4',
+			                    score: $( '#__ht__score' ).val()
+			                },
+			                success: function(data, textStatus, jqXHR)
+			                {
+			                    //receive(data);
+			                    __ht__loadingComplete('Successfully saved your score.', true);
+			                },
+			                error: function (jqXHR, textStatus, errorThrown)
+			                {
+			                    __ht__loadingComplete('Error with saving your final feedback. Your session is probably expired.', false);
+			                }
+			            });
+			        } else {
+
+			        }
+			    });
+
+			__ht__bottomGrader1stHalf.css('float', 'left');
+			__ht__bottomGrader1stHalf.css('width', '50%');
+			__ht__bottomGrader1stHalf.css('height', '100%');
+			//__ht__bottomGrader1stHalf.css('background', '#00ffff');
+			__ht__bottomGrader.append(__ht__bottomGrader1stHalf);
+
+			__ht__bottomGrader2ndHalf = $('<div><div style="width:80%; height:100%; float:left; text-align:center;"><textarea id="__ht__elementcomment" placeholder="Напишете тук своя коментар към избрания елемент от реферата. Коментарите се запазват автоматично при избор на нов елемент." style="resize: none; margin: 5px; width: 95%; height: 90%; color:black; background-color: white;"></textarea></div><div style="width:20%; height:100%; float:left; text-align:center;"></div></div>');
+			__ht__bottomGrader2ndHalf.css('float', 'left');
+			__ht__bottomGrader2ndHalf.css('width', '50%');
+			__ht__bottomGrader2ndHalf.css('height', '100%');
+			//__ht__bottomGrader2ndHalf.css('background', '#ff00ff');
+			__ht__bottomGrader.append(__ht__bottomGrader2ndHalf);
+
+			__ht__deleteCommentButton = $('<a href="#" style="margin:auto; margin-top:30px; width:80%;height: auto;" class="__ht__btn __ht__red">Изтрий коментар</a>');
+			__ht__bottomGrader2ndHalf.find( "div:eq(1)" ).append(__ht__deleteCommentButton);
+
+			__ht__deleteCommentButton.bind('click', function(e) {
+			        e.preventDefault();
+
+			        if(((typeof __ht__selectedElementID) === "undefined")
+                    || (__ht__currentComments[__ht__selectedElementID] === undefined)){
+                        return;
+                    }
+			        	__ht__startLoading();
+
+			            $.ajax({
+			                url : 'https://w23ref.w3c.fmi.uni-sofia.bg/deletecomment.php',
+			                type: 'POST',
+			                //dataType: 'json',
+			                data : {
+			                    user_id: 85654,
+			                    referat_id: '85611_1_4',
+			                    element_id: __ht__selectedElementID
+			                },
+			                success: function(data, textStatus, jqXHR)
+			                {
+			                	delete __ht__currentComments[__ht__selectedElementID.toString()];
+			                	$('#__ht__comment' + __ht__selectedElementID.toString()).remove();
+			                	$( '#__ht__elementcomment' ).val('');
+			                	__ht__loadingComplete('Successfully removed comment.', true);
+			                    //receive(data);
+			                },
+			                error: function (jqXHR, textStatus, errorThrown)
+			                {
+			                    __ht__loadingComplete('Error with removing the comment. Your session is probably expired.', false);
+			                }
+			            });
+
+			    });
+
+			__ht__bottomGrader2ndHalf.find( "div:eq(1)" ).append('<br/>');
+
+			__ht__saveCommentButton = $('<a href="#" style="margin:auto; margin-top:20px; width:80%;height: auto;" class="__ht__btn __ht__green">Запази коментар</a>');
+			__ht__bottomGrader2ndHalf.find( "div:eq(1)" ).append(__ht__saveCommentButton);
+
+			__ht__saveCommentButton.bind('click', function(e){
+				e.preventDefault();
+				__ht__saveComment();
+			});
+		}
+
+		if (__ht__action == 'view') {
+			__ht__bottomGrader1stHalf = $('<div></div>');
+			__ht__bottomGrader1stHalf.css('float', 'left');
+			__ht__bottomGrader1stHalf.css('width', '50%');
+			__ht__bottomGrader1stHalf.css('height', '100%');
+			__ht__bottomGrader1stHalf.css('overflow-y', 'scroll');
+			__ht__bottomGrader1stHalf.css('word-wrap', 'break-word');
+
+			for (var i = 0; i < __ht__finalVerdicts.length; i++) {
+				__ht__bottomGrader1stHalf.append('<div class="__ht__blockquote"><b style="color:white;">'+__ht__finalVerdicts[i]['score'].toString()+' от 10 точки</b><br/>'+__ht__finalVerdicts[i]['comment']+'</div>');
+			}
+
+			__ht__bottomGrader.append(__ht__bottomGrader1stHalf);
+
+			__ht__bottomGrader2ndHalf = $('<div></div>');
+			__ht__bottomGrader2ndHalf.css('float', 'left');
+			__ht__bottomGrader2ndHalf.css('width', '50%');
+			__ht__bottomGrader2ndHalf.css('height', '100%');
+			__ht__bottomGrader2ndHalf.css('overflow-y', 'scroll');
+			__ht__bottomGrader2ndHalf.css('word-wrap', 'break-word');
+
+			for (var __ht__prop in __ht__currentComments) {
+				for (var i = 0; i < __ht__currentComments[__ht__prop].length; i++) {
+					var __ht__temptemptemp = $('<div class="__ht__blockquote">'+__ht__currentComments[__ht__prop][i]+'</div>');
+					__ht__temptemptemp.addClass('__ht__bottomComment' + __ht__prop);
+					__ht__temptemptemp.attr('data-htextrainfobox', __ht__prop);
+					__ht__temptemptemp.css('cursor', 'default');
+					__ht__temptemptemp.bind('click', function(e) {
+				        e.preventDefault();
+
+				        __ht__changeViewBox($(this).attr('data-htextrainfobox'));
+				    });
+					__ht__bottomGrader2ndHalf.append(__ht__temptemptemp);
+				}
+			}
+
+			__ht__bottomGrader.append(__ht__bottomGrader2ndHalf);
+		}
+
+		__ht__bottomGraderX = $('<div>X</div>');
+		__ht__bottomGraderX.css('position', 'absolute');
+		__ht__bottomGraderX.css('width', '48px');
+		__ht__bottomGraderX.css('top', '0');
+		__ht__bottomGraderX.css('right', '0');
+		__ht__bottomGraderX.css('font-size', '16px');
+
+		
+		__ht__bottomGraderX.css('height', '20px');
+		__ht__bottomGraderX.css('background', '#c75050');
+
+		__ht__bottomGraderX.hover(
+	      function() {
+	        __ht__bottomGraderX.css('background', '#e04343');
+	      }, function() {
+	        __ht__bottomGraderX.css('background', '#c75050');
+	      }
+	    );
+
+		__ht__bottomGraderX.css('line-height', '20px');
+		__ht__bottomGraderX.css('text-align', 'center');
+		__ht__bottomGraderX.css('color', 'white');
+		__ht__bottomGraderX.css('cursor', 'default');
+		__ht__bottomGraderX.click(function() {
+			__ht__changeViewBox(-1);
+            __ht__bottomGrader.hide();
+		    if (__ht__action == 'review') {
+                __ht__selectedBorder.hide();
+		    }
+		});
+		__ht__bottomGrader.append(__ht__bottomGraderX);
+
+		__ht__loadingDiv = $('<div></div>');
+		__ht__loadingDiv.css('position', 'fixed');
+		__ht__loadingDiv.css('width', '100%');
+		__ht__loadingDiv.css('height', '100%');
+		__ht__loadingDiv.css('left', '0');
+		__ht__loadingDiv.css('top', '0');
+		__ht__loadingDiv.css('background', '#c0c0c0');
+		__ht__loadingDiv.css('z-index', '10043');
+		__ht__loadingDiv.css('opacity', '0.60');
+		__ht__loadingDiv.hide();
+		$('body').append(__ht__loadingDiv);
+
+		__ht__loadingDivInfo = $('<div></div>');
+		__ht__loadingDivInfo.css('position', 'relative');
+		__ht__loadingDivInfo.css('width', '200px');
+		__ht__loadingDivInfo.css('height', '200px');
+		__ht__loadingDivInfo.css('background', '#c0c0c0');
+		__ht__loadingDivInfo.css('top', '200px');
+		__ht__loadingDivInfo.css('z-index', '10044');
+		__ht__loadingDivInfo.css('margin', 'auto');
+		__ht__loadingDiv.append(__ht__loadingDivInfo);
+    }
+
+    function __ht__startLoading() {
+    	__ht__loadingDivInfo.css('background', '#c0c0c0');
+    	__ht__loadingDivInfo.html('<img src="https://w23ref.w3c.fmi.uni-sofia.bg/img/loading.gif" style="width:100%">');
+    	__ht__loadingDiv.fadeIn();
+    }
+
+    function __ht__loadingComplete(msg, noerror) {
+    	if (noerror) {
+    		// __ht__loadingDivInfo.css('background', '#00ff00');
+            __ht__loadingDivInfo.html('<img src="https://w23ref.w3c.fmi.uni-sofia.bg/img/loading.gif" style="width:100%">');
+    	} else {
+			alert(msg);
+    	}
+    	// __ht__loadingDivInfo.html(msg);
+    	__ht__loadingDiv.fadeOut(1000);
+    }
+
+    function __ht__jQueryCheck() {
+        if (typeof jQuery === "undefined") {
+            // No one's loaded it; either load it or do without
+		    var __ht__script = document.createElement("SCRIPT");
+		    __ht__script.src = 'https://w23ref.w3c.fmi.uni-sofia.bg/assets/jquery.min.1.7.1.js';
+		    __ht__script.type = 'text/javascript';
+		    document.getElementsByTagName("head")[0].appendChild(__ht__script);
+
+		    // Poll for jQuery to come into existance
+		    var __ht__checkReady = function(callback) {
+		        if (window.jQuery) {
+		            callback(jQuery);
+		        } else {
+		            window.setTimeout(function() { __ht__checkReady(callback); }, 100);
+		        }
+		    };
+
+		    __ht__checkReady(function($) {
+			    __ht__hookwe();
+		    });
+        }
+        else
+        {
+        	//__ht__hookwe(); //2020-02-05
+			// hook on next event-loop to hook AFTER angular / other framework event listeners binding
+			// fixes comments not working when importing jquery manually in referat
+			setTimeout(function() {
+				__ht__hookwe();
+			}, 500); // 1ms timeout works too - just to skip the event loop, but better put some more to make sure other frameworks / code works too
+        	
+        }
+    }
+
+    // return false if the comment was send to the server, but wasn't saved successfully
+	// else, return true
+	function __ht__saveComment(){
+
+		if ( ((typeof __ht__selectedElementID) === "undefined")
+			|| ($( '#__ht__elementcomment' ).val() === '') ) {
+			return true;
+		}
+
+		// if the comment wasn't changed since it was last saved, exit the function
+		if(__ht__currentComments[__ht__selectedElementID.toString()] === $( '#__ht__elementcomment' ).val()){
+			return true;
+		}
+
+		__ht__startLoading();
+
+		var success = true;
+
+		$.ajax({
+			url : 'https://w23ref.w3c.fmi.uni-sofia.bg/savecomment.php',
+			type: 'POST',
+
+			// This function is called automatically when the user clicks on a new element.
+			// That's why the request must NOT be asynchronous. __ht__selectedBorder must have its old value when the
+			// response callback is executed. Only after the new comment position is saved, must the value of
+			// __ht__selectedBorder be updated with the newly selected element.
+			async: false,
+
+			//dataType: 'json',
+			data : {
+				comment: $( '#__ht__elementcomment' ).val(),
+				user_id: 85654,
+			referat_id: '85611_1_4',
+			element_id: __ht__selectedElementID
+		},
+		success: function(data, textStatus, jqXHR)
+		{
+			__ht__currentComments[__ht__selectedElementID.toString()] = $( '#__ht__elementcomment' ).val();
+			__ht__currentCommentsPositions[__ht__selectedElementID.toString()] = __ht__getElementPositionInfo(__ht__selectedBorder);
+			__ht__addNewComment(__ht__selectedElementID);
+			__ht__loadingComplete('Successfully saved comment.', true);
+			//receive(data);
+		},
+		error: function (jqXHR, textStatus, errorThrown)
+		{
+			__ht__loadingComplete('Error with saving the comment. Your session is probably expired.', false);
+			success = false;
+		}
+	});
+
+		return success;
+	}
+})();
+</script>
+
+<div style="width: 100px; height: 30px; position: fixed; top: 40%; left: 0px; background: rgb(0, 166, 147); color: white; text-align: center; font-size: 16px; line-height: 30px; cursor: default; z-index: 11000;">Коментари</div><div style="width: 100px; height: 30px; position: fixed; top: 60%; left: 0px; background: rgb(166, 0, 0); color: white; text-align: center; font-size: 16px; line-height: 30px; cursor: default; z-index: 11000;">Назад</div><div class="pfn1" style="float: left; position: sticky; width: 100%; bottom: 0px; left: 0px; height: 150px; background: rgb(85, 85, 85); color: white; z-index: 10042; text-align: left; font-size: 16px; margin: 0px; padding: 0px; border-radius: 0px; display: none;"><div style="float: left; width: 50%; height: 100%; overflow-y: scroll; overflow-wrap: break-word;"></div><div style="float: left; width: 50%; height: 100%; overflow-y: scroll; overflow-wrap: break-word;"></div><div style="position: absolute; width: 48px; top: 0px; right: 0px; font-size: 16px; height: 20px; background: rgb(199, 80, 80); line-height: 20px; text-align: center; color: white; cursor: default;">X</div></div><div style="position: fixed; width: 100%; height: 100%; left: 0px; top: 0px; background: rgb(192, 192, 192); z-index: 10043; opacity: 0.6; display: none;"><div style="position: relative; width: 200px; height: 200px; background: rgb(192, 192, 192); top: 200px; z-index: 10044; margin: auto;"></div></div></body><grammarly-desktop-integration data-grammarly-shadow-root="true"><template shadowrootmode="open"><style>
+      div.grammarly-desktop-integration {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select:none;
+        user-select:none;
+      }
+
+      div.grammarly-desktop-integration:before {
+        content: attr(data-content);
+      }
+    </style><div aria-label="grammarly-integration" role="group" tabindex="-1" class="grammarly-desktop-integration" data-content="{&quot;mode&quot;:&quot;full&quot;,&quot;isActive&quot;:true,&quot;isUserDisabled&quot;:false}"></div></template></grammarly-desktop-integration></html>

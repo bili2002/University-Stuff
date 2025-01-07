@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<!-- saved from url=(0088)https://w23ref.w3c.fmi.uni-sofia.bg/referat/85612_3_33/index.php?action=view&back=review -->
+<html lang="bg"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тестване с Jest.js</title>
+    <link rel="stylesheet" href="./Тестване с Jest.js_files/style.css">
+  <script src="./Тестване с Jest.js_files/jquery.min.1.7.1.js" type="text/javascript"></script><style type="text/css">/* background-image: unset; padding: unset; span:not([data-htextrainfo]), div:not([data-htextrainfo]) { padding: 0; height: auto; width: auto; margin: 0; border-radius: 0; border: none; background: none; } //not working span:not([data-htextrainfo]), div:not([data-htextrainfo]), div:not([data-htextrainfobo]), not(.__ht__blockquote) { padding: 2; height: auto; width: auto; margin: 0; border-radius: 0; border: none; background: none; } background-image: url("../img/background.png"); background-repeat: repeat; background-size: 100%; */ span:not([data-htextrainfo]), div:not([data-htextrainfo]) { padding: 0; height: auto; width: auto; margin: 0; border-radius: 0; border: none; background: none; font-family: "Helvetica", cursive; } .__ht__btn { border-radius: 3px; padding: 3px 7px; text-decoration: none; color: #fff; position: relative; display: inline-block; } .__ht__btn:active { transform: translate(0px, 5px); -webkit-transform: translate(0px, 5px); box-shadow: 0px 1px 0px 0px; } .__ht__green { background-color: #2ecc71; box-shadow: 0px 3px 0px 0px #15B358; } .__ht__green:hover { background-color: #48E68B; } .__ht__red { background-color: #e74c3c; box-shadow: 0px 3px 0px 0px #CE3323; } .__ht__red:hover { background-color: #FF6656; } .__ht__orange { background-color: #e67e22; box-shadow: 0px 3px 0px 0px #CD6509; } .__ht__orange:hover { background-color: #FF983C; } div.__ht__blockquote { border-left: 1px solid #ccc; border-left: 10px solid #ccc; margin: 1.5em 10px; padding: 0.5em 10px; } div.__ht__blockquote p { display: inline; } .#__ht__elementcomment, #__ht__score, #__ht__finalcomment { color: black; } .__ht__bottomPadding{ padding-bottom: 155px; }</style></head>
+  <body data-new-gr-c-s-check-loaded="14.1209.0" data-gr-ext-installed="">
+    <header data-htextrainfo="1">
+      <h1 data-htextrainfo="2">Тестване с Jest.js</h1>
+    </header>
+    <nav data-htextrainfo="3">
+      <a href="https://w23ref.w3c.fmi.uni-sofia.bg/referat/85612_3_33/index.php?action=view&amp;back=review#introduction" data-htextrainfo="4">Въведение</a>
+      <a href="https://w23ref.w3c.fmi.uni-sofia.bg/referat/85612_3_33/index.php?action=view&amp;back=review#overview" data-htextrainfo="5">Общ преглед</a>
+      <a href="https://w23ref.w3c.fmi.uni-sofia.bg/referat/85612_3_33/index.php?action=view&amp;back=review#installation" data-htextrainfo="6">Инсталиране и конфигурация</a>
+      <a href="https://w23ref.w3c.fmi.uni-sofia.bg/referat/85612_3_33/index.php?action=view&amp;back=review#features" data-htextrainfo="7">Основни функционалности</a>
+      <a href="https://w23ref.w3c.fmi.uni-sofia.bg/referat/85612_3_33/index.php?action=view&amp;back=review#pros-cons" data-htextrainfo="8">Предимства и недостатъци</a>
+      <a href="https://w23ref.w3c.fmi.uni-sofia.bg/referat/85612_3_33/index.php?action=view&amp;back=review#conclusion" data-htextrainfo="9">Заключение</a>
+      <a href="https://w23ref.w3c.fmi.uni-sofia.bg/referat/85612_3_33/index.php?action=view&amp;back=review#references" data-htextrainfo="10">Източници</a>
+    </nav>
+    <main data-htextrainfo="11">
+      <div class="image-text-side-by-side" data-htextrainfo="12">
+        <section id="introduction" data-htextrainfo="13">
+          <h2 data-htextrainfo="14">Въведение</h2>
+          <p data-htextrainfo="15">
+            Тестването на софтуер е една от най-важните и неизбежни задачи при
+            разработката на съвременни приложения. От малки скриптове до големи
+            корпоративни системи, гарантирането на коректната работа на кода е
+            ключово за успеха на всеки проект. Чрез ефективно тестване
+            разработчиците могат да откриват и поправят грешки в ранните етапи
+            на разработката, спестявайки време, ресурси и усилия.
+          </p>
+          <p data-htextrainfo="16">
+            Традиционните подходи към тестването често изискват много ръчен труд
+            и сложна настройка, особено когато става дума за сложни приложения,
+            използващи асинхронни операции, взаимодействия с API или сложни
+            алгоритми. Тук идва на помощ Jest.js – съвременен инструмент за
+            тестване на JavaScript, който предлага интуитивен синтаксис, бърза
+            производителност и богат набор от функции за разработчици.
+          </p>
+          <p data-htextrainfo="17">
+            Jest е създаден от Facebook като отговор на нарастващите нужди на
+            техните екипи за React приложения. Той е проектиран да бъде лесен за
+            интеграция, мощен и напълно конфигурируем. Независимо дали става
+            въпрос за фронтенд или бекенд приложение, Jest предоставя всичко
+            необходимо за създаване на надеждни и устойчиви тестове.
+          </p>
+          <p data-htextrainfo="18">
+            Основната цел на този реферат е да представи Jest.js като
+            инструмент, да обясни неговите ключови концепции, предимства и
+            начини за интеграция в различни проекти. Ще разгледаме също и
+            практически примери, които показват как можем да използваме Jest за
+            ефективно тестване на функции, компоненти и асинхронни операции. В
+            допълнение, ще се направи сравнение с други популярни инструменти за
+            тестване, за да се подчертаят неговите уникални характеристики.
+          </p>
+          <p data-htextrainfo="19">
+            В съвременния свят, където технологиите и приложенията се развиват с
+            бързи темпове, Jest.js се утвърждава като едно от най-добрите
+            решения за автоматизирано тестване. Независимо дали сте начинаещ или
+            опитен разработчик, този инструмент може да улесни значително вашата
+            работа и да ви помогне да гарантирате високо качество на софтуера.
+          </p>
+        </section>
+        <img src="./Тестване с Jest.js_files/jest-logo.png" alt="Jest logo" data-htextrainfo="20">
+      </div>
+
+      <section id="overview" data-htextrainfo="21">
+        <h2 data-htextrainfo="22">Общ преглед на Jest.js</h2>
+        <p data-htextrainfo="23">
+          Jest.js е една от най-популярните библиотеки за тестване в JavaScript
+          екосистемата. Създадена от Facebook, тя първоначално е проектирана за
+          тестване на React приложения, но бързо набира популярност и извън
+          React екосистемата. Днес Jest се използва за тестване на разнообразни
+          JavaScript и TypeScript приложения, включително Node.js проекти,
+          Vue.js, Angular и дори vanilla JavaScript код.
+        </p>
+        <p data-htextrainfo="24">
+          Една от основните цели на Jest е да направи процеса на писане на
+          тестове лесен, интуитивен и продуктивен. Това се постига чрез
+          предоставяне на множество вградени функционалности, които премахват
+          необходимостта от използване на допълнителни инструменти или сложни
+          конфигурации. Някои от основните предимства на Jest включват:
+        </p>
+        <ul data-htextrainfo="25">
+          <li data-htextrainfo="26">
+            <strong data-htextrainfo="27">Лесна настройка:</strong> Jest е проектиран да работи
+            "out-of-the-box" с минимална или никаква конфигурация. Това го прави
+            идеален за нови проекти, както и за интеграция в съществуващи
+            системи.
+          </li>
+          <li data-htextrainfo="28">
+            <strong data-htextrainfo="29">Паралелно изпълнение на тестове:</strong> Тестовете в Jest
+            се изпълняват в изолирани среди, което позволява тяхното
+            паралелизиране и значително намалява времето за изпълнение.
+          </li>
+          <li data-htextrainfo="30">
+            <strong data-htextrainfo="31">Поддръжка на мокации и шпиони:</strong> Jest има вградени
+            инструменти за създаване на мокации (<code class="inline" data-htextrainfo="32">mocks</code>) и шпиони (<code class="inline" data-htextrainfo="33">spies</code>), които улесняват
+            симулирането на зависимости или външни API.
+          </li>
+          <li data-htextrainfo="34">
+            <strong data-htextrainfo="35">Кодово покритие:</strong> Jest автоматично събира информация
+            за кодовото покритие, предоставяйки подробни отчети, които помагат
+            на разработчиците да разберат кои части от кода не са тествани.
+          </li>
+          <li data-htextrainfo="36">
+            <strong data-htextrainfo="37">Поддръжка на асинхронни тестове:</strong> Jest поддържа
+            работа с промиси и <code class="inline" data-htextrainfo="38">async/await</code>, което
+            улеснява тестването на асинхронен код и API заявки.
+          </li>
+        </ul>
+        <p data-htextrainfo="39">
+          Освен своите технически възможности, Jest се отличава и с много добра
+          документация и активна общност. Това го прави достъпен инструмент
+          както за начинаещи разработчици, така и за професионалисти.
+        </p>
+        <h3 data-htextrainfo="40">Ключови характеристики на Jest</h3>
+        <p data-htextrainfo="41">
+          Някои от основните характеристики, които отличават Jest от други
+          инструменти за тестване, включват:
+        </p>
+        <ol data-htextrainfo="42">
+          <li data-htextrainfo="43">
+            <strong data-htextrainfo="44">Снимкови тестове (Snapshot Testing):</strong> Позволяват
+            записването на моментна снимка на компоненти или функции, която след
+            това може да бъде използвана за сравнение при бъдещи тестове. Това е
+            особено полезно за тестване на UI компоненти.
+          </li>
+          <li data-htextrainfo="45">
+            <strong data-htextrainfo="46">Вградена поддръжка на Babel:</strong> Jest поддържа Babel
+            конфигурации, което улеснява използването му с проекти, които
+            използват съвременен JavaScript синтаксис.
+          </li>
+          <li data-htextrainfo="47">
+            <strong data-htextrainfo="48">Разширяемост:</strong> Jest позволява създаване на
+            персонализирани тестови функции и мачъри, което го прави
+            изключително гъвкав.
+          </li>
+          <li data-htextrainfo="49">
+            <strong data-htextrainfo="50">Глобална среда за тестване:</strong> Предоставя глобални
+            функции като <code class="inline" data-htextrainfo="51">test</code>,
+            <code class="inline" data-htextrainfo="52">describe</code>,
+            <code class="inline" data-htextrainfo="53">beforeEach</code> и
+            <code class="inline" data-htextrainfo="54">afterEach</code>, които улесняват
+            организирането и изпълнението на тестовете.
+          </li>
+        </ol>
+        <h3 data-htextrainfo="55">Екосистема и интеграции</h3>
+        <p data-htextrainfo="56">
+          Jest е напълно съвместим с множество JavaScript рамки и инструменти,
+          което го прави лесен за интеграция в различни типове проекти.
+          Например:
+        </p>
+        <ul data-htextrainfo="57">
+          <li data-htextrainfo="58">
+            <strong data-htextrainfo="59">React:</strong> Jest работи отлично с React, особено когато
+            се комбинира с библиотеката
+            <code class="inline" data-htextrainfo="60">react-testing-library</code> за тестване на
+            компоненти.
+          </li>
+          <li data-htextrainfo="61">
+            <strong data-htextrainfo="62">Node.js:</strong> Jest може да се използва за тестване на
+            сървърни приложения и API, предоставени от Node.js.
+          </li>
+          <li data-htextrainfo="63">
+            <strong data-htextrainfo="64">TypeScript:</strong> Чрез добавяне на подходящи настройки,
+            Jest поддържа TypeScript проекти, предоставяйки пълна поддръжка за
+            типизация.
+          </li>
+        </ul>
+        <p data-htextrainfo="65">
+          Съчетавайки интуитивност, мощност и гъвкавост, Jest.js се утвърждава
+          като инструмент, който може значително да подобри качеството на
+          тестване във всеки JavaScript проект. Независимо от размера или
+          сложността на приложението, Jest предоставя ефективни инструменти за
+          разработчици, които искат да създадат надежден и добре тестван
+          софтуер.
+        </p>
+      </section>
+
+      <section id="installation" data-htextrainfo="66">
+        <h3 data-htextrainfo="67">Инсталация и конфигурация на Jest.js</h3>
+        <p data-htextrainfo="68">
+          За да започнете с Jest, първо трябва да го инсталирате в проекта си.
+          Можете да го направите чрез npm:
+        </p>
+        <pre data-htextrainfo="69"><code data-htextrainfo="70">npm install --save-dev jest</code></pre>
+        <img src="./Тестване с Jest.js_files/install.png" alt="Running the install command" data-htextrainfo="71">
+        <p data-htextrainfo="72">
+          След това, можете да добавите Jest в секцията
+          <code class="inline" data-htextrainfo="73">scripts</code> на
+          <code class="inline" data-htextrainfo="74">package.json</code> файла:
+        </p>
+        <pre data-htextrainfo="75"><code data-htextrainfo="76">"scripts": {
+    "test": "jest"
+}</code></pre>
+
+        <p data-htextrainfo="77">
+          Тестовете в Jest се пишат в специални файлове с разширение
+          <code class="inline" data-htextrainfo="78">.test.js</code> или
+          <code class="inline" data-htextrainfo="79">.spec.js</code>. Обичайно тестовете се съхраняват
+          в същата директория като кодовите файлове, които тествате. Например,
+          ако имате файл <code class="inline" data-htextrainfo="80">sum.js</code>, ще създадете тестов
+          файл с името <code class="inline" data-htextrainfo="81">sum.test.js</code>.
+        </p>
+
+        <p data-htextrainfo="82">Пример:</p>
+        <pre data-htextrainfo="83"><code data-htextrainfo="84">// sum.js
+function sum(a, b) {
+    return a + b;
+}
+module.exports = sum;
+    
+// sum.test.js
+const sum = require('./sum');
+    
+test('adds 1 + 2 to equal 3', () =&gt; {
+    expect(sum(1, 2)).toBe(3);
+});</code></pre>
+        <p data-htextrainfo="85">
+          Това е основната структура на тестовете в Jest. Можете да добавяте
+          много тестови случаи в един и същи файл или да ги разпределяте по
+          различни тестови файлове.
+        </p>
+        <p data-htextrainfo="86">
+          След като сте написали тестовете, можете да стартирате всички тестове
+          с командата <code class="inline" data-htextrainfo="87">npm test</code> в терминала. Това ще
+          стартира всички тестови файлове с разширение
+          <code class="inline" data-htextrainfo="88">.test.js</code> или
+          <code class="inline" data-htextrainfo="89">.spec.js</code>, които са намерени в проекта.
+        </p>
+        <img src="./Тестване с Jest.js_files/example-test.png" alt="Running example test" data-htextrainfo="90">
+      </section>
+
+      <section id="features" data-htextrainfo="91">
+        <h2 data-htextrainfo="92">Основни функционалности на Jest.js</h2>
+
+        <article data-htextrainfo="93">
+          <h3 data-htextrainfo="94">Тестови блокове и структуриран тестов процес</h3>
+          <p data-htextrainfo="95">
+            Jest позволява организацията на тестовете в ясни и структурирани
+            блокове чрез функциите <code class="inline" data-htextrainfo="96">test</code> и
+            <code class="inline" data-htextrainfo="97">it</code>. Те се използват за дефиниране на
+            индивидуални тестови случаи.
+          </p>
+          <pre data-htextrainfo="98"><code data-htextrainfo="99">test('Проверява дали функцията връща правилния резултат', () =&gt; {
+    const result = sum(2, 3);
+    expect(result).toBe(5);
+});</code></pre>
+          <p data-htextrainfo="100">
+            С функцията <code class="inline" data-htextrainfo="101">describe</code> можете да
+            организирате тестовете по логически групи:
+          </p>
+          <pre data-htextrainfo="102"><code data-htextrainfo="103">describe('Функция sum', () =&gt; {
+    test('връща вярната сума на две числа', () =&gt; {
+        expect(sum(1, 2)).toBe(3);
+    });
+    test('връща 0, ако и двете числа са 0', () =&gt; {
+        expect(sum(0, 0)).toBe(0);
+    });
+});</code></pre>
+        </article>
+
+        <article data-htextrainfo="104">
+          <h3 data-htextrainfo="105">Мачъри (Matchers)</h3>
+          <p data-htextrainfo="106">
+            Мачърите в Jest се използват за проверка на условия в тестовете. Те
+            предлагат богат набор от възможности:
+          </p>
+          <ul data-htextrainfo="107">
+            <li data-htextrainfo="108"><strong data-htextrainfo="109">Основни проверки:</strong></li>
+            <pre data-htextrainfo="110"><code data-htextrainfo="111">expect(5).toBe(5); // Проверка за строго равенство
+expect({ a: 1 }).toEqual({ a: 1 }); // Проверка за равенство на обекти</code></pre>
+            <li data-htextrainfo="112"><strong data-htextrainfo="113">Проверки за истина и лъжа:</strong></li>
+            <pre data-htextrainfo="114"><code data-htextrainfo="115">expect(true).toBeTruthy();
+expect(false).toBeFalsy();</code></pre>
+            <li data-htextrainfo="116"><strong data-htextrainfo="117">Работа с масиви:</strong></li>
+            <pre data-htextrainfo="118"><code data-htextrainfo="119">expect([1, 2, 3]).toContain(2); // Проверява дали масивът съдържа елемент</code></pre>
+            <li data-htextrainfo="120"><strong data-htextrainfo="121">Работа с изключения:</strong></li>
+            <pre data-htextrainfo="122"><code data-htextrainfo="123">expect(() =&gt; { throw new Error('Грешка'); }).toThrow('Грешка');</code></pre>
+          </ul>
+        </article>
+
+        <article data-htextrainfo="124">
+          <h3 data-htextrainfo="125">Мокации и шпиони (Mocks and Spies)</h3>
+          <p data-htextrainfo="126">
+            Jest предоставя мощни инструменти за симулиране на функции, модули и
+            зависимости, които улесняват тестването на сложни сценарии.
+          </p>
+          <pre data-htextrainfo="127"><code data-htextrainfo="128">const mockFn = jest.fn();
+mockFn('Hello, Jest!');
+expect(mockFn).toHaveBeenCalledWith('Hello, Jest!');</code></pre>
+          <p data-htextrainfo="129">
+            Jest позволява мокация на цял модул, което е полезно при работа с
+            външни зависимости:
+          </p>
+          <pre data-htextrainfo="130"><code data-htextrainfo="131">jest.mock('./api', () =&gt; ({
+    fetchData: jest.fn(() =&gt; Promise.resolve({ data: 'test' })),
+}));</code></pre>
+        </article>
+
+        <article data-htextrainfo="132">
+          <h3 data-htextrainfo="133">Снимкови тестове (Snapshot Testing)</h3>
+          <p data-htextrainfo="134">
+            Jest предоставя възможност за снимково тестване, което е особено
+            полезно за компоненти в React. Снимковите тестове съхраняват
+            текущото състояние на компонентите и ги сравняват при всяко
+            изпълнение.
+          </p>
+          <pre data-htextrainfo="135"><code data-htextrainfo="136">import renderer from 'react-test-renderer';
+import MyComponent from './MyComponent';
+    
+test('Съвпада с предишната снимка', () =&gt; {
+    const tree = renderer.create(&lt;MyComponent /&gt;).toJSON();
+    expect(tree).toMatchSnapshot();
+});</code></pre>
+        </article>
+
+        <article data-htextrainfo="137">
+          <h3 data-htextrainfo="138">Покритие на кода (Code Coverage)</h3>
+          <p data-htextrainfo="139">
+            Jest автоматично генерира отчет за покритието на кода, който показва
+            каква част от проекта е тествана. Това включва покритие на функции,
+            линии, клонове и изрази.
+          </p>
+          <pre data-htextrainfo="140"><code data-htextrainfo="141">npm test -- --coverage</code></pre>
+        </article>
+
+        <article data-htextrainfo="142">
+          <h3 data-htextrainfo="143">Асинхронно тестване</h3>
+          <p data-htextrainfo="144">
+            Jest улеснява тестването на асинхронни операции като
+            <code class="inline" data-htextrainfo="145">async/await</code> или
+            <code class="inline" data-htextrainfo="146">Promise</code>.
+          </p>
+          <pre data-htextrainfo="147"><code data-htextrainfo="148">test('Асинхронна функция връща правилен резултат', async () =&gt; {
+    const data = await fetchData();
+    expect(data).toEqual({ name: 'Test' });
+});</code></pre>
+        </article>
+      </section>
+
+      <div class="image-text-side-by-side" data-htextrainfo="149">
+        <section id="pros-cons" data-htextrainfo="150">
+          <h2 data-htextrainfo="151">Предимства и недостатъци на Jest.js</h2>
+          <h3 data-htextrainfo="152">Предимства</h3>
+          <ul data-htextrainfo="153">
+            <li data-htextrainfo="154">
+              <strong data-htextrainfo="155">Лесен за употреба:</strong> Jest е интуитивен и изисква
+              минимална конфигурация.
+            </li>
+            <li data-htextrainfo="156">
+              <strong data-htextrainfo="157">Бързина:</strong> Благодарение на паралелното изпълнение,
+              Jest значително намалява времето за тестове.
+            </li>
+            <li data-htextrainfo="158">
+              <strong data-htextrainfo="159">Богата функционалност:</strong> Включва мачъри, мокации и
+              поддръжка за снимкови тестове.
+            </li>
+            <li data-htextrainfo="160">
+              <strong data-htextrainfo="161">Активна общност:</strong> Jest има голяма общност, което
+              гарантира редовни актуализации и добра поддръжка.
+            </li>
+          </ul>
+          <h3 data-htextrainfo="162">Недостатъци</h3>
+          <ul data-htextrainfo="163">
+            <li data-htextrainfo="164">
+              <strong data-htextrainfo="165">Специфичност към JavaScript:</strong> Jest е проектиран
+              основно за JavaScript и TypeScript, което ограничава приложимостта
+              му.
+            </li>
+            <li data-htextrainfo="166">
+              <strong data-htextrainfo="167">Проблеми с големи проекти:</strong> При много големи
+              кодови бази, производителността може да се влоши.
+            </li>
+            <li data-htextrainfo="168">
+              <strong data-htextrainfo="169">Крива на обучение:</strong> Някои специфични функции (като
+              снимковите тестове) изискват време за овладяване.
+            </li>
+          </ul>
+        </section>
+        <img src="./Тестване с Jest.js_files/pros-and-cons.png" alt="Pros and cons" data-htextrainfo="170">
+      </div>
+
+      <section id="conclusion" data-htextrainfo="171">
+        <h2 data-htextrainfo="172">Заключение</h2>
+        <p data-htextrainfo="173">
+          Jest.js е мощен инструмент, който улеснява процеса на писане и
+          изпълнение на тестове за JavaScript приложения. Благодарение на своята
+          интуитивност, богата функционалност и висока производителност, Jest се
+          утвърждава като предпочитана библиотека за тестване сред
+          разработчиците. Независимо дали става въпрос за малки проекти или
+          сложни системи, Jest предоставя ефективни инструменти за гарантиране
+          на надеждността и качеството на софтуера.
+        </p>
+        <p data-htextrainfo="174">
+          Въпреки някои ограничения, като трудности при мащабируемост или
+          специфичност към JavaScript, Jest остава водещ избор в екосистемата на
+          JavaScript. С активната си общност и непрекъснати подобрения,
+          библиотеката ще продължи да играе важна роля в света на софтуерното
+          тестване.
+        </p>
+      </section>
+
+      <section id="references" data-htextrainfo="175">
+        <h2 data-htextrainfo="176">Източници</h2>
+        <ol data-htextrainfo="177">
+          <li data-htextrainfo="178">
+            Jest.js Documentation, "Getting Started with Jest",
+            <a href="https://jestjs.io/docs/getting-started" target="_blank" data-htextrainfo="179">https://jestjs.io/docs/getting-started</a>
+          </li>
+        </ol>
+      </section>
+    </main>
+    <footer data-htextrainfo="180">
+      <h3 style="color: white" data-htextrainfo="181">ФМИ ©</h3>
+    </footer>
+  <script data-htextrainfo="182">	var __ht__currentlyHoveredElements = [];
+	var __ht__currentHoverElement;
+	var __ht__hoverBorder;
+	var __ht__selectedBorder;
+	var __ht__bottomGrader;
+	var __ht__bottomGrader1stHalf;
+	var __ht__bottomGrader2ndHalf;
+
+	var __ht__backLabelLink;
+
+	var __ht__selectedElementID;
+	var __ht__submitButton;
+	var __ht__saveCommentButton;
+	var __ht__deleteCommentButton;
+
+	var __ht__highlightedID = -1;
+
+	var __ht__finalVerdicts = [];
+	
+
+	var __ht__currentComments = {};
+	
+	var __ht__currentCommentsPositions = {};
+	const __ht__action = 'view';
+
+	var __ht__loadingDiv;
+	var __ht__loadingDivInfo;
+
+	function __ht__updateTextInput() {
+      	$('#__ht__score').val( $('#__ht__scoreslider').val() );
+    }
+
+	(function() {
+    if (window.addEventListener) {
+        // Standard
+        window.addEventListener('load', __ht__jQueryCheck, false);
+    }
+    else if (window.attachEvent) {
+        // Microsoft
+        window.attachEvent('onload', __ht__jQueryCheck);
+    }
+
+    function __ht__changeViewBox(id) {
+    	if (id != __ht__highlightedID) {
+    		if (__ht__highlightedID != -1) {
+    			 $('#__ht__comment'+__ht__highlightedID.toString()).css('background', '#ff00ff');
+    			 $('.__ht__bottomComment'+__ht__highlightedID.toString()).css('background-color','transparent');
+    		}
+    		__ht__highlightedID = id;
+    		if (id != -1) {
+	    		 $('#__ht__comment'+id.toString()).css('background', '#0000ff');
+	    		 $('.__ht__bottomComment'+id.toString()).css('background', '#e67e22');
+	    	}
+    	}
+
+    	if (id != -1) {
+			$('html, body').animate({
+		        scrollTop: $('#__ht__comment'+id.toString()).offset().top
+		    }, 1000);
+
+			__ht__bottomGrader2ndHalf.animate({
+		        scrollTop: __ht__bottomGrader2ndHalf.scrollTop() + $('.__ht__bottomComment'+id.toString()).first().position().top
+		    }, 1000);
+		}
+    }
+
+    function __ht__hoveredElement(obj) {
+    	__ht__currentlyHoveredElements.push(obj);
+    	__ht__updateHoveredElement();
+    }
+
+    function __ht__unhoveredElement(obj) {
+    	__ht__currentlyHoveredElements.splice(__ht__currentlyHoveredElements.indexOf(obj), 1);
+    	__ht__updateHoveredElement();
+    }
+
+    function __ht__getElementPositionInfo(elem) {
+        var __ht__tempWidth = elem.width() + parseInt(elem.css('padding-left').replace('px', '')) + parseInt(elem.css('padding-right').replace('px', ''));
+        var __ht__tempHeight = elem.height() + parseInt(elem.css('padding-top').replace('px', '')) + parseInt(elem.css('padding-bottom').replace('px', ''));
+        var __ht__tempLeft = elem.offset().left;
+        var __ht__tempTop = elem.offset().top;
+        var __ht__tempPosition = 'absolute';
+
+		__ht__fixedparents = elem.parents().filter(function() {
+		    return $(this).css('position') == 'fixed';
+		  });
+		if ( __ht__fixedparents.length )
+		{
+			__ht__tempPosition = 'fixed';
+		}
+		else if (elem.css('position') == 'fixed')
+		{
+			__ht__tempPosition = 'fixed';
+		}
+
+		return {width: __ht__tempWidth, height: __ht__tempHeight, left: __ht__tempLeft, top: __ht__tempTop, position: __ht__tempPosition};
+    }
+
+    function __ht__updateHoveredElement() {
+    	var __ht__len = __ht__currentlyHoveredElements.length;
+    	var __ht__oldHoverElement = __ht__currentHoverElement;
+    	var __ht__maxID = -1;
+
+    	if (__ht__len == 0)
+    	{
+    		__ht__currentHoverElement = undefined;
+    	}
+    	else if (__ht__len == 1)
+    	{
+    		__ht__currentHoverElement = $(__ht__currentlyHoveredElements[0]);
+    	}
+
+    	for (i = 0; i < __ht__len; i++)
+    	{
+    		if (parseInt($(__ht__currentlyHoveredElements[i]).attr('data-htextrainfo')) > __ht__maxID)
+    		{
+    			__ht__maxID = parseInt($(__ht__currentlyHoveredElements[i]).attr('data-htextrainfo'));
+				__ht__currentHoverElement = $(__ht__currentlyHoveredElements[i]);
+    		}
+    	}
+
+    	if (__ht__currentHoverElement !== undefined)
+		{
+			var __ht__postinfos = __ht__getElementPositionInfo(__ht__currentHoverElement);
+			__ht__hoverBorder.show();
+			__ht__hoverBorder.width(__ht__postinfos.width);
+			__ht__hoverBorder.height(__ht__postinfos.height);
+			__ht__hoverBorder.css('position', __ht__postinfos.position);
+			__ht__hoverBorder.offset({ top: __ht__postinfos.top, left: __ht__postinfos.left });
+		}else{
+			__ht__hoverBorder.hide();
+		}
+    }
+
+    function __ht__addNewComment(commentID) {
+        var commentIdFullName='__ht__comment'+commentID.toString();
+
+        // If a div element has already been positioned over the commented
+        // element, then don't create a new div.
+        if(document.getElementById(commentIdFullName)){
+            return;
+        }
+
+        var __ht__temptemptemp = $('<div id='+commentIdFullName+'></div>');
+	    __ht__temptemptemp.width(__ht__currentCommentsPositions[commentID].width);
+		__ht__temptemptemp.height(__ht__currentCommentsPositions[commentID].height);
+		__ht__temptemptemp.css('position', __ht__currentCommentsPositions[commentID].position);
+		if (__ht__currentCommentsPositions[commentID].position == 'fixed')
+		{
+			__ht__temptemptemp.offset({ top: __ht__currentCommentsPositions[commentID].top - $(window).scrollTop(), left: __ht__currentCommentsPositions[commentID].left - $(window).scrollLeft() });
+		}
+		else
+		{
+			__ht__temptemptemp.offset({ top: __ht__currentCommentsPositions[commentID].top, left: __ht__currentCommentsPositions[commentID].left });
+		}
+		__ht__temptemptemp.css('background', '#ff00ff');
+		__ht__temptemptemp.css('opacity', '0.42');
+		__ht__temptemptemp.css('z-index', '10004');
+		if (__ht__action == 'review')
+		{
+			__ht__temptemptemp.css('pointer-events', 'none');
+		}
+
+		__ht__temptemptemp.attr('data-htextrainfobox', commentID);
+
+		if (__ht__action == 'view')
+		{
+			__ht__temptemptemp.bind('click', function(e) {
+		        e.preventDefault();
+
+		        __ht__bottomGrader.show();
+		        __ht__changeViewBox($(this).attr('data-htextrainfobox'));
+		    });
+		}
+
+	    $('body').append(__ht__temptemptemp);
+    }
+
+    function __ht__hookwe() {
+
+    	$('head').append('<style type="text/css">/* background-image: unset; padding: unset; span:not([data-htextrainfo]), div:not([data-htextrainfo]) { padding: 0; height: auto; width: auto; margin: 0; border-radius: 0; border: none; background: none; } //not working span:not([data-htextrainfo]), div:not([data-htextrainfo]), div:not([data-htextrainfobo]), not(.__ht__blockquote) { padding: 2; height: auto; width: auto; margin: 0; border-radius: 0; border: none; background: none; } background-image: url("../img/background.png"); background-repeat: repeat; background-size: 100%; */ span:not([data-htextrainfo]), div:not([data-htextrainfo]) { padding: 0; height: auto; width: auto; margin: 0; border-radius: 0; border: none; background: none; font-family: "Helvetica", cursive; } .__ht__btn { border-radius: 3px; padding: 3px 7px; text-decoration: none; color: #fff; position: relative; display: inline-block; } .__ht__btn:active { transform: translate(0px, 5px); -webkit-transform: translate(0px, 5px); box-shadow: 0px 1px 0px 0px; } .__ht__green { background-color: #2ecc71; box-shadow: 0px 3px 0px 0px #15B358; } .__ht__green:hover { background-color: #48E68B; } .__ht__red { background-color: #e74c3c; box-shadow: 0px 3px 0px 0px #CE3323; } .__ht__red:hover { background-color: #FF6656; } .__ht__orange { background-color: #e67e22; box-shadow: 0px 3px 0px 0px #CD6509; } .__ht__orange:hover { background-color: #FF983C; } div.__ht__blockquote { border-left: 1px solid #ccc; border-left: 10px solid #ccc; margin: 1.5em 10px; padding: 0.5em 10px; } div.__ht__blockquote p { display: inline; } .#__ht__elementcomment, #__ht__score, #__ht__finalcomment { color: black; } .__ht__bottomPadding{ padding-bottom: 155px; }</style>');
+
+    	var i = 0;
+	    $('body *').each(function() {
+	    	i++;
+		    $(this).attr('data-htextrainfo', i);
+		    if (i.toString() in __ht__currentComments)
+		    {
+		    	__ht__currentCommentsPositions[i.toString()] = __ht__getElementPositionInfo($(this));
+		    }
+		});
+
+		if (__ht__action == 'review') {
+			$('body *').click(function(event) {
+				// Check whether the click event is triggered from event propagation (bubbling or capturing).
+				// We don't want to execute this function if the event is triggered from propagation.
+				// We want the function to be executed just once for a selected element.
+				if(event.target !== event.currentTarget){
+					return;
+				}
+
+				if (__ht__saveComment()) {
+					__ht__bottomGrader.show();
+					document.getElementById('__ht__elementcomment').focus();
+					__ht__selectedBorder.show();
+					__ht__selectedBorder.css('position', __ht__hoverBorder.css('position'));
+					__ht__selectedBorder.width(__ht__hoverBorder.width());
+					__ht__selectedBorder.height(__ht__hoverBorder.height());
+					__ht__selectedBorder.offset(__ht__hoverBorder.offset());
+					__ht__selectedElementID = __ht__currentHoverElement.attr('data-htextrainfo');
+					if (__ht__selectedElementID.toString() in __ht__currentComments)
+					{
+						$( '#__ht__elementcomment' ).val(__ht__currentComments[__ht__selectedElementID.toString()]);
+					}
+					else
+					{
+						$( '#__ht__elementcomment' ).val('');
+					}
+				}
+			});
+
+			$('body *').hover(
+				function() {
+				  	__ht__hoveredElement($( this )[0]);
+				},
+				function() {
+			  		__ht__unhoveredElement($( this )[0]);
+				}
+			);
+		}
+
+		for (var __ht__prop in __ht__currentCommentsPositions) {
+		    __ht__addNewComment(__ht__prop);
+		}
+
+		__ht__bottomGraderSpacer = $('<div>Коментари</div>');
+		__ht__bottomGraderSpacer.css('width', '100px');
+		__ht__bottomGraderSpacer.css('height', '30px');
+		__ht__bottomGraderSpacer.css('position', 'fixed');
+		__ht__bottomGraderSpacer.css('top', '40%');
+		__ht__bottomGraderSpacer.css('left', '0');
+		
+		//__ht__bottomGraderSpacer.css('padding', '0');
+		//__ht__bottomGraderSpacer.css('max-width:', '100');
+		//__ht__bottomGraderSpacer.css('margin', '0');
+
+		__ht__bottomGraderSpacer.css('background', '#00A693');
+		__ht__bottomGraderSpacer.css('color', 'white');
+		__ht__bottomGraderSpacer.css('text-align', 'center');
+		__ht__bottomGraderSpacer.css('font-size', '16px');
+
+		__ht__bottomGraderSpacer.css('line-height', '30px');
+		__ht__bottomGraderSpacer.css('cursor', 'default');
+		__ht__bottomGraderSpacer.css('z-index', '11000');
+		__ht__bottomGraderSpacer.click(function() {
+            __ht__bottomGrader.toggle();
+		});
+		$('body').append(__ht__bottomGraderSpacer);
+
+		__ht__backLabelLink = $('<div>Назад</div>');
+		__ht__backLabelLink.css('width', '100px');
+		__ht__backLabelLink.css('height', '30px');
+		__ht__backLabelLink.css('position', 'fixed');
+		__ht__backLabelLink.css('top', '60%');
+		__ht__backLabelLink.css('left', '0');
+		__ht__backLabelLink.css('background', '#A60000');
+		__ht__backLabelLink.css('color', 'white');
+		__ht__backLabelLink.css('text-align', 'center');
+		__ht__backLabelLink.css('font-size', '16px');
+
+		__ht__backLabelLink.css('line-height', '30px');
+		__ht__backLabelLink.css('cursor', 'default');
+		__ht__backLabelLink.css('z-index', '11000');
+		__ht__backLabelLink.click(function() {
+	    	window.location = 'https://w23ref.w3c.fmi.uni-sofia.bg/review.php';
+		});
+		$('body').append(__ht__backLabelLink);
+
+		if (__ht__action == 'review') {
+			__ht__hoverBorder = $('<div  class="pfn2" style="float: left;"></div>');
+			__ht__hoverBorder.hide();
+			__ht__hoverBorder.css('border', '1px solid red');
+			__ht__hoverBorder.css('font-size', '16px'); //??
+			__ht__hoverBorder.css('pointer-events', 'none');
+			//__ht__hoverBorder.css('position', 'absolute');
+			__ht__hoverBorder.css('z-index', '10003');
+			$('body').append(__ht__hoverBorder);
+
+			__ht__selectedBorder = $('<div></div>');
+			__ht__selectedBorder.hide();
+			__ht__selectedBorder.css('border', '1px solid #FDBCB4');
+			__ht__selectedBorder.css('background', '#FDBCB4');
+			__ht__selectedBorder.css('opacity', '0.60');
+			__ht__selectedBorder.css('pointer-events', 'none');
+			__ht__selectedBorder.css('position', 'absolute');
+			__ht__selectedBorder.css('z-index', '10002');
+			
+			$('body').append(__ht__selectedBorder);
+		}
+
+		__ht__bottomGrader = $('<div class="pfn1"  style="background: #red; float: left; "></div>');
+		// The webkit prefix is needed for Safari to work properly with the sticky position
+		__ht__bottomGrader.css('position', '-webkit-sticky');
+		__ht__bottomGrader.css('position', 'sticky ');
+		__ht__bottomGrader.css('width', '100%');
+		__ht__bottomGrader.css('bottom', '0');
+		__ht__bottomGrader.css('left', '0');
+		__ht__bottomGrader.css('height', '150px');
+		__ht__bottomGrader.css('background', '#555555');
+		__ht__bottomGrader.css('color', 'white');
+		__ht__bottomGrader.css('z-index', '10042');
+		__ht__bottomGrader.css('text-align', 'left');//MP:2017-01-04 (merge-back)	
+		__ht__bottomGrader.css('font-size', '16px'); //??
+		//__ht__bottomGrader.css('max-width', '100%'); 
+		__ht__bottomGrader.css('margin', '0'); 
+
+		//__ht__bottomGrader.css('font-size', '16px');		
+		//__ht__bottomGrader.css('margin', '0px');//MP:2017-01-04 (merge-back)	
+		//__ht__bottomGrader.css('margin', '0%');//MP:2017-01-04 (merge-back)	
+		//__ht__bottomGrader.css('margin-left', '0%');//MP:2017-01-04 (merge-back)	
+		//__ht__bottomGrader.css('margin-right', '0%');//MP:2017-01-04 (merge-back)	
+		__ht__bottomGrader.css('padding', '0');//MP:2018-05-03 (merge-back)	
+		__ht__bottomGrader.css('border-radius', '0px');//MP:2018-05-03 (merge-back)
+		//__ht__bottomGrader.css('background-color', 'transparent');//MP:2018-05-03 (merge-back)		
+		
+        __ht__bottomGrader.hide();
+		$('body').append(__ht__bottomGrader);
+
+		if (__ht__action == 'review') {
+			__ht__bottomGrader1stHalf = $('<div><div style="width:80%; height:100%; float:left; text-align:center; "><textarea id="__ht__finalcomment" placeholder="Напишете финалния си коментар тук. Той ще се запази заедно с оценката." style="resize: none;  margin: 5px; width: 95%; height: 90%; color:black; background-color: white;"></textarea></div><div style="width:20%; height:100%; float:left; text-align:center;"><span style="margin: 5px; width: 90%; float: left; text-align: center;">Оценка</span><input id="__ht__score" style="margin: 5px; width: 90%; float: left; color:black; background-color: white;" type="text" value="5" disabled><input id="__ht__scoreslider" type="range" name="rangeInput" min="0" max="10" step="1" value="5" style="margin: 5px; width: 90%; float: left;" onchange="__ht__updateTextInput();"></div></div>');
+
+			__ht__submitButton = $('<a href="#" style="margin:auto; width:80%;height: auto; font-size:16px" class="__ht__btn __ht__orange">Запази оценка</a>');
+			__ht__bottomGrader1stHalf.find( "div:eq(1)" ).append(__ht__submitButton);
+
+			__ht__submitButton.bind('click', function(e) {
+			        e.preventDefault();
+
+			        if ( $( '#__ht__finalcomment' ).val() !== '' ) {
+
+			        	__ht__startLoading();
+
+			            $.ajax({
+			                url : 'https://w23ref.w3c.fmi.uni-sofia.bg/savescore.php',
+			                type: 'POST',
+			                //dataType: 'json',
+			                data : {
+			                    comment: $( '#__ht__finalcomment' ).val(),
+			                    user_id: 85654,
+			                    referat_id: '85612_3_33',
+			                    score: $( '#__ht__score' ).val()
+			                },
+			                success: function(data, textStatus, jqXHR)
+			                {
+			                    //receive(data);
+			                    __ht__loadingComplete('Successfully saved your score.', true);
+			                },
+			                error: function (jqXHR, textStatus, errorThrown)
+			                {
+			                    __ht__loadingComplete('Error with saving your final feedback. Your session is probably expired.', false);
+			                }
+			            });
+			        } else {
+
+			        }
+			    });
+
+			__ht__bottomGrader1stHalf.css('float', 'left');
+			__ht__bottomGrader1stHalf.css('width', '50%');
+			__ht__bottomGrader1stHalf.css('height', '100%');
+			//__ht__bottomGrader1stHalf.css('background', '#00ffff');
+			__ht__bottomGrader.append(__ht__bottomGrader1stHalf);
+
+			__ht__bottomGrader2ndHalf = $('<div><div style="width:80%; height:100%; float:left; text-align:center;"><textarea id="__ht__elementcomment" placeholder="Напишете тук своя коментар към избрания елемент от реферата. Коментарите се запазват автоматично при избор на нов елемент." style="resize: none; margin: 5px; width: 95%; height: 90%; color:black; background-color: white;"></textarea></div><div style="width:20%; height:100%; float:left; text-align:center;"></div></div>');
+			__ht__bottomGrader2ndHalf.css('float', 'left');
+			__ht__bottomGrader2ndHalf.css('width', '50%');
+			__ht__bottomGrader2ndHalf.css('height', '100%');
+			//__ht__bottomGrader2ndHalf.css('background', '#ff00ff');
+			__ht__bottomGrader.append(__ht__bottomGrader2ndHalf);
+
+			__ht__deleteCommentButton = $('<a href="#" style="margin:auto; margin-top:30px; width:80%;height: auto;" class="__ht__btn __ht__red">Изтрий коментар</a>');
+			__ht__bottomGrader2ndHalf.find( "div:eq(1)" ).append(__ht__deleteCommentButton);
+
+			__ht__deleteCommentButton.bind('click', function(e) {
+			        e.preventDefault();
+
+			        if(((typeof __ht__selectedElementID) === "undefined")
+                    || (__ht__currentComments[__ht__selectedElementID] === undefined)){
+                        return;
+                    }
+			        	__ht__startLoading();
+
+			            $.ajax({
+			                url : 'https://w23ref.w3c.fmi.uni-sofia.bg/deletecomment.php',
+			                type: 'POST',
+			                //dataType: 'json',
+			                data : {
+			                    user_id: 85654,
+			                    referat_id: '85612_3_33',
+			                    element_id: __ht__selectedElementID
+			                },
+			                success: function(data, textStatus, jqXHR)
+			                {
+			                	delete __ht__currentComments[__ht__selectedElementID.toString()];
+			                	$('#__ht__comment' + __ht__selectedElementID.toString()).remove();
+			                	$( '#__ht__elementcomment' ).val('');
+			                	__ht__loadingComplete('Successfully removed comment.', true);
+			                    //receive(data);
+			                },
+			                error: function (jqXHR, textStatus, errorThrown)
+			                {
+			                    __ht__loadingComplete('Error with removing the comment. Your session is probably expired.', false);
+			                }
+			            });
+
+			    });
+
+			__ht__bottomGrader2ndHalf.find( "div:eq(1)" ).append('<br/>');
+
+			__ht__saveCommentButton = $('<a href="#" style="margin:auto; margin-top:20px; width:80%;height: auto;" class="__ht__btn __ht__green">Запази коментар</a>');
+			__ht__bottomGrader2ndHalf.find( "div:eq(1)" ).append(__ht__saveCommentButton);
+
+			__ht__saveCommentButton.bind('click', function(e){
+				e.preventDefault();
+				__ht__saveComment();
+			});
+		}
+
+		if (__ht__action == 'view') {
+			__ht__bottomGrader1stHalf = $('<div></div>');
+			__ht__bottomGrader1stHalf.css('float', 'left');
+			__ht__bottomGrader1stHalf.css('width', '50%');
+			__ht__bottomGrader1stHalf.css('height', '100%');
+			__ht__bottomGrader1stHalf.css('overflow-y', 'scroll');
+			__ht__bottomGrader1stHalf.css('word-wrap', 'break-word');
+
+			for (var i = 0; i < __ht__finalVerdicts.length; i++) {
+				__ht__bottomGrader1stHalf.append('<div class="__ht__blockquote"><b style="color:white;">'+__ht__finalVerdicts[i]['score'].toString()+' от 10 точки</b><br/>'+__ht__finalVerdicts[i]['comment']+'</div>');
+			}
+
+			__ht__bottomGrader.append(__ht__bottomGrader1stHalf);
+
+			__ht__bottomGrader2ndHalf = $('<div></div>');
+			__ht__bottomGrader2ndHalf.css('float', 'left');
+			__ht__bottomGrader2ndHalf.css('width', '50%');
+			__ht__bottomGrader2ndHalf.css('height', '100%');
+			__ht__bottomGrader2ndHalf.css('overflow-y', 'scroll');
+			__ht__bottomGrader2ndHalf.css('word-wrap', 'break-word');
+
+			for (var __ht__prop in __ht__currentComments) {
+				for (var i = 0; i < __ht__currentComments[__ht__prop].length; i++) {
+					var __ht__temptemptemp = $('<div class="__ht__blockquote">'+__ht__currentComments[__ht__prop][i]+'</div>');
+					__ht__temptemptemp.addClass('__ht__bottomComment' + __ht__prop);
+					__ht__temptemptemp.attr('data-htextrainfobox', __ht__prop);
+					__ht__temptemptemp.css('cursor', 'default');
+					__ht__temptemptemp.bind('click', function(e) {
+				        e.preventDefault();
+
+				        __ht__changeViewBox($(this).attr('data-htextrainfobox'));
+				    });
+					__ht__bottomGrader2ndHalf.append(__ht__temptemptemp);
+				}
+			}
+
+			__ht__bottomGrader.append(__ht__bottomGrader2ndHalf);
+		}
+
+		__ht__bottomGraderX = $('<div>X</div>');
+		__ht__bottomGraderX.css('position', 'absolute');
+		__ht__bottomGraderX.css('width', '48px');
+		__ht__bottomGraderX.css('top', '0');
+		__ht__bottomGraderX.css('right', '0');
+		__ht__bottomGraderX.css('font-size', '16px');
+
+		
+		__ht__bottomGraderX.css('height', '20px');
+		__ht__bottomGraderX.css('background', '#c75050');
+
+		__ht__bottomGraderX.hover(
+	      function() {
+	        __ht__bottomGraderX.css('background', '#e04343');
+	      }, function() {
+	        __ht__bottomGraderX.css('background', '#c75050');
+	      }
+	    );
+
+		__ht__bottomGraderX.css('line-height', '20px');
+		__ht__bottomGraderX.css('text-align', 'center');
+		__ht__bottomGraderX.css('color', 'white');
+		__ht__bottomGraderX.css('cursor', 'default');
+		__ht__bottomGraderX.click(function() {
+			__ht__changeViewBox(-1);
+            __ht__bottomGrader.hide();
+		    if (__ht__action == 'review') {
+                __ht__selectedBorder.hide();
+		    }
+		});
+		__ht__bottomGrader.append(__ht__bottomGraderX);
+
+		__ht__loadingDiv = $('<div></div>');
+		__ht__loadingDiv.css('position', 'fixed');
+		__ht__loadingDiv.css('width', '100%');
+		__ht__loadingDiv.css('height', '100%');
+		__ht__loadingDiv.css('left', '0');
+		__ht__loadingDiv.css('top', '0');
+		__ht__loadingDiv.css('background', '#c0c0c0');
+		__ht__loadingDiv.css('z-index', '10043');
+		__ht__loadingDiv.css('opacity', '0.60');
+		__ht__loadingDiv.hide();
+		$('body').append(__ht__loadingDiv);
+
+		__ht__loadingDivInfo = $('<div></div>');
+		__ht__loadingDivInfo.css('position', 'relative');
+		__ht__loadingDivInfo.css('width', '200px');
+		__ht__loadingDivInfo.css('height', '200px');
+		__ht__loadingDivInfo.css('background', '#c0c0c0');
+		__ht__loadingDivInfo.css('top', '200px');
+		__ht__loadingDivInfo.css('z-index', '10044');
+		__ht__loadingDivInfo.css('margin', 'auto');
+		__ht__loadingDiv.append(__ht__loadingDivInfo);
+    }
+
+    function __ht__startLoading() {
+    	__ht__loadingDivInfo.css('background', '#c0c0c0');
+    	__ht__loadingDivInfo.html('<img src="https://w23ref.w3c.fmi.uni-sofia.bg/img/loading.gif" style="width:100%">');
+    	__ht__loadingDiv.fadeIn();
+    }
+
+    function __ht__loadingComplete(msg, noerror) {
+    	if (noerror) {
+    		// __ht__loadingDivInfo.css('background', '#00ff00');
+            __ht__loadingDivInfo.html('<img src="https://w23ref.w3c.fmi.uni-sofia.bg/img/loading.gif" style="width:100%">');
+    	} else {
+			alert(msg);
+    	}
+    	// __ht__loadingDivInfo.html(msg);
+    	__ht__loadingDiv.fadeOut(1000);
+    }
+
+    function __ht__jQueryCheck() {
+        if (typeof jQuery === "undefined") {
+            // No one's loaded it; either load it or do without
+		    var __ht__script = document.createElement("SCRIPT");
+		    __ht__script.src = 'https://w23ref.w3c.fmi.uni-sofia.bg/assets/jquery.min.1.7.1.js';
+		    __ht__script.type = 'text/javascript';
+		    document.getElementsByTagName("head")[0].appendChild(__ht__script);
+
+		    // Poll for jQuery to come into existance
+		    var __ht__checkReady = function(callback) {
+		        if (window.jQuery) {
+		            callback(jQuery);
+		        } else {
+		            window.setTimeout(function() { __ht__checkReady(callback); }, 100);
+		        }
+		    };
+
+		    __ht__checkReady(function($) {
+			    __ht__hookwe();
+		    });
+        }
+        else
+        {
+        	//__ht__hookwe(); //2020-02-05
+			// hook on next event-loop to hook AFTER angular / other framework event listeners binding
+			// fixes comments not working when importing jquery manually in referat
+			setTimeout(function() {
+				__ht__hookwe();
+			}, 500); // 1ms timeout works too - just to skip the event loop, but better put some more to make sure other frameworks / code works too
+        	
+        }
+    }
+
+    // return false if the comment was send to the server, but wasn't saved successfully
+	// else, return true
+	function __ht__saveComment(){
+
+		if ( ((typeof __ht__selectedElementID) === "undefined")
+			|| ($( '#__ht__elementcomment' ).val() === '') ) {
+			return true;
+		}
+
+		// if the comment wasn't changed since it was last saved, exit the function
+		if(__ht__currentComments[__ht__selectedElementID.toString()] === $( '#__ht__elementcomment' ).val()){
+			return true;
+		}
+
+		__ht__startLoading();
+
+		var success = true;
+
+		$.ajax({
+			url : 'https://w23ref.w3c.fmi.uni-sofia.bg/savecomment.php',
+			type: 'POST',
+
+			// This function is called automatically when the user clicks on a new element.
+			// That's why the request must NOT be asynchronous. __ht__selectedBorder must have its old value when the
+			// response callback is executed. Only after the new comment position is saved, must the value of
+			// __ht__selectedBorder be updated with the newly selected element.
+			async: false,
+
+			//dataType: 'json',
+			data : {
+				comment: $( '#__ht__elementcomment' ).val(),
+				user_id: 85654,
+			referat_id: '85612_3_33',
+			element_id: __ht__selectedElementID
+		},
+		success: function(data, textStatus, jqXHR)
+		{
+			__ht__currentComments[__ht__selectedElementID.toString()] = $( '#__ht__elementcomment' ).val();
+			__ht__currentCommentsPositions[__ht__selectedElementID.toString()] = __ht__getElementPositionInfo(__ht__selectedBorder);
+			__ht__addNewComment(__ht__selectedElementID);
+			__ht__loadingComplete('Successfully saved comment.', true);
+			//receive(data);
+		},
+		error: function (jqXHR, textStatus, errorThrown)
+		{
+			__ht__loadingComplete('Error with saving the comment. Your session is probably expired.', false);
+			success = false;
+		}
+	});
+
+		return success;
+	}
+})();
+</script>
+
+<div style="width: 100px; height: 30px; position: fixed; top: 40%; left: 0px; background: rgb(0, 166, 147); color: white; text-align: center; font-size: 16px; line-height: 30px; cursor: default; z-index: 11000;">Коментари</div><div style="width: 100px; height: 30px; position: fixed; top: 60%; left: 0px; background: rgb(166, 0, 0); color: white; text-align: center; font-size: 16px; line-height: 30px; cursor: default; z-index: 11000;">Назад</div><div class="pfn1" style="float: left; position: sticky; width: 100%; bottom: 0px; left: 0px; height: 150px; background: rgb(85, 85, 85); color: white; z-index: 10042; text-align: left; font-size: 16px; margin: 0px; padding: 0px; border-radius: 0px; display: none;"><div style="float: left; width: 50%; height: 100%; overflow-y: scroll; overflow-wrap: break-word;"></div><div style="float: left; width: 50%; height: 100%; overflow-y: scroll; overflow-wrap: break-word;"></div><div style="position: absolute; width: 48px; top: 0px; right: 0px; font-size: 16px; height: 20px; background: rgb(199, 80, 80); line-height: 20px; text-align: center; color: white; cursor: default;">X</div></div><div style="position: fixed; width: 100%; height: 100%; left: 0px; top: 0px; background: rgb(192, 192, 192); z-index: 10043; opacity: 0.6; display: none;"><div style="position: relative; width: 200px; height: 200px; background: rgb(192, 192, 192); top: 200px; z-index: 10044; margin: auto;"></div></div></body><grammarly-desktop-integration data-grammarly-shadow-root="true"><template shadowrootmode="open"><style>
+      div.grammarly-desktop-integration {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select:none;
+        user-select:none;
+      }
+
+      div.grammarly-desktop-integration:before {
+        content: attr(data-content);
+      }
+    </style><div aria-label="grammarly-integration" role="group" tabindex="-1" class="grammarly-desktop-integration" data-content="{&quot;mode&quot;:&quot;full&quot;,&quot;isActive&quot;:true,&quot;isUserDisabled&quot;:false}"></div></template></grammarly-desktop-integration></html>

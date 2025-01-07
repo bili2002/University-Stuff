@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Аудио филтри за уеб</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <audio id="audio-element" src="audio/audio.mp3" preload="auto"></audio>
+</head>
+<body>
+    <header>
+        <h1>Аудио филтри за уеб</h1>
+        <p>Реферат по тема: Аудио филтри за уеб</p>
+    </header>
+
+    <main>
+        <section id="table-of-contents">
+            <h2>Съдържание</h2>
+            <ul>
+                <li><a href="#introduction">Въведение</a></li>
+                <li><a href="#web-audio-overview">Обща информация за Web Audio API</a></li>
+                <li><a href="#core-objects">Основни обекти и възли</a></li>
+                <li><a href="#workflow">Работен процес</a></li>
+                <li><a href="#example">Пример за изграждане на аудио граф</a></li>
+                <li><a href="#advanced-features">Разширени функции</a></li>
+                <li><a href="#filter-interface">Аудио филтри</a></li>
+                <li><a href="#filter-comparison">Сравняване на филтрите</a></li>
+                <li><a href="#references">Използвани източници</a></li>
+            </ul>
+        </section>
+        
+        <section id="introduction">
+            <h2>Въведение</h2>
+            <p>
+                С развитието на уеб технологиите аудиото играе все по-важна роля в създаването на интерактивни приложения. Web Audio API предоставя мощен инструментариум за работа със звук директно в уеб браузъра. От създаване на музика и звукови ефекти до анализ на звукови сигнали, тази библиотека отваря нови възможности за разработчици.
+            </p>
+            <p>
+                Този проект има за цел да изследва основните функции на Web Audio API, с акцент върху различните аудио филтри и тяхното приложение. Ще бъдат разгледани принципите на работа, примерен код и визуализации за по-добро разбиране на възможностите, които предоставя този API.
+            </p>
+        </section>
+
+        <section id="web-audio-overview">
+            <article id="introduction">
+                <h2>Web Audio API</h2>
+                <p>
+                    Web Audio API е мощна JavaScript библиотека, която позволява обработка на звук в реално време директно в уеб браузъра. Тя е специално проектирана за създаване, анализ и манипулация на аудио сигнали с висока прецизност. Благодарение на своята модулна структура, Web Audio API е подходяща за редица приложения, включително създаване на музика, аудио визуализации, звукови ефекти за игри и интерактивни медии.
+                </p>
+                <p>
+                    Основната цел на библиотеката е да предостави среда за изграждане на аудио графи – мрежа от възли (nodes), които се свързват за обработка и манипулация на звука. Това включва филтриране, усилване, пространствено позициониране и добавяне на ефекти като реверберация и ехо.
+                </p>
+                <p>
+                    Благодарение на оптимизацията за ниска латентност и възможността за динамична промяна на параметрите в реално време, Web Audio API е особено подходяща за интерактивни приложения, където звукът трябва да реагира незабавно на действията на потребителя.
+                </p>
+            </article>
+        
+            <article id="core-objects">
+                <h3>Основни обекти и възли</h3>
+                <p>
+                    Web Audio API включва различни типове възли (nodes), които изпълняват специфични функции в аудио графа:
+                </p>
+                <ul>
+                    <li>
+                        <strong>AudioContext:</strong> Това е фундаменталният обект, от който започва всяка обработка. Той координира създаването и връзките между възлите и управлява потока на звука до крайната дестинация.
+                    </li>
+                    <li>
+                        <strong>OscillatorNode:</strong> Използва се за генериране на основни звукови вълни като синусоида, квадратна, триъгълна и назъбена вълна. Осцилаторите са основа за създаване на синтезатори или генериране на тестови сигнали.
+                    </li>
+                    <li>
+                        <strong>BiquadFilterNode:</strong> Осигурява набор от стандартни филтри като Low-pass, High-pass, Band-pass и други. Подходящ е за обработка на честоти, премахване на шум или създаване на ефекти.
+                    </li>
+                    <li>
+                        <strong>GainNode:</strong> Управлява силата на звука (амплитудата) на сигнала. Често се използва за плавно увеличаване или намаляване на звука.
+                    </li>
+                    <li>
+                        <strong>AnalyserNode:</strong> Анализира аудио сигнала и предоставя данни за неговия честотен спектър и времева структура. Това го прави идеален за аудио визуализации.
+                    </li>
+                    <li>
+                        <strong>ConvolverNode:</strong> Използва се за създаване на реверберация, симулирайки акустиката на реални пространства като стаи, зали и катедрали.
+                    </li>
+                </ul>
+            </article>
+        
+            <article id="workflow">
+                <h3>Работен процес</h3>
+                <p>Работният процес при използване на Web Audio API може да бъде разделен на няколко ключови стъпки:</p>
+                <ul>
+                    <li>
+                        <strong>Създаване на AudioContext:</strong> 
+                        Първата стъпка е създаването на <strong>AudioContext</strong>, който служи като основа за всички аудио операции. Този компонент управлява потока на звуковите сигнали и свързва всички възли в аудио графа.
+                    </li>
+                    <li>
+                        <strong>Генериране или зареждане на звук:</strong> 
+                        Звукът може да бъде генериран чрез <strong>OscillatorNode</strong>, който създава основни звукови вълни като синусоида и квадратна вълна. Алтернативно, може да използвате <strong>AudioBufferSourceNode</strong>, за да заредите и декодирате предварително записани аудио файлове.
+                    </li>
+                    <li>
+                        <strong>Свързване на възли:</strong> 
+                        След като звукът е създаден или зареден, той преминава през различни възли за обработка. Например, <strong>BiquadFilterNode</strong> може да се използва за филтриране на честоти, докато <strong>GainNode</strong> управлява силата на звука.
+                    </li>
+                    <li>
+                        <strong>Изпращане към дестинацията:</strong> 
+                        Последният възел в графа се свързва с <strong>AudioContext.destination</strong>, който изпраща обработения звук към говорителите или слушалките.
+                    </li>
+                </ul>
+            </article>            
+        
+            <article id="example">
+                <h3>Пример за изграждане на аудио граф</h3>
+                <p>
+                    Следният пример демонстрира как да изградим аудио граф, който генерира тон и го обработва с Low-pass филтър:
+                </p>
+                <pre><code>
+        const audioContext = new AudioContext();
+        
+        // Създаване на осцилатор
+        const oscillator = audioContext.createOscillator();
+        oscillator.type = "sine"; // Тип на вълната: синусоида
+        oscillator.frequency.value = 440; // Честота в Hz (A4)
+        
+        // Създаване на GainNode за управление на звука
+        const gainNode = audioContext.createGain();
+        gainNode.gain.value = 0.5; // Сила на звука: 50%
+        
+        // Създаване на Low-pass филтър
+        const filter = audioContext.createBiquadFilter();
+        filter.type = "lowpass";
+        filter.frequency.value = 1000; // Честота на прекъсване: 1000 Hz
+        
+        // Свързване на възлите
+        oscillator.connect(filter);
+        filter.connect(gainNode);
+        gainNode.connect(audioContext.destination);
+        
+        // Стартиране на осцилатора
+        oscillator.start();
+                </code></pre>
+            </article>
+
+            <article id="advanced-features">
+                <h3>Разширени функции</h3>
+                <p>
+                    Web Audio API предлага множество разширени функции, които позволяват още по-голяма гъвкавост и възможности за обработка на звука. Те включват:
+                </p>
+                <ul>
+                    <li>
+                        <strong>Dynamic Compression:</strong> 
+                        С <strong>DynamicsCompressorNode</strong>, Web Audio API може да регулира амплитудата на звуковия сигнал. Тази функция е полезна за предотвратяване на изкривявания при силни звуци или за изравняване на нивата на звука в запис.
+                    </li>
+                    <li>
+                        <strong>WaveShaper:</strong>
+                        Позволява изкривяване (distortion) на звука чрез промяна на формата на звуковата вълна. Това е особено подходящо за създаване на ефекти за китара или електронна музика.
+                    </li>
+                    <li>
+                        <strong>Periodic Waveforms:</strong>
+                        Вместо стандартните синусоидални, квадратни и триъгълни вълни, можете да създадете свои собствени периодични вълни с <strong>PeriodicWave</strong>.
+                    </li>
+                    <li>
+                        <strong>Spatialization:</strong>
+                        Web Audio API поддържа 3D пространствен звук чрез <strong>PannerNode</strong>, което позволява на разработчиците да позиционират звуковите източници в 3D пространство. Това е изключително полезно за игри или виртуална реалност.
+                    </li>
+                    <li>
+                        <strong>Custom Audio Processing:</strong>
+                        Чрез <strong>AudioWorklet</strong>, можете да създадете свои собствени аудио възли за персонализирана обработка на звука, предоставяйки максимална гъвкавост и контрол.
+                    </li>
+                </ul>
+                <p>
+                    Тези разширени функции правят Web Audio API изключително мощен инструмент, подходящ както за музикална продукция, така и за интерактивни приложения като игри и симулатори. Те разширяват границите на звуковите възможности в браузъра.
+                </p>
+            </article>            
+        </section>
+        
+        <section id="filter-interface">
+            <h2>Филтри</h2>
+            <div id="filter-switcher">
+                <button class="filter-button" data-filter="lowpass">Low-pass</button>
+                <button class="filter-button" data-filter="highpass">High-pass</button>
+                <button class="filter-button" data-filter="bandpass">Band-pass</button>
+                <button class="filter-button" data-filter="notch">Notch</button>
+                <button class="filter-button" data-filter="allpass">All-pass</button>
+                <button class="filter-button" data-filter="peaking">Peaking</button>
+                <button class="filter-button" data-filter="lowshelf">Low-shelf</button>
+                <button class="filter-button" data-filter="highshelf">High-shelf</button>
+            </div>
+        
+            <div id="filter-info">
+                <h3 id="filter-title"></h3>
+                <p id="filter-description"></p>
+            </div>
+        
+            <div id="how-it-works-section">
+                <h3>Как работи:</h3>
+                <p id="how-it-works"></p>
+            </div>
+        
+            <div id="applications-section">
+                <h3>Приложения:</h3>
+                <ul id="applications-list"></ul>
+            </div>
+        
+            <div id="characteristics">
+                <h3>Основни характеристики</h3>
+                <ul id="characteristics-list"></ul>
+            </div>
+        
+            <div id="parameters">
+                <h3>Параметри и примерен код</h3>
+                <ul id="parameters-list"></ul>
+                <pre><code id="filter-code"></code></pre>
+            </div>
+        
+            <div id="control-panel">
+                <div class="filter-control">
+                    <label for="cutoff-slider">Честота на филтъра (Hz):</label>
+                    <input type="range" id="cutoff-slider" min="50" max="5000" value="200">
+                    <span>Текуща честота: <span id="cutoff-value">200</span> Hz</span>
+                </div>
+        
+                <div class="filter-control" id="q-control" style="display: none;">
+                    <label for="q-slider">Качество на филтъра (Q):</label>
+                    <input type="range" id="q-slider" min="0.1" max="10" step="0.1" value="1">
+                    <span>Текущ Q: <span id="q-value">1.0</span></span>
+                </div>
+        
+                <div class="filter-control" id="gain-control" style="display: none;">
+                    <label for="gain-slider">Усилване (Gain):</label>
+                    <input type="range" id="gain-slider" min="-40" max="40" step="1" value="0">
+                    <span>Текущ Gain: <span id="gain-value">0</span> dB</span>
+                </div>
+            </div>
+        
+            <button id="play-pause-button">Пусни</button>
+        
+            <div id="visualization">
+                <h3>Визуализация</h3>
+                <p>
+                    Визуализацията включва два основни компонента:
+                </p>
+                <ul>
+                    <li><strong>Форма на вълната:</strong> Показва звуковия сигнал във времевото измерение.</li>
+                    <li><strong>Честотен спектър:</strong> Показва амплитудите на различните честоти в сигнала.</li>
+                </ul>
+                <canvas id="waveform" width="800" height="200"></canvas>
+                <canvas id="frequency" width="800" height="200"></canvas>
+            </div>
+        </section>
+        
+        <section id="filter-comparison">
+            <h2>Сравняване на филтрите</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Филтър</th>
+                        <th>Какво прави</th>
+                        <th>Основни параметри</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Low-pass</td>
+                        <td>Пропуска ниски честоти и потиска високите.</td>
+                        <td>Frequency, Q</td>
+                    </tr>
+                    <tr>
+                        <td>High-pass</td>
+                        <td>Пропуска високи честоти и потиска ниските.</td>
+                        <td>Frequency, Q</td>
+                    </tr>
+                    <tr>
+                        <td>Band-pass</td>
+                        <td>Пропуска честоти в определен диапазон.</td>
+                        <td>Frequency, Q</td>
+                    </tr>
+                    <tr>
+                        <td>Notch</td>
+                        <td>Потиска честоти в определен диапазон.</td>
+                        <td>Frequency, Q</td>
+                    </tr>
+                    <tr>
+                        <td>All-pass</td>
+                        <td>Пропуска всички честоти, но променя фазата.</td>
+                        <td>Frequency, Q</td>
+                    </tr>
+                    <tr>
+                        <td>Peaking</td>
+                        <td>Усилва или потиска честоти в тесен диапазон.</td>
+                        <td>Frequency, Q, Gain</td>
+                    </tr>
+                    <tr>
+                        <td>Low-shelf</td>
+                        <td>Усилва или потиска честоти под cutoff.</td>
+                        <td>Frequency, Gain</td>
+                    </tr>
+                    <tr>
+                        <td>High-shelf</td>
+                        <td>Усилва или потиска честоти над cutoff.</td>
+                        <td>Frequency, Gain</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section> 
+        <section id="conclusion">
+            <h2>Извод</h2>
+            <p>
+                Web Audio API е изключително мощен инструмент за разработка на аудио приложения в уеб среда. С помощта на филтрите и възлите, предоставени от API-то, разработчиците могат да създават висококачествени звукови ефекти и интерактивни аудио визуализации, които могат да обогатят потребителското изживяване.
+            </p>
+            <p>
+                Чрез разглеждането на различните видове аудио филтри в този проект, успяхме да демонстрираме тяхната функционалност и широк спектър от приложения. От простото намаляване на шумове до създаването на сложни музикални ефекти, Web Audio API отваря нови хоризонти за аудио разработка в уеб среда.
+            </p>
+            <p>
+                Благодарение на интуитивния си интерфейс и възможностите за работа в реално време, Web Audio API представлява важен инструмент за разработчици, които искат да създават иновативни и интерактивни аудио приложения.
+            </p>
+        </section>  
+        
+        <section id="references">
+            <h2>Използвани източници</h2>
+            <p>
+                [<a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API" target="_blank">1</a>] 
+                <strong>Web Audio API Documentation:</strong> Официалната документация за Web Audio API от Mozilla Developer Network.
+            </p>
+            <p>
+                [<a href="https://www.html5rocks.com/en/tutorials/webaudio/intro/" target="_blank">2</a>] 
+                <strong>Understanding Audio Nodes:</strong> Ръководство за работа с аудио възли в Web Audio API.
+            </p>
+            <p>
+                [<a href="https://webaudio.github.io/web-audio-api/" target="_blank">3</a>] 
+                <strong>Filter Types in Web Audio API:</strong> Подробно обяснение на различните видове филтри.
+            </p>
+            <p>
+                [<a href="https://noisehack.com/" target="_blank">4</a>] 
+                <strong>Audio Processing Examples:</strong> Примери за обработка на звук с Web Audio API.
+            </p>
+            <p>
+                [<a href="https://css-tricks.com/introduction-web-audio-api/" target="_blank">5</a>] 
+                <strong>Interactive Audio Visualizations:</strong> Интерактивни визуализации с Web Audio API.
+            </p>
+        </section>
+                    
+    </main>
+
+    <footer>
+        <p>Проект, демонстриращ използването на Web Audio API за обработка и визуализация на аудио сигнали.</p>
+    </footer>
+    
+
+    <script src="directives/info.js"></script>
+    <script src="directives/variables.js"></script>
+    <script src="directives/update_filtering.js"></script>
+    <script src="directives/visualization.js"></script>
+    <script src="directives/interactions.js"></script>
+</body>
+</html>

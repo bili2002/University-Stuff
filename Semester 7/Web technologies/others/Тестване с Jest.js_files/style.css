@@ -1,0 +1,137 @@
+body {
+  font-family: Arial, sans-serif;
+  font-size: 125%;
+  line-height: 1.6;
+  margin: 0;
+  padding-left: 4em;
+  padding-right: 4em;
+}
+
+h3 {
+  font-size: 1.5em;
+  color: #9b30ff;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+h2 {
+  font-size: 1.8em;
+  color: #9b30ff;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+p {
+  font-family: "Arial", sans-serif;
+  font-size: 1em;
+  line-height: 1.5;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+pre {
+  background-color: #1e1e1e;
+  color: #d4d4d4;
+  border-radius: 5px;
+  padding: 10px;
+  font-family: "Courier New", monospace;
+  font-size: 1.1em;
+  overflow-x: auto;
+  margin-bottom: 15px;
+}
+
+code {
+  font-family: "Courier New", monospace;
+  color: #f8f8f2;
+  background-color: #1e1e1e;
+  border-radius: 5px;
+}
+
+p strong {
+  color: #9b30ff;
+  font-weight: bold;
+}
+
+pre code {
+  white-space: pre-wrap; /* За дълги редове да се пречупват */
+  word-wrap: break-word; /* За разчупване на дълги думи */
+}
+
+nav {
+  background-color: #333;
+  padding: 10px;
+  color: #fff;
+  margin-left: -4em;
+  margin-right: -4em;
+  text-align: center;
+}
+
+nav a {
+  color: #fff;
+  text-decoration: none;
+  padding: 10px;
+  margin: 0 10px;
+  font-weight: bold;
+  font-size: 1em;
+}
+
+nav a:hover {
+  background-color: #9b30ff;
+  color: #fff;
+  border-radius: 3px;
+}
+
+nav ul {
+  list-style: none;
+  padding: 0;
+  text-align: center;
+}
+
+nav ul li {
+  display: inline-block;
+}
+
+header {
+  background-color: #9b30ff;
+  color: #fff;
+  text-align: center;
+  padding: 20px;
+  margin-left: -4em;
+  margin-right: -4em;
+}
+
+header h1 {
+  font-size: 2.5em;
+  margin: 0;
+  font-weight: bold;
+}
+
+footer {
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  padding: 15px;
+  font-size: 0.9em;
+  margin-left: -4.5em;
+  margin-right: -4.5em;
+}
+
+footer a {
+  color: #9b30ff;
+  text-decoration: none;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
+
+.image-text-side-by-side {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.inline {
+  border-radius: 5px;
+  padding: 3px;
+}

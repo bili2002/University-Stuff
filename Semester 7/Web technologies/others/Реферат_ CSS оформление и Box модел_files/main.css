@@ -1,0 +1,110 @@
+.box-submodel{
+    margin-left: 2%;
+}
+.code-highlight-examle pre{
+    background-color: #2c3e50;  
+    color: #ffffff;  
+    border-radius: 5px;  
+    padding: 2px 6px;  
+    font-family: "Courier New", Courier, monospace;  
+    display: inline-block;  
+    font-size: 1.2em;  
+    margin-left: 1.5%;
+    margin-top: 0.5%;
+}
+.code-highlight {
+    background-color: #2c3e50;
+    color: #ffffff;
+    border-radius: 5px; 
+    padding: 2px 6px; 
+    font-family: "Courier New", Courier, monospace;
+    display: inline-block;
+    font-size: 0.93em;
+}
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    height: 100vh;
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f0f8ff;
+    color: #333;
+}
+.navigation {
+    width: 240px;
+    padding: 15px;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 200px;
+    left: 10px;
+    height: 270px;
+    border-radius: 5px;
+}
+.navigation ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.navigation li {
+    margin: 10px 0;
+}
+.navigation a {
+    text-decoration: none;
+    font-size: 1.1em;
+    color: #34495e;
+    display: block;
+    padding: 8px 12px;
+    border-radius: 4px;
+    transition: background-color 0.3s, color 0.3s;
+}
+.navigation a:hover {
+    background-color: #3498db;
+    color: #ffffff;
+}
+main {
+    margin-left: 275px;
+    padding: 20px;
+    flex: 1;
+}
+header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+header h1 {
+    font-size: 2.5em;
+    color: #2c3e50;
+}
+header p {
+    font-size: 1.2em;
+    color: #555;
+}
+section {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+section h2 {
+    font-size: 1.8em;
+    color: #34495e;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 5px;
+}
+section p {
+    text-indent: 20px;
+}
+footer {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 0.9em;
+    color: #888;
+}
+footer a {
+    color: #3498db;
+    text-decoration: none;
+}

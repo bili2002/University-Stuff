@@ -7,6 +7,37 @@
 
 using namespace std;
 
+concept MAX_PREFIXABLE = requires (T t, T r) {
+    t < r;
+    t = r;
+}
+
+template<typename T1, typename... T2>
+shared_ptr<T1> make_shared(T2&&... args) {
+    return shared_ptr<T1>(new T1(std::forward<T2>(args)...));
+}
+
+template <typename T>
+requires MAX_PREFIXABLE(T) 
+std::vector<T> findMax(const std::vector<T>& elements) {
+    if (elements.empty()) {
+        return std::vector<T>();
+    }
+
+    std::vector<T> prefMax(elements.size());
+
+    prefMax[0] = elements[0];
+    for (size_t i = 1; i < elements.size(); i++) {
+        prefMax[i] = std::max(prefMax[i-1], elements[i]);
+    }
+
+    return prefMax;
+}
+
+struct X {
+
+};
+
 struct Item {
     int weight;
     int value;

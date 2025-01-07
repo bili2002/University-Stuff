@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<!-- saved from url=(0088)https://w23ref.w3c.fmi.uni-sofia.bg/referat/85652_5_91/index.php?action=view&back=review -->
+<html lang="bg"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тестване на Уеб приложения със Cypress</title>
+    <link rel="stylesheet" href="./Тестване на Уеб приложения със Cypress_files/style.css">
+<script src="./Тестване на Уеб приложения със Cypress_files/jquery.min.1.7.1.js" type="text/javascript"></script><style type="text/css">/* background-image: unset; padding: unset; span:not([data-htextrainfo]), div:not([data-htextrainfo]) { padding: 0; height: auto; width: auto; margin: 0; border-radius: 0; border: none; background: none; } //not working span:not([data-htextrainfo]), div:not([data-htextrainfo]), div:not([data-htextrainfobo]), not(.__ht__blockquote) { padding: 2; height: auto; width: auto; margin: 0; border-radius: 0; border: none; background: none; } background-image: url("../img/background.png"); background-repeat: repeat; background-size: 100%; */ span:not([data-htextrainfo]), div:not([data-htextrainfo]) { padding: 0; height: auto; width: auto; margin: 0; border-radius: 0; border: none; background: none; font-family: "Helvetica", cursive; } .__ht__btn { border-radius: 3px; padding: 3px 7px; text-decoration: none; color: #fff; position: relative; display: inline-block; } .__ht__btn:active { transform: translate(0px, 5px); -webkit-transform: translate(0px, 5px); box-shadow: 0px 1px 0px 0px; } .__ht__green { background-color: #2ecc71; box-shadow: 0px 3px 0px 0px #15B358; } .__ht__green:hover { background-color: #48E68B; } .__ht__red { background-color: #e74c3c; box-shadow: 0px 3px 0px 0px #CE3323; } .__ht__red:hover { background-color: #FF6656; } .__ht__orange { background-color: #e67e22; box-shadow: 0px 3px 0px 0px #CD6509; } .__ht__orange:hover { background-color: #FF983C; } div.__ht__blockquote { border-left: 1px solid #ccc; border-left: 10px solid #ccc; margin: 1.5em 10px; padding: 0.5em 10px; } div.__ht__blockquote p { display: inline; } .#__ht__elementcomment, #__ht__score, #__ht__finalcomment { color: black; } .__ht__bottomPadding{ padding-bottom: 155px; }</style></head>
+<body data-new-gr-c-s-check-loaded="14.1209.0" data-gr-ext-installed="">
+    <header data-htextrainfo="1">
+        <h1 data-htextrainfo="2">Тестване на Уеб приложения със Cypress</h1>
+        <p data-htextrainfo="3">Информация за Cypress и основните му функции при автоматизирано тестване на уеб приложения.</p>
+    </header>
+    
+     <nav id="toc" data-htextrainfo="4">
+        <h2 data-htextrainfo="5">Съдържание</h2>
+        <ul data-htextrainfo="6">
+            <li data-htextrainfo="7"><a href="https://w23ref.w3c.fmi.uni-sofia.bg/referat/85652_5_91/index.php?action=view&amp;back=review#introduction" data-htextrainfo="8">Какво е Cypress?</a></li>
+            <li data-htextrainfo="9"><a href="https://w23ref.w3c.fmi.uni-sofia.bg/referat/85652_5_91/index.php?action=view&amp;back=review#funct" data-htextrainfo="10">Основни функции на Cypress</a></li>
+            <li data-htextrainfo="11"><a href="https://w23ref.w3c.fmi.uni-sofia.bg/referat/85652_5_91/index.php?action=view&amp;back=review#installation" data-htextrainfo="12">Инсталация на Cypress</a></li>
+			<li data-htextrainfo="13"><a href="https://w23ref.w3c.fmi.uni-sofia.bg/referat/85652_5_91/index.php?action=view&amp;back=review#commands" data-htextrainfo="14">Употреба с реални команди на Cypress</a></li>
+			<li data-htextrainfo="15"><a href="https://w23ref.w3c.fmi.uni-sofia.bg/referat/85652_5_91/index.php?action=view&amp;back=review#test-types" data-htextrainfo="16">Основни типове тестове в Cypress</a></li>
+			<li data-htextrainfo="17"><a href="https://w23ref.w3c.fmi.uni-sofia.bg/referat/85652_5_91/index.php?action=view&amp;back=review#writing-tests" data-htextrainfo="18">Как да пишете добри тестове с Cypress?</a></li>
+			<li data-htextrainfo="19"><a href="https://w23ref.w3c.fmi.uni-sofia.bg/referat/85652_5_91/index.php?action=view&amp;back=review#e2e-scenario" data-htextrainfo="20">Примерен E2E сценарий с Cypress</a></li>
+			<li data-htextrainfo="21"><a href="https://w23ref.w3c.fmi.uni-sofia.bg/referat/85652_5_91/index.php?action=view&amp;back=review#resources" data-htextrainfo="22">Ресурси</a></li>
+			<li data-htextrainfo="23"><a href="https://w23ref.w3c.fmi.uni-sofia.bg/referat/85652_5_91/index.php?action=view&amp;back=review#conclusion" data-htextrainfo="24">Заключение</a></li>
+        </ul>
+    </nav>
+
+    <main data-htextrainfo="25">
+		<section id="introduction" data-htextrainfo="26">
+        <h2 data-htextrainfo="27"><a href="https://w23ref.w3c.fmi.uni-sofia.bg/referat/85652_5_91/index.php?action=view&amp;back=review#resources" data-htextrainfo="28">[1]</a>Какво е Cypress?<sup data-htextrainfo="29"></sup></h2>
+        <p data-htextrainfo="30">
+            Cypress е модерен инструмент за тестване на уеб приложения. Той се използва за автоматизирано тестване
+            на потребителски интерфейси (UI) и е идеален за разработчици и QA специалисти. Cypress осигурява 
+            лесен за употреба интерфейс и предлага функции като:
+        </p>
+        <ul data-htextrainfo="31">
+            <li data-htextrainfo="32">Бърза настройка и лесна интеграция с проекти.</li>
+            <li data-htextrainfo="33">Мощни инструменти за дебъгване в реално време.</li>
+            <li data-htextrainfo="34">Възможност за тестване в реален браузър.</li>
+            <li data-htextrainfo="35">Лесно записване на тестови случаи чрез удобно API.</li>
+        </ul>
+		  <h3 data-htextrainfo="36">Примери за употреба</h3>
+        <p data-htextrainfo="37">
+            С помощта на Cypress можете да тествате функционалността на бутони, форми, навигация, 
+            както и дали визуалните елементи се зареждат коректно.
+        </p>
+		<img src="./Тестване на Уеб приложения със Cypress_files/cypress.webp" width="600" data-htextrainfo="38">
+		</section>
+
+		<section id="funct" data-htextrainfo="39">
+        <h2 data-htextrainfo="40">Основни функции на Cypress</h2>
+        <p data-htextrainfo="41">Cypress предоставя различни мощни функции, които го правят изключително полезен за тестване на уеб приложения:</p>
+
+        <div class="feature" data-htextrainfo="42">
+            <h4 data-htextrainfo="43">1. Пази информация за времето на изпълнение</h4>
+            <p data-htextrainfo="44">
+                Cypress прави снимки на всяка стъпка от теста. Задръж мишката върху командите в Command Log, 
+                за да видиш точно какво се е случило на всеки етап.
+            </p>
+			<img src="./Тестване на Уеб приложения със Cypress_files/cypress_snapshot.png" width="400" data-htextrainfo="45">
+        </div>
+
+        <div class="feature" data-htextrainfo="46">
+            <h4 data-htextrainfo="47">2. Лесно за дебъгване</h4>
+            <p data-htextrainfo="48">
+                Прочитаемите грешки и стековете правят дебъгването изключително бързо.
+            </p>
+        </div>
+
+        <div class="feature" data-htextrainfo="49">
+            <h4 data-htextrainfo="50">3. Автоматично изчакване</h4>
+            <p data-htextrainfo="51">
+                Cypress автоматично изчаква командите 
+                и твърденията, преди да продължи. Край на асинхронните проблеми!
+            </p>
+        </div>
+
+        <div class="feature" data-htextrainfo="52">
+            <h4 data-htextrainfo="53">4. Spies, Stubs и Clocks</h4>
+            <p data-htextrainfo="54">
+                Позволява проверката и контролирането на поведението на функции, отговори на сървъра или таймери.
+            </p>
+				<img src="./Тестване на Уеб приложения със Cypress_files/cypress_debug.jpg" width="400" data-htextrainfo="55">
+        </div>
+
+        <div class="feature" data-htextrainfo="56">
+            <h4 data-htextrainfo="57">5. Контрол на мрежовия трафик</h4>
+            <p data-htextrainfo="58">
+                Лесно се контролират и тестват гранични случаи, без да включваш сървъра. Може да се манипулираш мрежовия трафик, 
+                в зависимост от предпочитанията.
+            </p>
+        </div>
+
+        <div class="feature" data-htextrainfo="59">
+            <h4 data-htextrainfo="60">6. Постоянни резултати</h4>
+            <p data-htextrainfo="61">
+                Архитектурата на Cypress не използва Selenium или WebDriver. Не допуска нестабилни тестове и предоставя
+                бързи, надеждни и последователни резултати.
+            </p>
+        </div>
+
+        <div class="feature" data-htextrainfo="62">
+            <h4 data-htextrainfo="63">7. Тестване в различни браузъри</h4>
+            <p data-htextrainfo="64">
+                Изпълнява тестове във Firefox и браузъри от Chrome семейството (включително Edge и Electron), както локално, 
+                така и в Continuous Integration среда.
+            </p>
+			<img src="./Тестване на Уеб приложения със Cypress_files/cypress1.jpg" width="400" data-htextrainfo="65">
+        </div>
+		</section>
+
+       <section id="installation" data-htextrainfo="66"><section id="installation" data-htextrainfo="67">
+            <h2 data-htextrainfo="68"><a href="https://w23ref.w3c.fmi.uni-sofia.bg/referat/85652_5_91/index.php?action=view&amp;back=review#resources" data-htextrainfo="69">[2]</a>Инсталация на Cypress</h2>
+            <p data-htextrainfo="70">Следвайте стъпките по-долу, за да инсталирате Cypress в проекта си:</p>
+
+			<img src="./Тестване на Уеб приложения със Cypress_files/cypress_config.jpg" width="600" data-htextrainfo="71">
+			<div class="feature" data-htextrainfo="72">
+            <h3 data-htextrainfo="73"><a href="https://w23ref.w3c.fmi.uni-sofia.bg/referat/85652_5_91/index.php?action=view&amp;back=review#resources" data-htextrainfo="74">[4]</a>Стъпка 1: Инсталиране на Node.js</h3>
+            <p data-htextrainfo="75">
+                Уверете се, че имате инсталиран <a href="https://nodejs.org/" target="_blank" data-htextrainfo="76">Node.js</a> на вашата машина. Cypress работи на Node.js и ще се използва като зависимост.
+            </p>
+			</div>
+
+            <h3 data-htextrainfo="77">Стъпка 2: Създаване на нов проект (или използване на съществуващ)</h3>
+            <p data-htextrainfo="78">
+                Ако нямате проект, създайте нов чрез командата:
+                </p><pre data-htextrainfo="79"><code data-htextrainfo="80">mkdir my-cypress-project</code></pre>
+                <p data-htextrainfo="81">След това влезте в новосъздадената директория:</p>
+                <pre data-htextrainfo="82"><code data-htextrainfo="83">cd my-cypress-project</code></pre>
+            <p data-htextrainfo="84"></p>
+
+            <h3 data-htextrainfo="85">Стъпка 3: Инициализация на npm</h3>
+            <p data-htextrainfo="86">
+                Стартирайте следната команда, за да инициализирате проект с npm:
+                </p><pre data-htextrainfo="87"><code data-htextrainfo="88">npm init -y</code></pre>
+                Това ще създаде файл <code data-htextrainfo="89">package.json</code> в директорията на проекта.
+            <p data-htextrainfo="90"></p>
+
+            <h3 data-htextrainfo="91">Стъпка 4: Инсталиране на Cypress</h3>
+            <p data-htextrainfo="92">
+                Използвайте следната команда, за да инсталирате Cypress в проекта:
+                </p><pre data-htextrainfo="93"><code data-htextrainfo="94">npm install cypress --save-dev</code></pre>
+                Това ще добави Cypress като разработческа зависимост във вашия проект.
+            <p data-htextrainfo="95"></p>
+
+            <h3 data-htextrainfo="96">Стъпка 5: Стартиране на Cypress</h3>
+            <p data-htextrainfo="97">
+                След като инсталацията приключи, можете да стартирате Cypress с командата:
+                </p><pre data-htextrainfo="98"><code data-htextrainfo="99">npx cypress open</code></pre>
+                Това ще отвори Cypress Test Runner, от който можете да стартирате тестовете си.
+            <p data-htextrainfo="100"></p>
+			
+			<img src="./Тестване на Уеб приложения със Cypress_files/run_cypress.jpg" width="500" data-htextrainfo="101">
+
+            <h3 data-htextrainfo="102">Допълнителни ресурси</h3>
+            <p data-htextrainfo="103">Можете да научите повече за Cypress и неговата настройка в официалната документация на <a href="https://www.cypress.io/docs/" target="_blank" data-htextrainfo="104">Cypress Docs</a>.</p>
+        </section>
+		
+		 <section id="commands" data-htextrainfo="105">
+            <h2 data-htextrainfo="106"><a href="https://w23ref.w3c.fmi.uni-sofia.bg/referat/85652_5_91/index.php?action=view&amp;back=review#resources" data-htextrainfo="107">[3]</a>Употреба с реални команди на Cypress</h2>
+            <p data-htextrainfo="108">Ето няколко примера с реални Cypress команди, които можете да използвате при автоматизираното тестване на уеб приложения.</p>
+				
+				<img src="./Тестване на Уеб приложения със Cypress_files/cypress_cheat_sheet.jpg" width="500" height="300" data-htextrainfo="109">
+            <h3 data-htextrainfo="110">1. Навигация до страница</h3>
+            <p data-htextrainfo="111">Една от основните команди на Cypress е <code data-htextrainfo="112">cy.visit()</code>, която се използва за навигация до конкретен URL адрес:</p>
+            <pre data-htextrainfo="113"><code data-htextrainfo="114">cy.visit('https://example.com')</code></pre>
+            <p data-htextrainfo="115">Това зарежда посочената уеб страница за тестване.</p>
+			
+			<img src="./Тестване на Уеб приложения със Cypress_files/cypress_visit.png" width="400" data-htextrainfo="116">
+
+            <h3 data-htextrainfo="117">2. Проверка на заглавие на страница</h3>
+            <p data-htextrainfo="118">Можете да проверите съдържанието на заглавието на страницата с помощта на <code data-htextrainfo="119">cy.title()</code>:</p>
+            <pre data-htextrainfo="120"><code data-htextrainfo="121">cy.title().should('eq', 'Expected Page Title')</code></pre>
+            <p data-htextrainfo="122">Това ще провери дали заглавието на страницата е равно на "Expected Page Title".</p>
+
+            <h3 data-htextrainfo="123">3. Работа с форми</h3>
+            <p data-htextrainfo="124">Командата <code data-htextrainfo="125">cy.get()</code> се използва за избор на HTML елементи. Например, можете да попълните форма и да натиснете бутон:</p>
+            <pre data-htextrainfo="126"><code data-htextrainfo="127">
+			cy.get('input[name="username"]').type('myUsername')
+			cy.get('input[name="password"]').type('myPassword')
+			cy.get('button[type="submit"]').click()
+            </code></pre>
+            <p data-htextrainfo="128">Това ще въведе стойности в полетата за потребителско име и парола и ще натисне бутона за изпращане на формата.</p>
+
+            <h3 data-htextrainfo="129">4. Проверка на текст в елемент</h3>
+            <p data-htextrainfo="130">Можете да проверите дали даден елемент съдържа определен текст, като използвате следната команда:</p>
+            <pre data-htextrainfo="131"><code data-htextrainfo="132">cy.get('h1').should('contain.text', 'Добре дошли')</code></pre>
+            <p data-htextrainfo="133">Това ще провери дали заглавието <code data-htextrainfo="134">&lt;h1&gt;</code> съдържа текста "Добре дошли".</p>
+
+            <h3 data-htextrainfo="135">5. Проверка на видимост на елемент</h3>
+            <p data-htextrainfo="136">Командата <code data-htextrainfo="137">cy.get()</code> също така може да провери дали даден елемент е видим на страницата:</p>
+            <pre data-htextrainfo="138"><code data-htextrainfo="139">cy.get('.my-button').should('be.visible')</code></pre>
+            <p data-htextrainfo="140">Това ще провери дали бутонът с клас <code data-htextrainfo="141">.my-button</code> е видим на страницата.</p>
+			
+			<img src="./Тестване на Уеб приложения със Cypress_files/cypress_commands.webp" width="600" height="350" data-htextrainfo="142">
+
+            <h3 data-htextrainfo="143">6. Потребителски интеракции и асинхронни команди</h3>
+            <p data-htextrainfo="144">Cypress автоматично чака за асинхронни операции като зареждане на елементи, което елиминира нуждата от използване на допълнителни паузи. Например:</p>
+            <pre data-htextrainfo="145"><code data-htextrainfo="146">cy.get('.modal').should('not.exist')</code></pre>
+            <p data-htextrainfo="147">Това ще провери, че модалът с клас <code data-htextrainfo="148">.modal</code> не съществува на страницата (или е скрит).</p>
+
+            <h3 data-htextrainfo="149">7. Мокиране на мрежови заявки</h3>
+            <p data-htextrainfo="150">Можете да мокнете мрежови заявки, за да тествате как приложението реагира при различни отговори:</p>
+            <pre data-htextrainfo="151"><code data-htextrainfo="152">
+			cy.intercept('GET', '/api/products', {
+			  statusCode: 200,
+			  body: [{ id: 1, name: 'Продукт 1' }]
+			}).as('getProducts')
+
+			cy.visit('/products')
+			cy.wait('@getProducts')
+            </code></pre>
+            <p data-htextrainfo="153">Това ще мокира GET заявката към "/api/products", ще върне определен отговор и ще чака за този отговор преди да продължи теста.</p>
+			
+			 <h3 data-htextrainfo="154">8. Проверка на стойности на елементи</h3>
+            <p data-htextrainfo="155">Можете да проверите стойността на форма или на текстово поле с командата <code data-htextrainfo="156">cy.get().should('have.value')</code>:</p>
+            <pre data-htextrainfo="157"><code data-htextrainfo="158">cy.get('input[name="username"]').should('have.value', 'myUsername')</code></pre>
+            <p data-htextrainfo="159">Това ще провери дали полето за потребителско име съдържа точно "myUsername".</p>
+			
+			<img src="./Тестване на Уеб приложения със Cypress_files/cypress_commands1.png" width="600" height="350" data-htextrainfo="160">
+
+            <h3 data-htextrainfo="161">9. Проверка на атрибути на елементи</h3>
+            <p data-htextrainfo="162">Също така можете да проверите атрибутите на елементи като <code data-htextrainfo="163">href</code>, <code data-htextrainfo="164">src</code>, и др. Например:</p>
+            <pre data-htextrainfo="165"><code data-htextrainfo="166">cy.get('a[href="/about"]').should('have.attr', 'href', '/about')</code></pre>
+            <p data-htextrainfo="167">Това ще провери дали линкът има правилния атрибут <code data-htextrainfo="168">href</code>, сочещ към <code data-htextrainfo="169">/about</code>.</p>
+
+            <h3 data-htextrainfo="170">10. Скролване на страница</h3>
+            <p data-htextrainfo="171">Може да използваш командата <code data-htextrainfo="172">cy.scrollTo()</code> за да симулираш скролиране на страницата:</p>
+            <pre data-htextrainfo="173"><code data-htextrainfo="174">cy.scrollTo('bottom')</code></pre>
+            <p data-htextrainfo="175">Това ще скролира страницата до долната част.</p>
+			
+        </section>
+		
+		<section id="test-types" data-htextrainfo="176">
+            <h2 data-htextrainfo="177"><a href="https://w23ref.w3c.fmi.uni-sofia.bg/referat/85652_5_91/index.php?action=view&amp;back=review#resources" data-htextrainfo="178">[1]</a>Основни типове тестове в Cypress</h2>
+            <ul data-htextrainfo="179">
+                <li data-htextrainfo="180"><strong data-htextrainfo="181">Юнитни тестове:</strong> Тестовете за отделни компоненти и функции на приложението.</li>
+                <li data-htextrainfo="182"><strong data-htextrainfo="183">Интеграционни тестове:</strong> Тестове за взаимодействието между различни компоненти.</li>
+                <li data-htextrainfo="184"><strong data-htextrainfo="185">End-to-End тестове (E2E):</strong> Пълни тестови сценарии, които покриват цялото приложение от началото до края.</li>
+				
+				<img src="./Тестване на Уеб приложения със Cypress_files/welcome_cypress.jpg" width="600" data-htextrainfo="186">
+            </ul>
+        </section>
+
+        <section id="writing-tests" data-htextrainfo="187">
+            <h2 data-htextrainfo="188">Как да пишете добри тестове с Cypress?</h2>
+            <ul data-htextrainfo="189">
+                <li data-htextrainfo="190"><strong data-htextrainfo="191">Пишете кратки и ясни тестови случаи:</strong> Вашите тестове трябва да бъдат фокусирани върху малки части от функционалността на приложението.</li>
+                <li data-htextrainfo="192"><strong data-htextrainfo="193">Използвайте командите на Cypress за синхронизация:</strong> Използвайте команди като <code data-htextrainfo="194">cy.wait()</code> и <code data-htextrainfo="195">cy.intercept()</code>, когато работите с мрежови заявки.</li>
+                <li data-htextrainfo="196"><strong data-htextrainfo="197">Добавяйте проверка за грешки:</strong> Добавете проверки за грешки и неправилни състояния, които могат да възникнат по време на изпълнението на теста.</li>
+                <li data-htextrainfo="198"><strong data-htextrainfo="199">Тествайте разнообразни сценарии:</strong> Създайте тестове за различни потребителски сценарии, като използвате различни данни и интеракции.</li>
+            
+			<img src="./Тестване на Уеб приложения със Cypress_files/cypress_results.png" width="600" data-htextrainfo="200">
+			</ul>
+        </section>
+		
+		<section id="e2e-scenario" data-htextrainfo="201">
+    <h2 data-htextrainfo="202">Примерен E2E сценарий с Cypress</h2>
+	<img src="./Тестване на Уеб приложения със Cypress_files/Cypress-Testing.jpg" width="600" data-htextrainfo="203">
+    <p data-htextrainfo="204">Този теоретичен E2E тест демонстрира как потребителят може да се регистрира, влезе и да създаде нова публикация в уеб приложение.</p>
+    <pre data-htextrainfo="205"><code data-htextrainfo="206">
+// Описание: E2E сценарий за тестване на основните функции на блог платформата
+
+describe('E2E тестване на блог платформата', () =&gt; {
+    // Предварителна стъпка: Изчиства тестовата база данни и се уверява, че приложението е в чисто състояние.
+    before(() =&gt; {
+        cy.request('POST', '/api/test/reset') // Рестартиране на тестовата база данни
+    })
+
+    it('Регистрация на нов потребител', () =&gt; {
+        cy.visit('/signup') // Посещение на страницата за регистрация
+        cy.get('#username').type('testuser') // Въвеждане на потребителско име
+        cy.get('#email').type('testuser@example.com') // Въвеждане на email
+        cy.get('#password').type('Password123!') // Въвеждане на парола
+        cy.get('#confirmPassword').type('Password123!') // Потвърждение на паролата
+        cy.get('button[type="submit"]').click() // Потвърждаване на формата
+        cy.url().should('include', '/welcome') // Уверява се, че е на страницата за приветствие
+        cy.contains('Добре дошли, testuser!') // Проверка за текст на страницата
+    })
+
+    it('Влизане в системата', () =&gt; {
+        cy.visit('/login') // Посещение на страницата за влизане
+        cy.get('#email').type('testuser@example.com') // Въвеждане на email
+        cy.get('#password').type('Password123!') // Въвеждане на парола
+        cy.get('button[type="submit"]').click() // Натискане на бутона за вход
+        cy.url().should('include', '/dashboard') // Уверява се, че е на страницата на таблото
+        cy.contains('Здравейте, testuser!') // Проверява за персонализиран текст
+    })
+
+    it('Създаване на нова публикация', () =&gt; {
+        cy.visit('/dashboard') // Посещение на таблото
+        cy.get('button.new-post').click() // Отваряне на формата за нова публикация
+        cy.get('#title').type('Моят първи блог пост') // Заглавие на публикацията
+        cy.get('#content').type('Това е съдържанието на моя първи блог пост.') // Съдържание на публикацията
+        cy.get('button.publish').click() // Натискане на бутона за публикуване
+        cy.url().should('include', '/posts') // Проверява дали е пренасочен към списъка с публикации
+        cy.contains('Моят първи блог пост') // Проверява дали публикацията е видима
+    })
+
+    it('Изход от системата', () =&gt; {
+        cy.get('button.logout').click() // Натискане на бутона за изход
+        cy.url().should('include', '/login') // Проверява дали е върнат на страницата за вход
+    })
+})
+
+    </code></pre>
+	<img src="./Тестване на Уеб приложения със Cypress_files/cypres_e2e.jpg" width="600" data-htextrainfo="207">
+	</section>
+	<section id="conclusion" data-htextrainfo="208">
+            <h2 data-htextrainfo="209">Заключение</h2>
+            <p data-htextrainfo="210">Cypress е мощен и лесен за използване инструмент за автоматизирано тестване на уеб приложения.</p><p data-htextrainfo="211">
+			</p><p data-htextrainfo="212">Неговият интегриран подход към тестването осигурява бързи резултати и висока надеждност на тестовете.</p><p data-htextrainfo="213">
+			</p><p data-htextrainfo="214">С лесния си интерфейс и възможности за отстраняване на грешки в реално време, Cypress е отличен избор за разработчиците и тестерите,</p><p data-htextrainfo="215">
+			</p><p data-htextrainfo="216">които искат да ускорят процеса на разработка и осигурят по-добро качество на продуктите.</p><p data-htextrainfo="217">
+    </p></section>
+		
+	<section id="resources" data-htextrainfo="218">
+    <h2 data-htextrainfo="219">Ресурси</h2>
+    <ul data-htextrainfo="220">
+         <li data-htextrainfo="221">1. <a href="https://docs.cypress.io/" target="_blank" data-htextrainfo="222">Официална документация на Cypress</a></li>
+        <li data-htextrainfo="223">2. <a href="https://github.com/cypress-io/cypress" target="_blank" data-htextrainfo="224">GitHub репозитори на Cypress</a></li>
+        <li data-htextrainfo="225">3. <a href="https://www.youtube.com/results?search_query=cypress+tutorials" target="_blank" data-htextrainfo="226">Видео уроци за Cypress</a></li>
+		<li data-htextrainfo="227">4. <a href="https://nodejs.org/en" target="_blank" data-htextrainfo="228">Официална страница на Node.js</a></li>
+    </ul>
+</section>
+    </section></main>
+
+<script data-htextrainfo="229">	var __ht__currentlyHoveredElements = [];
+	var __ht__currentHoverElement;
+	var __ht__hoverBorder;
+	var __ht__selectedBorder;
+	var __ht__bottomGrader;
+	var __ht__bottomGrader1stHalf;
+	var __ht__bottomGrader2ndHalf;
+
+	var __ht__backLabelLink;
+
+	var __ht__selectedElementID;
+	var __ht__submitButton;
+	var __ht__saveCommentButton;
+	var __ht__deleteCommentButton;
+
+	var __ht__highlightedID = -1;
+
+	var __ht__finalVerdicts = [];
+	
+
+	var __ht__currentComments = {};
+	
+	var __ht__currentCommentsPositions = {};
+	const __ht__action = 'view';
+
+	var __ht__loadingDiv;
+	var __ht__loadingDivInfo;
+
+	function __ht__updateTextInput() {
+      	$('#__ht__score').val( $('#__ht__scoreslider').val() );
+    }
+
+	(function() {
+    if (window.addEventListener) {
+        // Standard
+        window.addEventListener('load', __ht__jQueryCheck, false);
+    }
+    else if (window.attachEvent) {
+        // Microsoft
+        window.attachEvent('onload', __ht__jQueryCheck);
+    }
+
+    function __ht__changeViewBox(id) {
+    	if (id != __ht__highlightedID) {
+    		if (__ht__highlightedID != -1) {
+    			 $('#__ht__comment'+__ht__highlightedID.toString()).css('background', '#ff00ff');
+    			 $('.__ht__bottomComment'+__ht__highlightedID.toString()).css('background-color','transparent');
+    		}
+    		__ht__highlightedID = id;
+    		if (id != -1) {
+	    		 $('#__ht__comment'+id.toString()).css('background', '#0000ff');
+	    		 $('.__ht__bottomComment'+id.toString()).css('background', '#e67e22');
+	    	}
+    	}
+
+    	if (id != -1) {
+			$('html, body').animate({
+		        scrollTop: $('#__ht__comment'+id.toString()).offset().top
+		    }, 1000);
+
+			__ht__bottomGrader2ndHalf.animate({
+		        scrollTop: __ht__bottomGrader2ndHalf.scrollTop() + $('.__ht__bottomComment'+id.toString()).first().position().top
+		    }, 1000);
+		}
+    }
+
+    function __ht__hoveredElement(obj) {
+    	__ht__currentlyHoveredElements.push(obj);
+    	__ht__updateHoveredElement();
+    }
+
+    function __ht__unhoveredElement(obj) {
+    	__ht__currentlyHoveredElements.splice(__ht__currentlyHoveredElements.indexOf(obj), 1);
+    	__ht__updateHoveredElement();
+    }
+
+    function __ht__getElementPositionInfo(elem) {
+        var __ht__tempWidth = elem.width() + parseInt(elem.css('padding-left').replace('px', '')) + parseInt(elem.css('padding-right').replace('px', ''));
+        var __ht__tempHeight = elem.height() + parseInt(elem.css('padding-top').replace('px', '')) + parseInt(elem.css('padding-bottom').replace('px', ''));
+        var __ht__tempLeft = elem.offset().left;
+        var __ht__tempTop = elem.offset().top;
+        var __ht__tempPosition = 'absolute';
+
+		__ht__fixedparents = elem.parents().filter(function() {
+		    return $(this).css('position') == 'fixed';
+		  });
+		if ( __ht__fixedparents.length )
+		{
+			__ht__tempPosition = 'fixed';
+		}
+		else if (elem.css('position') == 'fixed')
+		{
+			__ht__tempPosition = 'fixed';
+		}
+
+		return {width: __ht__tempWidth, height: __ht__tempHeight, left: __ht__tempLeft, top: __ht__tempTop, position: __ht__tempPosition};
+    }
+
+    function __ht__updateHoveredElement() {
+    	var __ht__len = __ht__currentlyHoveredElements.length;
+    	var __ht__oldHoverElement = __ht__currentHoverElement;
+    	var __ht__maxID = -1;
+
+    	if (__ht__len == 0)
+    	{
+    		__ht__currentHoverElement = undefined;
+    	}
+    	else if (__ht__len == 1)
+    	{
+    		__ht__currentHoverElement = $(__ht__currentlyHoveredElements[0]);
+    	}
+
+    	for (i = 0; i < __ht__len; i++)
+    	{
+    		if (parseInt($(__ht__currentlyHoveredElements[i]).attr('data-htextrainfo')) > __ht__maxID)
+    		{
+    			__ht__maxID = parseInt($(__ht__currentlyHoveredElements[i]).attr('data-htextrainfo'));
+				__ht__currentHoverElement = $(__ht__currentlyHoveredElements[i]);
+    		}
+    	}
+
+    	if (__ht__currentHoverElement !== undefined)
+		{
+			var __ht__postinfos = __ht__getElementPositionInfo(__ht__currentHoverElement);
+			__ht__hoverBorder.show();
+			__ht__hoverBorder.width(__ht__postinfos.width);
+			__ht__hoverBorder.height(__ht__postinfos.height);
+			__ht__hoverBorder.css('position', __ht__postinfos.position);
+			__ht__hoverBorder.offset({ top: __ht__postinfos.top, left: __ht__postinfos.left });
+		}else{
+			__ht__hoverBorder.hide();
+		}
+    }
+
+    function __ht__addNewComment(commentID) {
+        var commentIdFullName='__ht__comment'+commentID.toString();
+
+        // If a div element has already been positioned over the commented
+        // element, then don't create a new div.
+        if(document.getElementById(commentIdFullName)){
+            return;
+        }
+
+        var __ht__temptemptemp = $('<div id='+commentIdFullName+'></div>');
+	    __ht__temptemptemp.width(__ht__currentCommentsPositions[commentID].width);
+		__ht__temptemptemp.height(__ht__currentCommentsPositions[commentID].height);
+		__ht__temptemptemp.css('position', __ht__currentCommentsPositions[commentID].position);
+		if (__ht__currentCommentsPositions[commentID].position == 'fixed')
+		{
+			__ht__temptemptemp.offset({ top: __ht__currentCommentsPositions[commentID].top - $(window).scrollTop(), left: __ht__currentCommentsPositions[commentID].left - $(window).scrollLeft() });
+		}
+		else
+		{
+			__ht__temptemptemp.offset({ top: __ht__currentCommentsPositions[commentID].top, left: __ht__currentCommentsPositions[commentID].left });
+		}
+		__ht__temptemptemp.css('background', '#ff00ff');
+		__ht__temptemptemp.css('opacity', '0.42');
+		__ht__temptemptemp.css('z-index', '10004');
+		if (__ht__action == 'review')
+		{
+			__ht__temptemptemp.css('pointer-events', 'none');
+		}
+
+		__ht__temptemptemp.attr('data-htextrainfobox', commentID);
+
+		if (__ht__action == 'view')
+		{
+			__ht__temptemptemp.bind('click', function(e) {
+		        e.preventDefault();
+
+		        __ht__bottomGrader.show();
+		        __ht__changeViewBox($(this).attr('data-htextrainfobox'));
+		    });
+		}
+
+	    $('body').append(__ht__temptemptemp);
+    }
+
+    function __ht__hookwe() {
+
+    	$('head').append('<style type="text/css">/* background-image: unset; padding: unset; span:not([data-htextrainfo]), div:not([data-htextrainfo]) { padding: 0; height: auto; width: auto; margin: 0; border-radius: 0; border: none; background: none; } //not working span:not([data-htextrainfo]), div:not([data-htextrainfo]), div:not([data-htextrainfobo]), not(.__ht__blockquote) { padding: 2; height: auto; width: auto; margin: 0; border-radius: 0; border: none; background: none; } background-image: url("../img/background.png"); background-repeat: repeat; background-size: 100%; */ span:not([data-htextrainfo]), div:not([data-htextrainfo]) { padding: 0; height: auto; width: auto; margin: 0; border-radius: 0; border: none; background: none; font-family: "Helvetica", cursive; } .__ht__btn { border-radius: 3px; padding: 3px 7px; text-decoration: none; color: #fff; position: relative; display: inline-block; } .__ht__btn:active { transform: translate(0px, 5px); -webkit-transform: translate(0px, 5px); box-shadow: 0px 1px 0px 0px; } .__ht__green { background-color: #2ecc71; box-shadow: 0px 3px 0px 0px #15B358; } .__ht__green:hover { background-color: #48E68B; } .__ht__red { background-color: #e74c3c; box-shadow: 0px 3px 0px 0px #CE3323; } .__ht__red:hover { background-color: #FF6656; } .__ht__orange { background-color: #e67e22; box-shadow: 0px 3px 0px 0px #CD6509; } .__ht__orange:hover { background-color: #FF983C; } div.__ht__blockquote { border-left: 1px solid #ccc; border-left: 10px solid #ccc; margin: 1.5em 10px; padding: 0.5em 10px; } div.__ht__blockquote p { display: inline; } .#__ht__elementcomment, #__ht__score, #__ht__finalcomment { color: black; } .__ht__bottomPadding{ padding-bottom: 155px; }</style>');
+
+    	var i = 0;
+	    $('body *').each(function() {
+	    	i++;
+		    $(this).attr('data-htextrainfo', i);
+		    if (i.toString() in __ht__currentComments)
+		    {
+		    	__ht__currentCommentsPositions[i.toString()] = __ht__getElementPositionInfo($(this));
+		    }
+		});
+
+		if (__ht__action == 'review') {
+			$('body *').click(function(event) {
+				// Check whether the click event is triggered from event propagation (bubbling or capturing).
+				// We don't want to execute this function if the event is triggered from propagation.
+				// We want the function to be executed just once for a selected element.
+				if(event.target !== event.currentTarget){
+					return;
+				}
+
+				if (__ht__saveComment()) {
+					__ht__bottomGrader.show();
+					document.getElementById('__ht__elementcomment').focus();
+					__ht__selectedBorder.show();
+					__ht__selectedBorder.css('position', __ht__hoverBorder.css('position'));
+					__ht__selectedBorder.width(__ht__hoverBorder.width());
+					__ht__selectedBorder.height(__ht__hoverBorder.height());
+					__ht__selectedBorder.offset(__ht__hoverBorder.offset());
+					__ht__selectedElementID = __ht__currentHoverElement.attr('data-htextrainfo');
+					if (__ht__selectedElementID.toString() in __ht__currentComments)
+					{
+						$( '#__ht__elementcomment' ).val(__ht__currentComments[__ht__selectedElementID.toString()]);
+					}
+					else
+					{
+						$( '#__ht__elementcomment' ).val('');
+					}
+				}
+			});
+
+			$('body *').hover(
+				function() {
+				  	__ht__hoveredElement($( this )[0]);
+				},
+				function() {
+			  		__ht__unhoveredElement($( this )[0]);
+				}
+			);
+		}
+
+		for (var __ht__prop in __ht__currentCommentsPositions) {
+		    __ht__addNewComment(__ht__prop);
+		}
+
+		__ht__bottomGraderSpacer = $('<div>Коментари</div>');
+		__ht__bottomGraderSpacer.css('width', '100px');
+		__ht__bottomGraderSpacer.css('height', '30px');
+		__ht__bottomGraderSpacer.css('position', 'fixed');
+		__ht__bottomGraderSpacer.css('top', '40%');
+		__ht__bottomGraderSpacer.css('left', '0');
+		
+		//__ht__bottomGraderSpacer.css('padding', '0');
+		//__ht__bottomGraderSpacer.css('max-width:', '100');
+		//__ht__bottomGraderSpacer.css('margin', '0');
+
+		__ht__bottomGraderSpacer.css('background', '#00A693');
+		__ht__bottomGraderSpacer.css('color', 'white');
+		__ht__bottomGraderSpacer.css('text-align', 'center');
+		__ht__bottomGraderSpacer.css('font-size', '16px');
+
+		__ht__bottomGraderSpacer.css('line-height', '30px');
+		__ht__bottomGraderSpacer.css('cursor', 'default');
+		__ht__bottomGraderSpacer.css('z-index', '11000');
+		__ht__bottomGraderSpacer.click(function() {
+            __ht__bottomGrader.toggle();
+		});
+		$('body').append(__ht__bottomGraderSpacer);
+
+		__ht__backLabelLink = $('<div>Назад</div>');
+		__ht__backLabelLink.css('width', '100px');
+		__ht__backLabelLink.css('height', '30px');
+		__ht__backLabelLink.css('position', 'fixed');
+		__ht__backLabelLink.css('top', '60%');
+		__ht__backLabelLink.css('left', '0');
+		__ht__backLabelLink.css('background', '#A60000');
+		__ht__backLabelLink.css('color', 'white');
+		__ht__backLabelLink.css('text-align', 'center');
+		__ht__backLabelLink.css('font-size', '16px');
+
+		__ht__backLabelLink.css('line-height', '30px');
+		__ht__backLabelLink.css('cursor', 'default');
+		__ht__backLabelLink.css('z-index', '11000');
+		__ht__backLabelLink.click(function() {
+	    	window.location = 'https://w23ref.w3c.fmi.uni-sofia.bg/review.php';
+		});
+		$('body').append(__ht__backLabelLink);
+
+		if (__ht__action == 'review') {
+			__ht__hoverBorder = $('<div  class="pfn2" style="float: left;"></div>');
+			__ht__hoverBorder.hide();
+			__ht__hoverBorder.css('border', '1px solid red');
+			__ht__hoverBorder.css('font-size', '16px'); //??
+			__ht__hoverBorder.css('pointer-events', 'none');
+			//__ht__hoverBorder.css('position', 'absolute');
+			__ht__hoverBorder.css('z-index', '10003');
+			$('body').append(__ht__hoverBorder);
+
+			__ht__selectedBorder = $('<div></div>');
+			__ht__selectedBorder.hide();
+			__ht__selectedBorder.css('border', '1px solid #FDBCB4');
+			__ht__selectedBorder.css('background', '#FDBCB4');
+			__ht__selectedBorder.css('opacity', '0.60');
+			__ht__selectedBorder.css('pointer-events', 'none');
+			__ht__selectedBorder.css('position', 'absolute');
+			__ht__selectedBorder.css('z-index', '10002');
+			
+			$('body').append(__ht__selectedBorder);
+		}
+
+		__ht__bottomGrader = $('<div class="pfn1"  style="background: #red; float: left; "></div>');
+		// The webkit prefix is needed for Safari to work properly with the sticky position
+		__ht__bottomGrader.css('position', '-webkit-sticky');
+		__ht__bottomGrader.css('position', 'sticky ');
+		__ht__bottomGrader.css('width', '100%');
+		__ht__bottomGrader.css('bottom', '0');
+		__ht__bottomGrader.css('left', '0');
+		__ht__bottomGrader.css('height', '150px');
+		__ht__bottomGrader.css('background', '#555555');
+		__ht__bottomGrader.css('color', 'white');
+		__ht__bottomGrader.css('z-index', '10042');
+		__ht__bottomGrader.css('text-align', 'left');//MP:2017-01-04 (merge-back)	
+		__ht__bottomGrader.css('font-size', '16px'); //??
+		//__ht__bottomGrader.css('max-width', '100%'); 
+		__ht__bottomGrader.css('margin', '0'); 
+
+		//__ht__bottomGrader.css('font-size', '16px');		
+		//__ht__bottomGrader.css('margin', '0px');//MP:2017-01-04 (merge-back)	
+		//__ht__bottomGrader.css('margin', '0%');//MP:2017-01-04 (merge-back)	
+		//__ht__bottomGrader.css('margin-left', '0%');//MP:2017-01-04 (merge-back)	
+		//__ht__bottomGrader.css('margin-right', '0%');//MP:2017-01-04 (merge-back)	
+		__ht__bottomGrader.css('padding', '0');//MP:2018-05-03 (merge-back)	
+		__ht__bottomGrader.css('border-radius', '0px');//MP:2018-05-03 (merge-back)
+		//__ht__bottomGrader.css('background-color', 'transparent');//MP:2018-05-03 (merge-back)		
+		
+        __ht__bottomGrader.hide();
+		$('body').append(__ht__bottomGrader);
+
+		if (__ht__action == 'review') {
+			__ht__bottomGrader1stHalf = $('<div><div style="width:80%; height:100%; float:left; text-align:center; "><textarea id="__ht__finalcomment" placeholder="Напишете финалния си коментар тук. Той ще се запази заедно с оценката." style="resize: none;  margin: 5px; width: 95%; height: 90%; color:black; background-color: white;"></textarea></div><div style="width:20%; height:100%; float:left; text-align:center;"><span style="margin: 5px; width: 90%; float: left; text-align: center;">Оценка</span><input id="__ht__score" style="margin: 5px; width: 90%; float: left; color:black; background-color: white;" type="text" value="5" disabled><input id="__ht__scoreslider" type="range" name="rangeInput" min="0" max="10" step="1" value="5" style="margin: 5px; width: 90%; float: left;" onchange="__ht__updateTextInput();"></div></div>');
+
+			__ht__submitButton = $('<a href="#" style="margin:auto; width:80%;height: auto; font-size:16px" class="__ht__btn __ht__orange">Запази оценка</a>');
+			__ht__bottomGrader1stHalf.find( "div:eq(1)" ).append(__ht__submitButton);
+
+			__ht__submitButton.bind('click', function(e) {
+			        e.preventDefault();
+
+			        if ( $( '#__ht__finalcomment' ).val() !== '' ) {
+
+			        	__ht__startLoading();
+
+			            $.ajax({
+			                url : 'https://w23ref.w3c.fmi.uni-sofia.bg/savescore.php',
+			                type: 'POST',
+			                //dataType: 'json',
+			                data : {
+			                    comment: $( '#__ht__finalcomment' ).val(),
+			                    user_id: 85654,
+			                    referat_id: '85652_5_91',
+			                    score: $( '#__ht__score' ).val()
+			                },
+			                success: function(data, textStatus, jqXHR)
+			                {
+			                    //receive(data);
+			                    __ht__loadingComplete('Successfully saved your score.', true);
+			                },
+			                error: function (jqXHR, textStatus, errorThrown)
+			                {
+			                    __ht__loadingComplete('Error with saving your final feedback. Your session is probably expired.', false);
+			                }
+			            });
+			        } else {
+
+			        }
+			    });
+
+			__ht__bottomGrader1stHalf.css('float', 'left');
+			__ht__bottomGrader1stHalf.css('width', '50%');
+			__ht__bottomGrader1stHalf.css('height', '100%');
+			//__ht__bottomGrader1stHalf.css('background', '#00ffff');
+			__ht__bottomGrader.append(__ht__bottomGrader1stHalf);
+
+			__ht__bottomGrader2ndHalf = $('<div><div style="width:80%; height:100%; float:left; text-align:center;"><textarea id="__ht__elementcomment" placeholder="Напишете тук своя коментар към избрания елемент от реферата. Коментарите се запазват автоматично при избор на нов елемент." style="resize: none; margin: 5px; width: 95%; height: 90%; color:black; background-color: white;"></textarea></div><div style="width:20%; height:100%; float:left; text-align:center;"></div></div>');
+			__ht__bottomGrader2ndHalf.css('float', 'left');
+			__ht__bottomGrader2ndHalf.css('width', '50%');
+			__ht__bottomGrader2ndHalf.css('height', '100%');
+			//__ht__bottomGrader2ndHalf.css('background', '#ff00ff');
+			__ht__bottomGrader.append(__ht__bottomGrader2ndHalf);
+
+			__ht__deleteCommentButton = $('<a href="#" style="margin:auto; margin-top:30px; width:80%;height: auto;" class="__ht__btn __ht__red">Изтрий коментар</a>');
+			__ht__bottomGrader2ndHalf.find( "div:eq(1)" ).append(__ht__deleteCommentButton);
+
+			__ht__deleteCommentButton.bind('click', function(e) {
+			        e.preventDefault();
+
+			        if(((typeof __ht__selectedElementID) === "undefined")
+                    || (__ht__currentComments[__ht__selectedElementID] === undefined)){
+                        return;
+                    }
+			        	__ht__startLoading();
+
+			            $.ajax({
+			                url : 'https://w23ref.w3c.fmi.uni-sofia.bg/deletecomment.php',
+			                type: 'POST',
+			                //dataType: 'json',
+			                data : {
+			                    user_id: 85654,
+			                    referat_id: '85652_5_91',
+			                    element_id: __ht__selectedElementID
+			                },
+			                success: function(data, textStatus, jqXHR)
+			                {
+			                	delete __ht__currentComments[__ht__selectedElementID.toString()];
+			                	$('#__ht__comment' + __ht__selectedElementID.toString()).remove();
+			                	$( '#__ht__elementcomment' ).val('');
+			                	__ht__loadingComplete('Successfully removed comment.', true);
+			                    //receive(data);
+			                },
+			                error: function (jqXHR, textStatus, errorThrown)
+			                {
+			                    __ht__loadingComplete('Error with removing the comment. Your session is probably expired.', false);
+			                }
+			            });
+
+			    });
+
+			__ht__bottomGrader2ndHalf.find( "div:eq(1)" ).append('<br/>');
+
+			__ht__saveCommentButton = $('<a href="#" style="margin:auto; margin-top:20px; width:80%;height: auto;" class="__ht__btn __ht__green">Запази коментар</a>');
+			__ht__bottomGrader2ndHalf.find( "div:eq(1)" ).append(__ht__saveCommentButton);
+
+			__ht__saveCommentButton.bind('click', function(e){
+				e.preventDefault();
+				__ht__saveComment();
+			});
+		}
+
+		if (__ht__action == 'view') {
+			__ht__bottomGrader1stHalf = $('<div></div>');
+			__ht__bottomGrader1stHalf.css('float', 'left');
+			__ht__bottomGrader1stHalf.css('width', '50%');
+			__ht__bottomGrader1stHalf.css('height', '100%');
+			__ht__bottomGrader1stHalf.css('overflow-y', 'scroll');
+			__ht__bottomGrader1stHalf.css('word-wrap', 'break-word');
+
+			for (var i = 0; i < __ht__finalVerdicts.length; i++) {
+				__ht__bottomGrader1stHalf.append('<div class="__ht__blockquote"><b style="color:white;">'+__ht__finalVerdicts[i]['score'].toString()+' от 10 точки</b><br/>'+__ht__finalVerdicts[i]['comment']+'</div>');
+			}
+
+			__ht__bottomGrader.append(__ht__bottomGrader1stHalf);
+
+			__ht__bottomGrader2ndHalf = $('<div></div>');
+			__ht__bottomGrader2ndHalf.css('float', 'left');
+			__ht__bottomGrader2ndHalf.css('width', '50%');
+			__ht__bottomGrader2ndHalf.css('height', '100%');
+			__ht__bottomGrader2ndHalf.css('overflow-y', 'scroll');
+			__ht__bottomGrader2ndHalf.css('word-wrap', 'break-word');
+
+			for (var __ht__prop in __ht__currentComments) {
+				for (var i = 0; i < __ht__currentComments[__ht__prop].length; i++) {
+					var __ht__temptemptemp = $('<div class="__ht__blockquote">'+__ht__currentComments[__ht__prop][i]+'</div>');
+					__ht__temptemptemp.addClass('__ht__bottomComment' + __ht__prop);
+					__ht__temptemptemp.attr('data-htextrainfobox', __ht__prop);
+					__ht__temptemptemp.css('cursor', 'default');
+					__ht__temptemptemp.bind('click', function(e) {
+				        e.preventDefault();
+
+				        __ht__changeViewBox($(this).attr('data-htextrainfobox'));
+				    });
+					__ht__bottomGrader2ndHalf.append(__ht__temptemptemp);
+				}
+			}
+
+			__ht__bottomGrader.append(__ht__bottomGrader2ndHalf);
+		}
+
+		__ht__bottomGraderX = $('<div>X</div>');
+		__ht__bottomGraderX.css('position', 'absolute');
+		__ht__bottomGraderX.css('width', '48px');
+		__ht__bottomGraderX.css('top', '0');
+		__ht__bottomGraderX.css('right', '0');
+		__ht__bottomGraderX.css('font-size', '16px');
+
+		
+		__ht__bottomGraderX.css('height', '20px');
+		__ht__bottomGraderX.css('background', '#c75050');
+
+		__ht__bottomGraderX.hover(
+	      function() {
+	        __ht__bottomGraderX.css('background', '#e04343');
+	      }, function() {
+	        __ht__bottomGraderX.css('background', '#c75050');
+	      }
+	    );
+
+		__ht__bottomGraderX.css('line-height', '20px');
+		__ht__bottomGraderX.css('text-align', 'center');
+		__ht__bottomGraderX.css('color', 'white');
+		__ht__bottomGraderX.css('cursor', 'default');
+		__ht__bottomGraderX.click(function() {
+			__ht__changeViewBox(-1);
+            __ht__bottomGrader.hide();
+		    if (__ht__action == 'review') {
+                __ht__selectedBorder.hide();
+		    }
+		});
+		__ht__bottomGrader.append(__ht__bottomGraderX);
+
+		__ht__loadingDiv = $('<div></div>');
+		__ht__loadingDiv.css('position', 'fixed');
+		__ht__loadingDiv.css('width', '100%');
+		__ht__loadingDiv.css('height', '100%');
+		__ht__loadingDiv.css('left', '0');
+		__ht__loadingDiv.css('top', '0');
+		__ht__loadingDiv.css('background', '#c0c0c0');
+		__ht__loadingDiv.css('z-index', '10043');
+		__ht__loadingDiv.css('opacity', '0.60');
+		__ht__loadingDiv.hide();
+		$('body').append(__ht__loadingDiv);
+
+		__ht__loadingDivInfo = $('<div></div>');
+		__ht__loadingDivInfo.css('position', 'relative');
+		__ht__loadingDivInfo.css('width', '200px');
+		__ht__loadingDivInfo.css('height', '200px');
+		__ht__loadingDivInfo.css('background', '#c0c0c0');
+		__ht__loadingDivInfo.css('top', '200px');
+		__ht__loadingDivInfo.css('z-index', '10044');
+		__ht__loadingDivInfo.css('margin', 'auto');
+		__ht__loadingDiv.append(__ht__loadingDivInfo);
+    }
+
+    function __ht__startLoading() {
+    	__ht__loadingDivInfo.css('background', '#c0c0c0');
+    	__ht__loadingDivInfo.html('<img src="https://w23ref.w3c.fmi.uni-sofia.bg/img/loading.gif" style="width:100%">');
+    	__ht__loadingDiv.fadeIn();
+    }
+
+    function __ht__loadingComplete(msg, noerror) {
+    	if (noerror) {
+    		// __ht__loadingDivInfo.css('background', '#00ff00');
+            __ht__loadingDivInfo.html('<img src="https://w23ref.w3c.fmi.uni-sofia.bg/img/loading.gif" style="width:100%">');
+    	} else {
+			alert(msg);
+    	}
+    	// __ht__loadingDivInfo.html(msg);
+    	__ht__loadingDiv.fadeOut(1000);
+    }
+
+    function __ht__jQueryCheck() {
+        if (typeof jQuery === "undefined") {
+            // No one's loaded it; either load it or do without
+		    var __ht__script = document.createElement("SCRIPT");
+		    __ht__script.src = 'https://w23ref.w3c.fmi.uni-sofia.bg/assets/jquery.min.1.7.1.js';
+		    __ht__script.type = 'text/javascript';
+		    document.getElementsByTagName("head")[0].appendChild(__ht__script);
+
+		    // Poll for jQuery to come into existance
+		    var __ht__checkReady = function(callback) {
+		        if (window.jQuery) {
+		            callback(jQuery);
+		        } else {
+		            window.setTimeout(function() { __ht__checkReady(callback); }, 100);
+		        }
+		    };
+
+		    __ht__checkReady(function($) {
+			    __ht__hookwe();
+		    });
+        }
+        else
+        {
+        	//__ht__hookwe(); //2020-02-05
+			// hook on next event-loop to hook AFTER angular / other framework event listeners binding
+			// fixes comments not working when importing jquery manually in referat
+			setTimeout(function() {
+				__ht__hookwe();
+			}, 500); // 1ms timeout works too - just to skip the event loop, but better put some more to make sure other frameworks / code works too
+        	
+        }
+    }
+
+    // return false if the comment was send to the server, but wasn't saved successfully
+	// else, return true
+	function __ht__saveComment(){
+
+		if ( ((typeof __ht__selectedElementID) === "undefined")
+			|| ($( '#__ht__elementcomment' ).val() === '') ) {
+			return true;
+		}
+
+		// if the comment wasn't changed since it was last saved, exit the function
+		if(__ht__currentComments[__ht__selectedElementID.toString()] === $( '#__ht__elementcomment' ).val()){
+			return true;
+		}
+
+		__ht__startLoading();
+
+		var success = true;
+
+		$.ajax({
+			url : 'https://w23ref.w3c.fmi.uni-sofia.bg/savecomment.php',
+			type: 'POST',
+
+			// This function is called automatically when the user clicks on a new element.
+			// That's why the request must NOT be asynchronous. __ht__selectedBorder must have its old value when the
+			// response callback is executed. Only after the new comment position is saved, must the value of
+			// __ht__selectedBorder be updated with the newly selected element.
+			async: false,
+
+			//dataType: 'json',
+			data : {
+				comment: $( '#__ht__elementcomment' ).val(),
+				user_id: 85654,
+			referat_id: '85652_5_91',
+			element_id: __ht__selectedElementID
+		},
+		success: function(data, textStatus, jqXHR)
+		{
+			__ht__currentComments[__ht__selectedElementID.toString()] = $( '#__ht__elementcomment' ).val();
+			__ht__currentCommentsPositions[__ht__selectedElementID.toString()] = __ht__getElementPositionInfo(__ht__selectedBorder);
+			__ht__addNewComment(__ht__selectedElementID);
+			__ht__loadingComplete('Successfully saved comment.', true);
+			//receive(data);
+		},
+		error: function (jqXHR, textStatus, errorThrown)
+		{
+			__ht__loadingComplete('Error with saving the comment. Your session is probably expired.', false);
+			success = false;
+		}
+	});
+
+		return success;
+	}
+})();
+</script>
+
+<div style="width: 100px; height: 30px; position: fixed; top: 40%; left: 0px; background: rgb(0, 166, 147); color: white; text-align: center; font-size: 16px; line-height: 30px; cursor: default; z-index: 11000;">Коментари</div><div style="width: 100px; height: 30px; position: fixed; top: 60%; left: 0px; background: rgb(166, 0, 0); color: white; text-align: center; font-size: 16px; line-height: 30px; cursor: default; z-index: 11000;">Назад</div><div class="pfn1" style="float: left; position: sticky; width: 100%; bottom: 0px; left: 0px; height: 150px; background: rgb(85, 85, 85); color: white; z-index: 10042; text-align: left; font-size: 16px; margin: 0px; padding: 0px; border-radius: 0px; display: none;"><div style="float: left; width: 50%; height: 100%; overflow-y: scroll; overflow-wrap: break-word;"></div><div style="float: left; width: 50%; height: 100%; overflow-y: scroll; overflow-wrap: break-word;"></div><div style="position: absolute; width: 48px; top: 0px; right: 0px; font-size: 16px; height: 20px; background: rgb(199, 80, 80); line-height: 20px; text-align: center; color: white; cursor: default;">X</div></div><div style="position: fixed; width: 100%; height: 100%; left: 0px; top: 0px; background: rgb(192, 192, 192); z-index: 10043; opacity: 0.6; display: none;"><div style="position: relative; width: 200px; height: 200px; background: rgb(192, 192, 192); top: 200px; z-index: 10044; margin: auto;"></div></div></body><grammarly-desktop-integration data-grammarly-shadow-root="true"><template shadowrootmode="open"><style>
+      div.grammarly-desktop-integration {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select:none;
+        user-select:none;
+      }
+
+      div.grammarly-desktop-integration:before {
+        content: attr(data-content);
+      }
+    </style><div aria-label="grammarly-integration" role="group" tabindex="-1" class="grammarly-desktop-integration" data-content="{&quot;mode&quot;:&quot;full&quot;,&quot;isActive&quot;:true,&quot;isUserDisabled&quot;:false}"></div></template></grammarly-desktop-integration></html>

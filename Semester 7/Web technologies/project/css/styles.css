@@ -1,0 +1,205 @@
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+header {
+    background: #005f73;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2rem;
+}
+
+header p {
+    margin-top: 10px;
+    font-size: 1.2rem;
+    color: #d1eceb;
+}
+
+main {
+    padding: 20px;
+    max-width: 900px;
+    margin: 20px auto;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+section {
+    margin-bottom: 20px;
+}
+
+section h2 {
+    color: #005f73;
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    border-bottom: 2px solid #0a9396;
+    padding-bottom: 5px;
+}
+
+section h3 {
+    color: #0a9396;
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+}
+
+section ul {
+    list-style: disc;
+    margin-left: 20px;
+    padding-left: 10px;
+}
+
+section pre {
+    background: #e0f4f4;
+    padding: 15px;
+    border-radius: 5px;
+    font-family: monospace;
+    font-size: 0.9rem;
+    overflow-x: auto;
+}
+
+#filter-comparison table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+#filter-comparison th, #filter-comparison td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+#filter-comparison th {
+    background-color: #f4f4f4;
+    color: #333;
+    text-align: center;
+    font-weight: bold;
+}
+
+#filter-comparison tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+#filter-comparison tbody tr:hover {
+    background-color: #e8f4f4;
+}
+
+#control-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.filter-control {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.filter-control label {
+    font-weight: bold;
+    color: #005f73;
+}
+
+.filter-control input[type="range"] {
+    flex-grow: 1;
+    max-width: 300px;
+}
+
+.filter-control span {
+    font-size: 0.9rem;
+    color: #333;
+}
+
+#filter-switcher .filter-button, #play-pause-button {
+    background: #005f73;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    margin: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background 0.3s ease;
+}
+
+#filter-switcher .filter-button:hover, #play-pause-button:hover {
+    background: #0a9396;
+}
+
+#filter-switcher .filter-button.active {
+    background: #0a9396;
+    font-weight: bold;
+}
+
+#visualization canvas {
+    display: block;
+    margin: 10px auto;
+    border: 1px solid #ddd;
+    background: #f9f9f9;
+    border-radius: 5px;
+}
+
+footer {
+    background: #005f73;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    font-size: 0.9rem;
+}
+
+#references p {
+    line-height: 0.8;
+}
+
+#references a {
+    color: #005f73;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+#references a:hover {
+    text-decoration: underline;
+}
+
+#table-of-contents {
+    margin: 40px 0;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ddd;
+}
+
+#table-of-contents h2 {
+    font-size: 1.8rem;
+    padding-left: 20px;
+    padding-bottom: 15px;
+}
+
+#table-of-contents ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+#table-of-contents a {
+    text-decoration: none;
+    color: #005f73;
+    font-size: 1.1rem;
+}
+
+#table-of-contents a:hover {
+    text-decoration: underline;
+    color: #0a9396;
+}

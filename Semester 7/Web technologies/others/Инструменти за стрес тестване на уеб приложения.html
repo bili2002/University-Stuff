@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<!-- saved from url=(0088)https://w23ref.w3c.fmi.uni-sofia.bg/referat/85608_1_19/index.php?action=view&back=review -->
+<html lang="bg"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Инструменти за стрес тестване на уеб приложения</title>
+    <link rel="stylesheet" href="./Инструменти за стрес тестване на уеб приложения_files/referat.css">
+    <script src="./Инструменти за стрес тестване на уеб приложения_files/referat.js" defer="" async=""></script>
+<script src="./Инструменти за стрес тестване на уеб приложения_files/jquery.min.1.7.1.js" type="text/javascript"></script><style type="text/css">/* background-image: unset; padding: unset; span:not([data-htextrainfo]), div:not([data-htextrainfo]) { padding: 0; height: auto; width: auto; margin: 0; border-radius: 0; border: none; background: none; } //not working span:not([data-htextrainfo]), div:not([data-htextrainfo]), div:not([data-htextrainfobo]), not(.__ht__blockquote) { padding: 2; height: auto; width: auto; margin: 0; border-radius: 0; border: none; background: none; } background-image: url("../img/background.png"); background-repeat: repeat; background-size: 100%; */ span:not([data-htextrainfo]), div:not([data-htextrainfo]) { padding: 0; height: auto; width: auto; margin: 0; border-radius: 0; border: none; background: none; font-family: "Helvetica", cursive; } .__ht__btn { border-radius: 3px; padding: 3px 7px; text-decoration: none; color: #fff; position: relative; display: inline-block; } .__ht__btn:active { transform: translate(0px, 5px); -webkit-transform: translate(0px, 5px); box-shadow: 0px 1px 0px 0px; } .__ht__green { background-color: #2ecc71; box-shadow: 0px 3px 0px 0px #15B358; } .__ht__green:hover { background-color: #48E68B; } .__ht__red { background-color: #e74c3c; box-shadow: 0px 3px 0px 0px #CE3323; } .__ht__red:hover { background-color: #FF6656; } .__ht__orange { background-color: #e67e22; box-shadow: 0px 3px 0px 0px #CD6509; } .__ht__orange:hover { background-color: #FF983C; } div.__ht__blockquote { border-left: 1px solid #ccc; border-left: 10px solid #ccc; margin: 1.5em 10px; padding: 0.5em 10px; } div.__ht__blockquote p { display: inline; } .#__ht__elementcomment, #__ht__score, #__ht__finalcomment { color: black; } .__ht__bottomPadding{ padding-bottom: 155px; }</style></head>
+<body data-new-gr-c-s-check-loaded="14.1209.0" data-gr-ext-installed="">
+    <header data-htextrainfo="1">
+        <h1 data-htextrainfo="2">Инструменти за стрес тестване на уеб приложения</h1>
+    </header>
+    <main data-htextrainfo="3">
+
+        <section data-htextrainfo="4">
+            <img src="./Инструменти за стрес тестване на уеб приложения_files/stress.png" alt="Stress Testing" class="image" data-htextrainfo="5">
+        </section>
+
+        <section data-htextrainfo="6">
+            <h2 data-htextrainfo="7">Какво означава стрес-тестване?</h2>
+            <p data-htextrainfo="8">Стрес тестването представлява специфичен тип софтуерно тестване, което се използва за оценка на стабилността и надеждността на дадено софтуерно приложение. Основната цел на този вид тестове е да се анализира как софтуерът се държи при изключително високи натоварвания и да се гарантира, че няма да се срине при критични ситуации. Чрез стрес тестовете се изследва устойчивостта на софтуера и способността му да обработва грешки дори извън стандартните условия на работа. Това включва симулация на екстремни натоварвания, за да се провери как софтуерът функционира в границите на своята издръжливост.</p>
+            <p data-htextrainfo="9">В контекста на софтуерното инженерство, стрес тестването често се нарича още „тест за издръжливост“. Процесът включва подлагане на приложението на интензивни натоварвания за кратък период от време, с цел да се установи неговият предел на издръжливост. Най-разпространената употреба на стрес тестовете е за идентифициране на точката, при която системата – било то софтуерна или хардуерна – започва да отказва. Освен това, тези тестове предоставят ценна информация за ефективността на системата при управление на грешки в условия на екстремен стрес, което е от критично значение за осигуряване на нейната надеждност.</p>
+        </section>
+
+        <section data-htextrainfo="10">
+            <h2 data-htextrainfo="11">За какво е нужно стрес-тестването?</h2>
+            <p data-htextrainfo="12">Стрес тестването е от съществено значение за оценка на способността на системата да се справя с внезапни и необичайни пикове в трафика. Липсата на адекватна реакция при подобни ситуации може да доведе до значителни загуби, включително финансови, репутационни и свързани с чувствителна информация. Това го прави изключително ценен процес, който се прилага поради следните причини:</p>
+            <ul data-htextrainfo="13">
+                <li data-htextrainfo="14"><strong data-htextrainfo="15">Проверка на работоспособността при необичайни условия:</strong> Целта е да се установи дали системата може да издържи на натоварвания, които надвишават нормалните граници.</li>
+                <li data-htextrainfo="16"><strong data-htextrainfo="17">Осигуряване на подходящи съобщения за грешка:</strong> При натоварване е важно системата да информира потребителите с ясни съобщения, вместо да се срине без предупреждение.</li>
+                <li data-htextrainfo="18"><strong data-htextrainfo="19">Предотвратяване на сериозни загуби:</strong> Сривовете на системата при екстремни натоварвания могат да доведат до огромни финансови щети, които често надвишават разходите за предварително тестване.</li>
+                <li data-htextrainfo="20"><strong data-htextrainfo="21">Подготовка за извънредни ситуации:</strong> Стрес тестването дава възможност на разработчиците да идентифицират слабите места и да ги укрепят, гарантирайки, че системата ще функционира стабилно дори при екстремни натоварвания.</li>
+            </ul>
+            <p data-htextrainfo="22">Този процес не само минимизира риска от повреди, но и повишава доверието в системата, като осигурява стабилност при неочаквани сценарии.</p>
+        </section>
+
+        <section data-htextrainfo="23">
+            <h2 data-htextrainfo="24">Цели на стрес-тестването</h2>
+            <p data-htextrainfo="25">Целта на стрес тестовете е да се изследва поведението на системата след възникване на повреда и да се оцени нейната способност за възстановяване. За да се счита стрес тестът за успешен, системата трябва да реагира адекватно при екстремни условия, предоставяйки ясно и подходящо съобщение за грешка, което информира потребителите за възникналия проблем.</p>
+            <p data-htextrainfo="26">Често при провеждане на този тип тестване се използват огромни набори от данни, които могат да включват критична информация. Важно е тестерите да гарантират, че тези данни, особено тези свързани със сигурността, няма да бъдат изгубени или компрометирани по време на тестовете. Това изисква внимателно планиране и управление на тестовите сценарии.</p>
+            <p data-htextrainfo="27">Ключовият аспект на стрес тестовете е да се увери, че системата може успешно да се възстанови след повреда, процес известен като възстановимост. Тази способност е от съществено значение за осигуряване на надеждност и непрекъснатост на работата на софтуера дори в условия на сериозен натиск.</p>
+        </section>
+
+        <section data-htextrainfo="28">
+            <h2 data-htextrainfo="29">Видове стрес-тестване</h2>
+        
+            <h3 data-htextrainfo="30">1. Разпределено стрес тестване</h3>
+            <p data-htextrainfo="31">При разпределените клиент-сървър системи стрес тестването се извършва на всички клиенти от сървъра. Основната задача на стрес сървъра е да разпространява набор от стрес тестове към стрес клиентите и да следи тяхното състояние.</p>
+            <ul data-htextrainfo="32">
+                <li data-htextrainfo="33"><strong data-htextrainfo="34">Процес:</strong> Сървърът добавя клиента в своя списък, след като клиентът се свърже, и започва да изпраща данни за тестване. В същото време клиентските машини изпращат периодични сигнали за статуса си (heartbeat).</li>
+                <li data-htextrainfo="35"><strong data-htextrainfo="36">Отстраняване на грешки:</strong> Ако сървърът не получава сигнали от дадена клиентска машина, това показва проблем, който изисква допълнително проучване.</li>
+                <li data-htextrainfo="37"><strong data-htextrainfo="38">Пример:</strong> Сървърът успешно се свързва с Клиент 1 и Клиент 2, но не може да комуникира с Клиент 3 и Клиент 4.</li>
+            </ul>
+        
+            <h3 data-htextrainfo="39">2. Стрес тестване върху приложението</h3>
+            <p data-htextrainfo="40">Фокусира се върху откриването на дефекти, свързани със:</p>
+            <ul data-htextrainfo="41">
+                <li data-htextrainfo="42">Заключване и блокиране на данни</li>
+                <li data-htextrainfo="43">Проблеми в мрежата</li>
+                <li data-htextrainfo="44">Затруднения в производителността на приложението</li>
+            </ul>
+            <p data-htextrainfo="45">Този тип тестове са особено полезни за оценка на стабилността на приложението при високи натоварвания.</p>
+        
+            <h3 data-htextrainfo="46">3. Транзакционен стрес тест</h3>
+            <p data-htextrainfo="47">Тестът обхваща една или повече транзакции между две или повече приложения.</p>
+            <ul data-htextrainfo="48">
+                <li data-htextrainfo="49"><strong data-htextrainfo="50">Цел:</strong> Финна настройка и оптимизация на системата.</li>
+                <li data-htextrainfo="51"><strong data-htextrainfo="52">Пример:</strong> Оценка на поведението на интегрирана система при множество транзакции, извършвани едновременно.</li>
+            </ul>
+        
+            <h3 data-htextrainfo="53">4. Системен стрес тест</h3>
+            <p data-htextrainfo="54">Интегрирано стрес тестване, което включва множество системи, работещи на един сървър.</p>
+            <ul data-htextrainfo="55">
+                <li data-htextrainfo="56"><strong data-htextrainfo="57">Цел:</strong> Идентифициране на дефекти, при които едно приложение блокира друго.</li>
+                <li data-htextrainfo="58"><strong data-htextrainfo="59">Пример:</strong> Установяване на взаимодействията между приложенията и минимизиране на конфликтите.</li>
+            </ul>
+        
+            <h3 data-htextrainfo="60">5. Проучвателно стрес тестване</h3>
+            <p data-htextrainfo="61">Този вид тестове изследва системата с необичайни параметри или условия, които рядко се срещат в реални сценарии. Целта е откриване на дефекти в екстремни и неочаквани ситуации.</p>
+            <ul data-htextrainfo="62">
+                <li data-htextrainfo="63"><strong data-htextrainfo="64">Примери за сценарии:</strong></li>
+                <ul data-htextrainfo="65">
+                    <li data-htextrainfo="66">Едновременно влизане на огромен брой потребители.</li>
+                    <li data-htextrainfo="67">Активиране на антивирусен скенер на всички машини едновременно.</li>
+                    <li data-htextrainfo="68">Недостъпност на базата данни, докато тя е необходима за уебсайт.</li>
+                    <li data-htextrainfo="69">Въвеждане на голям обем данни едновременно в базата данни.</li>
+                </ul>
+            </ul>
+            <p data-htextrainfo="70">Тези тестове помагат да се оцени устойчивостта на системата в ситуации, които излизат извън стандартния спектър на натоварване.</p>
+        </section>
+
+        <section data-htextrainfo="71">
+            <h2 data-htextrainfo="72">Как се прави стрес тест?</h2>
+            <p data-htextrainfo="73">Стрес тестването е структуриран процес, който включва пет основни етапа:</p>
+        
+            <h3 data-htextrainfo="74">1. Планиране на стрес теста</h3>
+            <ul data-htextrainfo="75">
+                <li data-htextrainfo="76"><strong data-htextrainfo="77">Цел:</strong> Да се създаде ясна стратегия за провеждане на теста.</li>
+                <li data-htextrainfo="78"><strong data-htextrainfo="79">Дейности:</strong></li>
+                <ul data-htextrainfo="80">
+                    <li data-htextrainfo="81">Събиране на данни за системата, която ще бъде тествана.</li>
+                    <li data-htextrainfo="82">Анализ на системата, за да се разберат възможните ѝ слабости и критични точки.</li>
+                    <li data-htextrainfo="83">Определяне на целите на стрес теста, като например оценка на устойчивостта или капацитета при екстремни натоварвания.</li>
+                </ul>
+            </ul>
+        
+            <h3 data-htextrainfo="84">2. Създаване на скриптове за автоматизация</h3>
+            <ul data-htextrainfo="85">
+                <li data-htextrainfo="86"><strong data-htextrainfo="87">Цел:</strong> Автоматизиране на процеса на стрес тестване за ефективност и повторяемост.</li>
+                <li data-htextrainfo="88"><strong data-htextrainfo="89">Дейности:</strong></li>
+                <ul data-htextrainfo="90">
+                    <li data-htextrainfo="91">Разработване на скриптове за автоматизация, които симулират различни сценарии на натоварване.</li>
+                    <li data-htextrainfo="92">Генериране на тестови данни, необходими за провеждане на стрес тестовете.</li>
+                </ul>
+            </ul>
+        
+            <h3 data-htextrainfo="93">3. Изпълнение на скриптове</h3>
+            <ul data-htextrainfo="94">
+                <li data-htextrainfo="95"><strong data-htextrainfo="96">Цел:</strong> Провеждане на стрес тестовете.</li>
+                <li data-htextrainfo="97"><strong data-htextrainfo="98">Дейности:</strong></li>
+                <ul data-htextrainfo="99">
+                    <li data-htextrainfo="100">Стартиране на автоматизираните скриптове, които прилагат стресови натоварвания върху системата.</li>
+                    <li data-htextrainfo="101">Събиране и съхраняване на резултатите от тестовете за последващ анализ.</li>
+                </ul>
+            </ul>
+        
+            <h3 data-htextrainfo="102">4. Анализ на резултатите</h3>
+            <ul data-htextrainfo="103">
+                <li data-htextrainfo="104"><strong data-htextrainfo="105">Цел:</strong> Да се идентифицират и разберат причините за проблеми, възникнали по време на тестовете.</li>
+                <li data-htextrainfo="106"><strong data-htextrainfo="107">Дейности:</strong></li>
+                <ul data-htextrainfo="108">
+                    <li data-htextrainfo="109">Анализиране на събраните резултати.</li>
+                    <li data-htextrainfo="110">Идентифициране на тесните места (bottlenecks), като например неефективно използване на ресурси, прекомерна забавяне или сривове.</li>
+                </ul>
+            </ul>
+        
+            <h3 data-htextrainfo="111">5. Оптимизиране</h3>
+            <ul data-htextrainfo="112">
+                <li data-htextrainfo="113"><strong data-htextrainfo="114">Цел:</strong> Подобряване на производителността и устойчивостта на системата.</li>
+                <li data-htextrainfo="115"><strong data-htextrainfo="116">Дейности:</strong></li>
+                <ul data-htextrainfo="117">
+                    <li data-htextrainfo="118">Коригиране на конфигурациите, оптимизиране на кода или променяне на архитектурата.</li>
+                    <li data-htextrainfo="119">Извършване на настройки, базирани на резултатите от анализа, с цел постигане на желаните показатели.</li>
+                </ul>
+            </ul>
+        
+            <h3 data-htextrainfo="120">Повторение на цикъла</h3>
+            <p data-htextrainfo="121">След оптимизациите, целият процес на стрес тестване се стартира отново. Това позволява да се провери дали въведените промени водят до подобрение и дали системата вече отговаря на зададените изисквания.</p>
+            <p data-htextrainfo="122">Този цикличен подход гарантира постепенно подобряване на устойчивостта и производителността на системата.</p>
+        </section>
+
+        <section data-htextrainfo="123">
+            <h2 data-htextrainfo="124">Метрики за стрес тестване</h2>
+            <p data-htextrainfo="125">Измерването на ефективността и устойчивостта на системата по време на стрес тестове е възможно чрез ключови метрики, които се групират в три основни категории:</p>
+        
+            <h3 data-htextrainfo="126">1. Измерване на скалируемост и производителност</h3>
+            <ul data-htextrainfo="127">
+                <li data-htextrainfo="128"><strong data-htextrainfo="129">Страници в секунда:</strong> Измерва броя на страниците, които са заявени от потребителите или клиенти за една секунда.</li>
+                <ul data-htextrainfo="130">
+                    <li data-htextrainfo="131"><strong data-htextrainfo="132">Пример:</strong> Оценява способността на системата да обработва множество заявки едновременно.</li>
+                </ul>
+                <li data-htextrainfo="133"><strong data-htextrainfo="134">Пропускателна способност:</strong> Основен индикатор, който измерва обема на данни, обработвани за секунда (обикновено в байтове или мегабайтове).</li>
+                <ul data-htextrainfo="135">
+                    <li data-htextrainfo="136"><strong data-htextrainfo="137">Пример:</strong> Брой байтове, които сървърът успешно изпраща като отговор.</li>
+                </ul>
+                <li data-htextrainfo="138"><strong data-htextrainfo="139">Кръгове:</strong> Сравнява броя пъти, в които тестовите сценарии са били планирани, с действителния брой пъти, в които клиентите са ги изпълнили.</li>
+                <ul data-htextrainfo="140">
+                    <li data-htextrainfo="141"><strong data-htextrainfo="142">Пример:</strong> Помага за оценка на надеждността на планираните тестове.</li>
+                </ul>
+            </ul>
+        
+            <h3 data-htextrainfo="143">2. Отговор на приложението</h3>
+            <ul data-htextrainfo="144">
+                <li data-htextrainfo="145"><strong data-htextrainfo="146">Време на попадение:</strong> Средното време, необходимо за извличане на конкретна страница или изображение от сървъра.</li>
+                <ul data-htextrainfo="147">
+                    <li data-htextrainfo="148"><strong data-htextrainfo="149">Пример:</strong> Ефективност при зареждане на медийни ресурси.</li>
+                </ul>
+                <li data-htextrainfo="150"><strong data-htextrainfo="151">Време до първия байт (TTFB):</strong> Времето, което отнема на системата да върне първия байт от отговор на заявка.</li>
+                <ul data-htextrainfo="152">
+                    <li data-htextrainfo="153"><strong data-htextrainfo="154">Пример:</strong> Полезно за измерване на латентността на сървъра.</li>
+                </ul>
+                <li data-htextrainfo="155"><strong data-htextrainfo="156">Време на страница:</strong> Времето, което отнема за извличане на цялото съдържание на дадена страница.</li>
+                <ul data-htextrainfo="157">
+                    <li data-htextrainfo="158"><strong data-htextrainfo="159">Пример:</strong> Полезно за анализ на потребителското изживяване при зареждане на страници.</li>
+                </ul>
+            </ul>
+        
+            <h3 data-htextrainfo="160">3. Провали</h3>
+            <ul data-htextrainfo="161">
+                <li data-htextrainfo="162"><strong data-htextrainfo="163">Неуспешни връзки:</strong> Броят връзки, които клиентът е отказал поради слаб сигнал или други мрежови проблеми.</li>
+                <ul data-htextrainfo="164">
+                    <li data-htextrainfo="165"><strong data-htextrainfo="166">Пример:</strong> Полезно за оценка на стабилността на мрежовата инфраструктура.</li>
+                </ul>
+                <li data-htextrainfo="167"><strong data-htextrainfo="168">Неуспешни рундове:</strong> Броят тестови сценарии, които не са били изпълнени успешно.</li>
+                <ul data-htextrainfo="169">
+                    <li data-htextrainfo="170"><strong data-htextrainfo="171">Пример:</strong> Идентифицира слабости в изпълнението на тестовете.</li>
+                </ul>
+                <li data-htextrainfo="172"><strong data-htextrainfo="173">Неуспешни посещения:</strong> Броят неуспешни опити за достъп до ресурси от системата, като например счупени връзки или липсващи изображения.</li>
+                <ul data-htextrainfo="174">
+                    <li data-htextrainfo="175"><strong data-htextrainfo="176">Пример:</strong> Полезно за анализ на грешки в съдържанието и достъпността.</li>
+                </ul>
+            </ul>
+        </section>
+
+        <section data-htextrainfo="177">
+            <h2 data-htextrainfo="178">Видове инструменти за стрес тестване на уеб приложения</h2>
+        
+            <h3 data-htextrainfo="179">1. JMeter</h3>
+            <p data-htextrainfo="180">Apache JMeter е популярно решение с отворен код за тестване на производителността и натоварването на различни софтуерни услуги, включително уеб приложения. Той може да симулира голямо натоварване върху сървър чрез създаване на множество виртуални потребители.</p>
+            <h4 data-htextrainfo="181">Как протича стрес тестването с JMeter?</h4>
+            <ol data-htextrainfo="182">
+                <li data-htextrainfo="183">Създаване на заявка и изпращането ѝ към сървъра.</li>
+                <li data-htextrainfo="184">Получаване на отговор от сървъра и визуализиране на резултатите в диаграма или графика.</li>
+                <li data-htextrainfo="185">Обработка на отговора и генериране на отчети в текстови, XML или JSON формат за анализ.</li>
+                <li data-htextrainfo="186">Анализ на резултатите за да се идентифицират слабите места.</li>
+            </ol>
+            <h4 data-htextrainfo="187">Предимства на JMeter:</h4>
+            <ul data-htextrainfo="188">
+                <li data-htextrainfo="189">Отворен код: Безплатен и лесен за модификация.</li>
+                <li data-htextrainfo="190">Удобен GUI: Лесно създаване на тестови планове и конфигуриране на елементи.</li>
+                <li data-htextrainfo="191">Изчерпателна документация: Силна подкрепа и ръководства за начинаещи.</li>
+                <li data-htextrainfo="192">Записване на тестови сценарии: Използване на прокси сървър за запис на действия при разглеждане на уеб приложение.</li>
+            </ul>
+            <h4 data-htextrainfo="193">Примерен код:</h4>
+            <div class="code-block" data-htextrainfo="194">
+                <pre data-htextrainfo="195"><code data-htextrainfo="196">
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;jmeterTestPlan version="1.2" properties="5.0" jmeter="5.4.1 r1855137"&gt;
+    &lt;hashTree&gt;
+        &lt;TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Test Plan" enabled="true"&gt;
+            &lt;elementProp name="TestPlan.comments" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" enabled="true"&gt;
+                &lt;collectionProp name="Arguments.arguments"&gt;
+                    &lt;elementProp name="comments" elementType="string" guiclass="TextGui" testclass="Arguments" enabled="true"&gt;
+                        &lt;stringProp name="text"&gt;&lt;/stringProp&gt;
+                    &lt;/elementProp&gt;
+                &lt;/collectionProp&gt;
+            &lt;/elementProp&gt;
+        &lt;/TestPlan&gt;
+    &lt;/hashTree&gt;
+&lt;/jmeterTestPlan&gt;
+                </code></pre>
+                <button onclick="copyToClipboard(this)" data-htextrainfo="197">Copy</button>
+            </div>
+        
+            <h3 data-htextrainfo="198">2. k6</h3>
+            <p data-htextrainfo="199">Grafana k6 е инструмент с отворен код за тестване на натоварване, предназначен за разработчици и инженерни екипи. Писан е на Go, но скриптовете се създават с JavaScript.</p>
+            <h4 data-htextrainfo="200">Как протича стрес тестването с k6?</h4>
+            <ol data-htextrainfo="201">
+                <li data-htextrainfo="202">Създаване на тестов скрипт със сценарии за натоварване.</li>
+                <li data-htextrainfo="203">Изпълнение на теста с конфигурирани етапи за различни натоварвания.</li>
+                <li data-htextrainfo="204">Събиране на резултати като време за реакция, брой успешни или неуспешни заявки.</li>
+                <li data-htextrainfo="205">Препращане на резултатите за анализ.</li>
+            </ol>
+            <h4 data-htextrainfo="206">Предимства на k6:</h4>
+            <ul data-htextrainfo="207">
+                <li data-htextrainfo="208">Отворен код: Със силна поддръжка от общността.</li>
+                <li data-htextrainfo="209">JavaScript скриптове: Лесни за създаване и поддръжка.</li>
+                <li data-htextrainfo="210">Висока скалируемост: Лесно увеличаване на броя виртуални потребители.</li>
+                <li data-htextrainfo="211">Ниска консумация на ресурси: Лек за използване, подходящ за локални машини.</li>
+            </ul>
+            <h4 data-htextrainfo="212">Примерен код:</h4>
+            <div class="code-block" data-htextrainfo="213">
+                <pre data-htextrainfo="214"><code data-htextrainfo="215">
+import http from 'k6/http';
+import {sleep} from 'k6';
+
+export const options = {
+    stages: [
+        { duration: '10m', target: 200 },
+        { duration: '30m', target: 200 },
+        { duration: '5m', target: 0 },
+    ],
+};
+
+export default () =&gt; {
+    const urlRes = http.get('https://test-api.k6.io');
+    sleep(1);
+};
+                </code></pre>
+                <button onclick="copyToClipboard(this)" data-htextrainfo="216">Copy</button>
+            </div>
+        
+            <h3 data-htextrainfo="217">3. LoadNinja</h3>
+            <p data-htextrainfo="218">LoadNinja е облачна платформа за тестване на натоварване и производителност на уеб приложения и услуги. Тя предлага възможности за тестване на реални потребителски действия чрез симулиране на браузърни сесии.</p>
+            <h4 data-htextrainfo="219">Как протича стрес тестването с LoadNinja?</h4>
+            <ol data-htextrainfo="220">
+                <li data-htextrainfo="221">Записване на UI тест чрез браузър или API тестове чрез ръчни заявки.</li>
+                <li data-htextrainfo="222">Създаване на тестови сценарии, които симулират действия на потребители.</li>
+                <li data-htextrainfo="223">Изпълнение на теста с виртуални потребители в реални браузъри.</li>
+                <li data-htextrainfo="224">Анализ на резултатите, за да се оцени стабилността и мащабируемостта на приложението.</li>
+            </ol>
+            <h4 data-htextrainfo="225">Предимства на LoadNinja:</h4>
+            <ul data-htextrainfo="226">
+                <li data-htextrainfo="227">Записване на действия на потребители: Симулира потребителски взаимодействия, включително паузи между стъпките.</li>
+                <li data-htextrainfo="228">Използване на реални браузъри: Всеки виртуален потребител използва собствен браузър, което осигурява по-точно тестване.</li>
+                <li data-htextrainfo="229">Лесно създаване на тестове: Няма нужда от кодиране, просто записвайте действия в браузъра.</li>
+                <li data-htextrainfo="230">Възможност за наблюдение в реално време: Можете да следите активността на виртуалните потребители по време на теста.</li>
+            </ul>
+        </section>
+
+        
+        <section data-htextrainfo="231">
+            <h2 data-htextrainfo="232">Заключение</h2>
+            <p data-htextrainfo="233">Стрес тестването е основополагащ етап в жизнения цикъл на разработката на софтуер, който осигурява оценка на устойчивостта, стабилността и производителността на системата при екстремни условия. Основната му цел е да разкрие потенциални слабости, уязвимости и ограничения в производителността, като по този начин гарантира, че системата може да издържи на високи натоварвания и неочаквани сценарии.</p>
+            <p data-htextrainfo="234">Представените инструменти, като JMeter, k6 и LoadNinja, илюстрират основните подходи за стрес тестване, предоставяйки мощни възможности за симулация и анализ. Тяхното използване позволява:</p>
+            <ul data-htextrainfo="235">
+                <li data-htextrainfo="236">Навременно идентифициране на тесни места в производителността;</li>
+                <li data-htextrainfo="237">Осигуряване на надеждност дори при критични натоварвания;</li>
+                <li data-htextrainfo="238">Повишаване на удовлетворението на потребителите чрез стабилност на системата.</li>
+            </ul>
+            <p data-htextrainfo="239">Изпълнението на стрес тестове е не само полезно за предотвратяване на сривове, но и за непрекъснато подобрение на архитектурата и функционалността на приложенията. Те предоставят ценни данни, които разработчиците могат да използват за оптимизиране на системата и подготовка за реални сценарии с висока интензивност на трафика.</p>
+        </section>
+        
+
+        <footer data-htextrainfo="240">
+            <p data-htextrainfo="241">Цитирана литература:</p>
+            <ul data-htextrainfo="242">
+                <li data-htextrainfo="243">[1] <a href="https://www.guru99.com/stress-testing-tutorial.html" target="_blank" data-htextrainfo="244">Thomas Hamilton, "What is STRESS Testing in Software Testing?"</a>, последна промяна Април 24, 2024</li>
+                <li data-htextrainfo="245">[2] <a href="https://www.edureka.co/blog/jmeter-tutorial/#:~:text=Apache%20JMeter%20is%20a%20testing,functional%20testing%20of%20web%20applications" target="_blank" data-htextrainfo="246">Sayantini, "JMeter Tutorial for Beginners: All You Need To Know About Performance Testing"</a>, последна промяна Март 15, 2023</li>
+                <li data-htextrainfo="247">[3] <a href="https://www.guru99.com/jmeter-performance-testing.html" target="_blank" data-htextrainfo="248">Thomas Hamilton, "How to Use JMeter for Performance &amp; Load Testing"</a>, последна промяна 31 Октомври, 2024</li>
+                <li data-htextrainfo="249">[4] <a href="https://www.blazemeter.com/blog/load-ui" target="_blank" data-htextrainfo="250">James Panetti, "Load UI: How to Test Your UI While Under Load"</a>, последна промяна Май 31, 2021</li>
+                <li data-htextrainfo="251">[5] <a href="https://www.selenium.dev/documentation/" target="_blank" data-htextrainfo="252">Software Freedom Conservancy, "The Selenium Browser Automation Project"</a>, последна промяна Ноември 17, 2023</li>
+                <li data-htextrainfo="253">[6] <a href="https://k6.io/blog/k6-vs-jmeter/" target="_blank" data-htextrainfo="254">Nicole van der Hoeven, "Comparing k6 and JMeter for load testing"</a>, последна промяна Януари 27, 2021</li>
+                <li data-htextrainfo="255">[7] <a href="https://k6.io/docs/" target="_blank" data-htextrainfo="256">Grafana Labs, "Welcome to the k6 documentation"</a></li>
+                <li data-htextrainfo="257">[8] <a href="https://grafana.com/blog/2023/08/10/understanding-grafana-k6-a-simple-guide-to-the-load-testing-tool/" target="_blank" data-htextrainfo="258">Theo Crevon, "Understanding Grafana k6: A simple guide to the load testing tool"</a>, последна промяна Август 10, 2023</li>
+                <li data-htextrainfo="259">[9] <a href="https://support.smartbear.com/loadninja/docs/general-info/about.html" target="_blank" data-htextrainfo="260">SmartBear Software, "About LoadNinja"</a>, последна промяна Август 06, 2024</li>
+                <li data-htextrainfo="261">[10] <a href="https://support.smartbear.com/loadninja/docs/scripts/editor.html" target="_blank" data-htextrainfo="262">SmartBear Software, "UI Test Recorder"</a>, последна промяна Август 06, 2024</li>
+                <li data-htextrainfo="263">[11] <a href="https://support.smartbear.com/loadninja/docs/api-tests/index.html" target="_blank" data-htextrainfo="264">SmartBear Software, "API Tests"</a>, последна промяна Август 06, 2024</li>
+            </ul>
+        </footer>
+        
+    </main>
+<script data-htextrainfo="265">	var __ht__currentlyHoveredElements = [];
+	var __ht__currentHoverElement;
+	var __ht__hoverBorder;
+	var __ht__selectedBorder;
+	var __ht__bottomGrader;
+	var __ht__bottomGrader1stHalf;
+	var __ht__bottomGrader2ndHalf;
+
+	var __ht__backLabelLink;
+
+	var __ht__selectedElementID;
+	var __ht__submitButton;
+	var __ht__saveCommentButton;
+	var __ht__deleteCommentButton;
+
+	var __ht__highlightedID = -1;
+
+	var __ht__finalVerdicts = [];
+	
+
+	var __ht__currentComments = {};
+	
+	var __ht__currentCommentsPositions = {};
+	const __ht__action = 'view';
+
+	var __ht__loadingDiv;
+	var __ht__loadingDivInfo;
+
+	function __ht__updateTextInput() {
+      	$('#__ht__score').val( $('#__ht__scoreslider').val() );
+    }
+
+	(function() {
+    if (window.addEventListener) {
+        // Standard
+        window.addEventListener('load', __ht__jQueryCheck, false);
+    }
+    else if (window.attachEvent) {
+        // Microsoft
+        window.attachEvent('onload', __ht__jQueryCheck);
+    }
+
+    function __ht__changeViewBox(id) {
+    	if (id != __ht__highlightedID) {
+    		if (__ht__highlightedID != -1) {
+    			 $('#__ht__comment'+__ht__highlightedID.toString()).css('background', '#ff00ff');
+    			 $('.__ht__bottomComment'+__ht__highlightedID.toString()).css('background-color','transparent');
+    		}
+    		__ht__highlightedID = id;
+    		if (id != -1) {
+	    		 $('#__ht__comment'+id.toString()).css('background', '#0000ff');
+	    		 $('.__ht__bottomComment'+id.toString()).css('background', '#e67e22');
+	    	}
+    	}
+
+    	if (id != -1) {
+			$('html, body').animate({
+		        scrollTop: $('#__ht__comment'+id.toString()).offset().top
+		    }, 1000);
+
+			__ht__bottomGrader2ndHalf.animate({
+		        scrollTop: __ht__bottomGrader2ndHalf.scrollTop() + $('.__ht__bottomComment'+id.toString()).first().position().top
+		    }, 1000);
+		}
+    }
+
+    function __ht__hoveredElement(obj) {
+    	__ht__currentlyHoveredElements.push(obj);
+    	__ht__updateHoveredElement();
+    }
+
+    function __ht__unhoveredElement(obj) {
+    	__ht__currentlyHoveredElements.splice(__ht__currentlyHoveredElements.indexOf(obj), 1);
+    	__ht__updateHoveredElement();
+    }
+
+    function __ht__getElementPositionInfo(elem) {
+        var __ht__tempWidth = elem.width() + parseInt(elem.css('padding-left').replace('px', '')) + parseInt(elem.css('padding-right').replace('px', ''));
+        var __ht__tempHeight = elem.height() + parseInt(elem.css('padding-top').replace('px', '')) + parseInt(elem.css('padding-bottom').replace('px', ''));
+        var __ht__tempLeft = elem.offset().left;
+        var __ht__tempTop = elem.offset().top;
+        var __ht__tempPosition = 'absolute';
+
+		__ht__fixedparents = elem.parents().filter(function() {
+		    return $(this).css('position') == 'fixed';
+		  });
+		if ( __ht__fixedparents.length )
+		{
+			__ht__tempPosition = 'fixed';
+		}
+		else if (elem.css('position') == 'fixed')
+		{
+			__ht__tempPosition = 'fixed';
+		}
+
+		return {width: __ht__tempWidth, height: __ht__tempHeight, left: __ht__tempLeft, top: __ht__tempTop, position: __ht__tempPosition};
+    }
+
+    function __ht__updateHoveredElement() {
+    	var __ht__len = __ht__currentlyHoveredElements.length;
+    	var __ht__oldHoverElement = __ht__currentHoverElement;
+    	var __ht__maxID = -1;
+
+    	if (__ht__len == 0)
+    	{
+    		__ht__currentHoverElement = undefined;
+    	}
+    	else if (__ht__len == 1)
+    	{
+    		__ht__currentHoverElement = $(__ht__currentlyHoveredElements[0]);
+    	}
+
+    	for (i = 0; i < __ht__len; i++)
+    	{
+    		if (parseInt($(__ht__currentlyHoveredElements[i]).attr('data-htextrainfo')) > __ht__maxID)
+    		{
+    			__ht__maxID = parseInt($(__ht__currentlyHoveredElements[i]).attr('data-htextrainfo'));
+				__ht__currentHoverElement = $(__ht__currentlyHoveredElements[i]);
+    		}
+    	}
+
+    	if (__ht__currentHoverElement !== undefined)
+		{
+			var __ht__postinfos = __ht__getElementPositionInfo(__ht__currentHoverElement);
+			__ht__hoverBorder.show();
+			__ht__hoverBorder.width(__ht__postinfos.width);
+			__ht__hoverBorder.height(__ht__postinfos.height);
+			__ht__hoverBorder.css('position', __ht__postinfos.position);
+			__ht__hoverBorder.offset({ top: __ht__postinfos.top, left: __ht__postinfos.left });
+		}else{
+			__ht__hoverBorder.hide();
+		}
+    }
+
+    function __ht__addNewComment(commentID) {
+        var commentIdFullName='__ht__comment'+commentID.toString();
+
+        // If a div element has already been positioned over the commented
+        // element, then don't create a new div.
+        if(document.getElementById(commentIdFullName)){
+            return;
+        }
+
+        var __ht__temptemptemp = $('<div id='+commentIdFullName+'></div>');
+	    __ht__temptemptemp.width(__ht__currentCommentsPositions[commentID].width);
+		__ht__temptemptemp.height(__ht__currentCommentsPositions[commentID].height);
+		__ht__temptemptemp.css('position', __ht__currentCommentsPositions[commentID].position);
+		if (__ht__currentCommentsPositions[commentID].position == 'fixed')
+		{
+			__ht__temptemptemp.offset({ top: __ht__currentCommentsPositions[commentID].top - $(window).scrollTop(), left: __ht__currentCommentsPositions[commentID].left - $(window).scrollLeft() });
+		}
+		else
+		{
+			__ht__temptemptemp.offset({ top: __ht__currentCommentsPositions[commentID].top, left: __ht__currentCommentsPositions[commentID].left });
+		}
+		__ht__temptemptemp.css('background', '#ff00ff');
+		__ht__temptemptemp.css('opacity', '0.42');
+		__ht__temptemptemp.css('z-index', '10004');
+		if (__ht__action == 'review')
+		{
+			__ht__temptemptemp.css('pointer-events', 'none');
+		}
+
+		__ht__temptemptemp.attr('data-htextrainfobox', commentID);
+
+		if (__ht__action == 'view')
+		{
+			__ht__temptemptemp.bind('click', function(e) {
+		        e.preventDefault();
+
+		        __ht__bottomGrader.show();
+		        __ht__changeViewBox($(this).attr('data-htextrainfobox'));
+		    });
+		}
+
+	    $('body').append(__ht__temptemptemp);
+    }
+
+    function __ht__hookwe() {
+
+    	$('head').append('<style type="text/css">/* background-image: unset; padding: unset; span:not([data-htextrainfo]), div:not([data-htextrainfo]) { padding: 0; height: auto; width: auto; margin: 0; border-radius: 0; border: none; background: none; } //not working span:not([data-htextrainfo]), div:not([data-htextrainfo]), div:not([data-htextrainfobo]), not(.__ht__blockquote) { padding: 2; height: auto; width: auto; margin: 0; border-radius: 0; border: none; background: none; } background-image: url("../img/background.png"); background-repeat: repeat; background-size: 100%; */ span:not([data-htextrainfo]), div:not([data-htextrainfo]) { padding: 0; height: auto; width: auto; margin: 0; border-radius: 0; border: none; background: none; font-family: "Helvetica", cursive; } .__ht__btn { border-radius: 3px; padding: 3px 7px; text-decoration: none; color: #fff; position: relative; display: inline-block; } .__ht__btn:active { transform: translate(0px, 5px); -webkit-transform: translate(0px, 5px); box-shadow: 0px 1px 0px 0px; } .__ht__green { background-color: #2ecc71; box-shadow: 0px 3px 0px 0px #15B358; } .__ht__green:hover { background-color: #48E68B; } .__ht__red { background-color: #e74c3c; box-shadow: 0px 3px 0px 0px #CE3323; } .__ht__red:hover { background-color: #FF6656; } .__ht__orange { background-color: #e67e22; box-shadow: 0px 3px 0px 0px #CD6509; } .__ht__orange:hover { background-color: #FF983C; } div.__ht__blockquote { border-left: 1px solid #ccc; border-left: 10px solid #ccc; margin: 1.5em 10px; padding: 0.5em 10px; } div.__ht__blockquote p { display: inline; } .#__ht__elementcomment, #__ht__score, #__ht__finalcomment { color: black; } .__ht__bottomPadding{ padding-bottom: 155px; }</style>');
+
+    	var i = 0;
+	    $('body *').each(function() {
+	    	i++;
+		    $(this).attr('data-htextrainfo', i);
+		    if (i.toString() in __ht__currentComments)
+		    {
+		    	__ht__currentCommentsPositions[i.toString()] = __ht__getElementPositionInfo($(this));
+		    }
+		});
+
+		if (__ht__action == 'review') {
+			$('body *').click(function(event) {
+				// Check whether the click event is triggered from event propagation (bubbling or capturing).
+				// We don't want to execute this function if the event is triggered from propagation.
+				// We want the function to be executed just once for a selected element.
+				if(event.target !== event.currentTarget){
+					return;
+				}
+
+				if (__ht__saveComment()) {
+					__ht__bottomGrader.show();
+					document.getElementById('__ht__elementcomment').focus();
+					__ht__selectedBorder.show();
+					__ht__selectedBorder.css('position', __ht__hoverBorder.css('position'));
+					__ht__selectedBorder.width(__ht__hoverBorder.width());
+					__ht__selectedBorder.height(__ht__hoverBorder.height());
+					__ht__selectedBorder.offset(__ht__hoverBorder.offset());
+					__ht__selectedElementID = __ht__currentHoverElement.attr('data-htextrainfo');
+					if (__ht__selectedElementID.toString() in __ht__currentComments)
+					{
+						$( '#__ht__elementcomment' ).val(__ht__currentComments[__ht__selectedElementID.toString()]);
+					}
+					else
+					{
+						$( '#__ht__elementcomment' ).val('');
+					}
+				}
+			});
+
+			$('body *').hover(
+				function() {
+				  	__ht__hoveredElement($( this )[0]);
+				},
+				function() {
+			  		__ht__unhoveredElement($( this )[0]);
+				}
+			);
+		}
+
+		for (var __ht__prop in __ht__currentCommentsPositions) {
+		    __ht__addNewComment(__ht__prop);
+		}
+
+		__ht__bottomGraderSpacer = $('<div>Коментари</div>');
+		__ht__bottomGraderSpacer.css('width', '100px');
+		__ht__bottomGraderSpacer.css('height', '30px');
+		__ht__bottomGraderSpacer.css('position', 'fixed');
+		__ht__bottomGraderSpacer.css('top', '40%');
+		__ht__bottomGraderSpacer.css('left', '0');
+		
+		//__ht__bottomGraderSpacer.css('padding', '0');
+		//__ht__bottomGraderSpacer.css('max-width:', '100');
+		//__ht__bottomGraderSpacer.css('margin', '0');
+
+		__ht__bottomGraderSpacer.css('background', '#00A693');
+		__ht__bottomGraderSpacer.css('color', 'white');
+		__ht__bottomGraderSpacer.css('text-align', 'center');
+		__ht__bottomGraderSpacer.css('font-size', '16px');
+
+		__ht__bottomGraderSpacer.css('line-height', '30px');
+		__ht__bottomGraderSpacer.css('cursor', 'default');
+		__ht__bottomGraderSpacer.css('z-index', '11000');
+		__ht__bottomGraderSpacer.click(function() {
+            __ht__bottomGrader.toggle();
+		});
+		$('body').append(__ht__bottomGraderSpacer);
+
+		__ht__backLabelLink = $('<div>Назад</div>');
+		__ht__backLabelLink.css('width', '100px');
+		__ht__backLabelLink.css('height', '30px');
+		__ht__backLabelLink.css('position', 'fixed');
+		__ht__backLabelLink.css('top', '60%');
+		__ht__backLabelLink.css('left', '0');
+		__ht__backLabelLink.css('background', '#A60000');
+		__ht__backLabelLink.css('color', 'white');
+		__ht__backLabelLink.css('text-align', 'center');
+		__ht__backLabelLink.css('font-size', '16px');
+
+		__ht__backLabelLink.css('line-height', '30px');
+		__ht__backLabelLink.css('cursor', 'default');
+		__ht__backLabelLink.css('z-index', '11000');
+		__ht__backLabelLink.click(function() {
+	    	window.location = 'https://w23ref.w3c.fmi.uni-sofia.bg/review.php';
+		});
+		$('body').append(__ht__backLabelLink);
+
+		if (__ht__action == 'review') {
+			__ht__hoverBorder = $('<div  class="pfn2" style="float: left;"></div>');
+			__ht__hoverBorder.hide();
+			__ht__hoverBorder.css('border', '1px solid red');
+			__ht__hoverBorder.css('font-size', '16px'); //??
+			__ht__hoverBorder.css('pointer-events', 'none');
+			//__ht__hoverBorder.css('position', 'absolute');
+			__ht__hoverBorder.css('z-index', '10003');
+			$('body').append(__ht__hoverBorder);
+
+			__ht__selectedBorder = $('<div></div>');
+			__ht__selectedBorder.hide();
+			__ht__selectedBorder.css('border', '1px solid #FDBCB4');
+			__ht__selectedBorder.css('background', '#FDBCB4');
+			__ht__selectedBorder.css('opacity', '0.60');
+			__ht__selectedBorder.css('pointer-events', 'none');
+			__ht__selectedBorder.css('position', 'absolute');
+			__ht__selectedBorder.css('z-index', '10002');
+			
+			$('body').append(__ht__selectedBorder);
+		}
+
+		__ht__bottomGrader = $('<div class="pfn1"  style="background: #red; float: left; "></div>');
+		// The webkit prefix is needed for Safari to work properly with the sticky position
+		__ht__bottomGrader.css('position', '-webkit-sticky');
+		__ht__bottomGrader.css('position', 'sticky ');
+		__ht__bottomGrader.css('width', '100%');
+		__ht__bottomGrader.css('bottom', '0');
+		__ht__bottomGrader.css('left', '0');
+		__ht__bottomGrader.css('height', '150px');
+		__ht__bottomGrader.css('background', '#555555');
+		__ht__bottomGrader.css('color', 'white');
+		__ht__bottomGrader.css('z-index', '10042');
+		__ht__bottomGrader.css('text-align', 'left');//MP:2017-01-04 (merge-back)	
+		__ht__bottomGrader.css('font-size', '16px'); //??
+		//__ht__bottomGrader.css('max-width', '100%'); 
+		__ht__bottomGrader.css('margin', '0'); 
+
+		//__ht__bottomGrader.css('font-size', '16px');		
+		//__ht__bottomGrader.css('margin', '0px');//MP:2017-01-04 (merge-back)	
+		//__ht__bottomGrader.css('margin', '0%');//MP:2017-01-04 (merge-back)	
+		//__ht__bottomGrader.css('margin-left', '0%');//MP:2017-01-04 (merge-back)	
+		//__ht__bottomGrader.css('margin-right', '0%');//MP:2017-01-04 (merge-back)	
+		__ht__bottomGrader.css('padding', '0');//MP:2018-05-03 (merge-back)	
+		__ht__bottomGrader.css('border-radius', '0px');//MP:2018-05-03 (merge-back)
+		//__ht__bottomGrader.css('background-color', 'transparent');//MP:2018-05-03 (merge-back)		
+		
+        __ht__bottomGrader.hide();
+		$('body').append(__ht__bottomGrader);
+
+		if (__ht__action == 'review') {
+			__ht__bottomGrader1stHalf = $('<div><div style="width:80%; height:100%; float:left; text-align:center; "><textarea id="__ht__finalcomment" placeholder="Напишете финалния си коментар тук. Той ще се запази заедно с оценката." style="resize: none;  margin: 5px; width: 95%; height: 90%; color:black; background-color: white;"></textarea></div><div style="width:20%; height:100%; float:left; text-align:center;"><span style="margin: 5px; width: 90%; float: left; text-align: center;">Оценка</span><input id="__ht__score" style="margin: 5px; width: 90%; float: left; color:black; background-color: white;" type="text" value="5" disabled><input id="__ht__scoreslider" type="range" name="rangeInput" min="0" max="10" step="1" value="5" style="margin: 5px; width: 90%; float: left;" onchange="__ht__updateTextInput();"></div></div>');
+
+			__ht__submitButton = $('<a href="#" style="margin:auto; width:80%;height: auto; font-size:16px" class="__ht__btn __ht__orange">Запази оценка</a>');
+			__ht__bottomGrader1stHalf.find( "div:eq(1)" ).append(__ht__submitButton);
+
+			__ht__submitButton.bind('click', function(e) {
+			        e.preventDefault();
+
+			        if ( $( '#__ht__finalcomment' ).val() !== '' ) {
+
+			        	__ht__startLoading();
+
+			            $.ajax({
+			                url : 'https://w23ref.w3c.fmi.uni-sofia.bg/savescore.php',
+			                type: 'POST',
+			                //dataType: 'json',
+			                data : {
+			                    comment: $( '#__ht__finalcomment' ).val(),
+			                    user_id: 85654,
+			                    referat_id: '85608_1_19',
+			                    score: $( '#__ht__score' ).val()
+			                },
+			                success: function(data, textStatus, jqXHR)
+			                {
+			                    //receive(data);
+			                    __ht__loadingComplete('Successfully saved your score.', true);
+			                },
+			                error: function (jqXHR, textStatus, errorThrown)
+			                {
+			                    __ht__loadingComplete('Error with saving your final feedback. Your session is probably expired.', false);
+			                }
+			            });
+			        } else {
+
+			        }
+			    });
+
+			__ht__bottomGrader1stHalf.css('float', 'left');
+			__ht__bottomGrader1stHalf.css('width', '50%');
+			__ht__bottomGrader1stHalf.css('height', '100%');
+			//__ht__bottomGrader1stHalf.css('background', '#00ffff');
+			__ht__bottomGrader.append(__ht__bottomGrader1stHalf);
+
+			__ht__bottomGrader2ndHalf = $('<div><div style="width:80%; height:100%; float:left; text-align:center;"><textarea id="__ht__elementcomment" placeholder="Напишете тук своя коментар към избрания елемент от реферата. Коментарите се запазват автоматично при избор на нов елемент." style="resize: none; margin: 5px; width: 95%; height: 90%; color:black; background-color: white;"></textarea></div><div style="width:20%; height:100%; float:left; text-align:center;"></div></div>');
+			__ht__bottomGrader2ndHalf.css('float', 'left');
+			__ht__bottomGrader2ndHalf.css('width', '50%');
+			__ht__bottomGrader2ndHalf.css('height', '100%');
+			//__ht__bottomGrader2ndHalf.css('background', '#ff00ff');
+			__ht__bottomGrader.append(__ht__bottomGrader2ndHalf);
+
+			__ht__deleteCommentButton = $('<a href="#" style="margin:auto; margin-top:30px; width:80%;height: auto;" class="__ht__btn __ht__red">Изтрий коментар</a>');
+			__ht__bottomGrader2ndHalf.find( "div:eq(1)" ).append(__ht__deleteCommentButton);
+
+			__ht__deleteCommentButton.bind('click', function(e) {
+			        e.preventDefault();
+
+			        if(((typeof __ht__selectedElementID) === "undefined")
+                    || (__ht__currentComments[__ht__selectedElementID] === undefined)){
+                        return;
+                    }
+			        	__ht__startLoading();
+
+			            $.ajax({
+			                url : 'https://w23ref.w3c.fmi.uni-sofia.bg/deletecomment.php',
+			                type: 'POST',
+			                //dataType: 'json',
+			                data : {
+			                    user_id: 85654,
+			                    referat_id: '85608_1_19',
+			                    element_id: __ht__selectedElementID
+			                },
+			                success: function(data, textStatus, jqXHR)
+			                {
+			                	delete __ht__currentComments[__ht__selectedElementID.toString()];
+			                	$('#__ht__comment' + __ht__selectedElementID.toString()).remove();
+			                	$( '#__ht__elementcomment' ).val('');
+			                	__ht__loadingComplete('Successfully removed comment.', true);
+			                    //receive(data);
+			                },
+			                error: function (jqXHR, textStatus, errorThrown)
+			                {
+			                    __ht__loadingComplete('Error with removing the comment. Your session is probably expired.', false);
+			                }
+			            });
+
+			    });
+
+			__ht__bottomGrader2ndHalf.find( "div:eq(1)" ).append('<br/>');
+
+			__ht__saveCommentButton = $('<a href="#" style="margin:auto; margin-top:20px; width:80%;height: auto;" class="__ht__btn __ht__green">Запази коментар</a>');
+			__ht__bottomGrader2ndHalf.find( "div:eq(1)" ).append(__ht__saveCommentButton);
+
+			__ht__saveCommentButton.bind('click', function(e){
+				e.preventDefault();
+				__ht__saveComment();
+			});
+		}
+
+		if (__ht__action == 'view') {
+			__ht__bottomGrader1stHalf = $('<div></div>');
+			__ht__bottomGrader1stHalf.css('float', 'left');
+			__ht__bottomGrader1stHalf.css('width', '50%');
+			__ht__bottomGrader1stHalf.css('height', '100%');
+			__ht__bottomGrader1stHalf.css('overflow-y', 'scroll');
+			__ht__bottomGrader1stHalf.css('word-wrap', 'break-word');
+
+			for (var i = 0; i < __ht__finalVerdicts.length; i++) {
+				__ht__bottomGrader1stHalf.append('<div class="__ht__blockquote"><b style="color:white;">'+__ht__finalVerdicts[i]['score'].toString()+' от 10 точки</b><br/>'+__ht__finalVerdicts[i]['comment']+'</div>');
+			}
+
+			__ht__bottomGrader.append(__ht__bottomGrader1stHalf);
+
+			__ht__bottomGrader2ndHalf = $('<div></div>');
+			__ht__bottomGrader2ndHalf.css('float', 'left');
+			__ht__bottomGrader2ndHalf.css('width', '50%');
+			__ht__bottomGrader2ndHalf.css('height', '100%');
+			__ht__bottomGrader2ndHalf.css('overflow-y', 'scroll');
+			__ht__bottomGrader2ndHalf.css('word-wrap', 'break-word');
+
+			for (var __ht__prop in __ht__currentComments) {
+				for (var i = 0; i < __ht__currentComments[__ht__prop].length; i++) {
+					var __ht__temptemptemp = $('<div class="__ht__blockquote">'+__ht__currentComments[__ht__prop][i]+'</div>');
+					__ht__temptemptemp.addClass('__ht__bottomComment' + __ht__prop);
+					__ht__temptemptemp.attr('data-htextrainfobox', __ht__prop);
+					__ht__temptemptemp.css('cursor', 'default');
+					__ht__temptemptemp.bind('click', function(e) {
+				        e.preventDefault();
+
+				        __ht__changeViewBox($(this).attr('data-htextrainfobox'));
+				    });
+					__ht__bottomGrader2ndHalf.append(__ht__temptemptemp);
+				}
+			}
+
+			__ht__bottomGrader.append(__ht__bottomGrader2ndHalf);
+		}
+
+		__ht__bottomGraderX = $('<div>X</div>');
+		__ht__bottomGraderX.css('position', 'absolute');
+		__ht__bottomGraderX.css('width', '48px');
+		__ht__bottomGraderX.css('top', '0');
+		__ht__bottomGraderX.css('right', '0');
+		__ht__bottomGraderX.css('font-size', '16px');
+
+		
+		__ht__bottomGraderX.css('height', '20px');
+		__ht__bottomGraderX.css('background', '#c75050');
+
+		__ht__bottomGraderX.hover(
+	      function() {
+	        __ht__bottomGraderX.css('background', '#e04343');
+	      }, function() {
+	        __ht__bottomGraderX.css('background', '#c75050');
+	      }
+	    );
+
+		__ht__bottomGraderX.css('line-height', '20px');
+		__ht__bottomGraderX.css('text-align', 'center');
+		__ht__bottomGraderX.css('color', 'white');
+		__ht__bottomGraderX.css('cursor', 'default');
+		__ht__bottomGraderX.click(function() {
+			__ht__changeViewBox(-1);
+            __ht__bottomGrader.hide();
+		    if (__ht__action == 'review') {
+                __ht__selectedBorder.hide();
+		    }
+		});
+		__ht__bottomGrader.append(__ht__bottomGraderX);
+
+		__ht__loadingDiv = $('<div></div>');
+		__ht__loadingDiv.css('position', 'fixed');
+		__ht__loadingDiv.css('width', '100%');
+		__ht__loadingDiv.css('height', '100%');
+		__ht__loadingDiv.css('left', '0');
+		__ht__loadingDiv.css('top', '0');
+		__ht__loadingDiv.css('background', '#c0c0c0');
+		__ht__loadingDiv.css('z-index', '10043');
+		__ht__loadingDiv.css('opacity', '0.60');
+		__ht__loadingDiv.hide();
+		$('body').append(__ht__loadingDiv);
+
+		__ht__loadingDivInfo = $('<div></div>');
+		__ht__loadingDivInfo.css('position', 'relative');
+		__ht__loadingDivInfo.css('width', '200px');
+		__ht__loadingDivInfo.css('height', '200px');
+		__ht__loadingDivInfo.css('background', '#c0c0c0');
+		__ht__loadingDivInfo.css('top', '200px');
+		__ht__loadingDivInfo.css('z-index', '10044');
+		__ht__loadingDivInfo.css('margin', 'auto');
+		__ht__loadingDiv.append(__ht__loadingDivInfo);
+    }
+
+    function __ht__startLoading() {
+    	__ht__loadingDivInfo.css('background', '#c0c0c0');
+    	__ht__loadingDivInfo.html('<img src="https://w23ref.w3c.fmi.uni-sofia.bg/img/loading.gif" style="width:100%">');
+    	__ht__loadingDiv.fadeIn();
+    }
+
+    function __ht__loadingComplete(msg, noerror) {
+    	if (noerror) {
+    		// __ht__loadingDivInfo.css('background', '#00ff00');
+            __ht__loadingDivInfo.html('<img src="https://w23ref.w3c.fmi.uni-sofia.bg/img/loading.gif" style="width:100%">');
+    	} else {
+			alert(msg);
+    	}
+    	// __ht__loadingDivInfo.html(msg);
+    	__ht__loadingDiv.fadeOut(1000);
+    }
+
+    function __ht__jQueryCheck() {
+        if (typeof jQuery === "undefined") {
+            // No one's loaded it; either load it or do without
+		    var __ht__script = document.createElement("SCRIPT");
+		    __ht__script.src = 'https://w23ref.w3c.fmi.uni-sofia.bg/assets/jquery.min.1.7.1.js';
+		    __ht__script.type = 'text/javascript';
+		    document.getElementsByTagName("head")[0].appendChild(__ht__script);
+
+		    // Poll for jQuery to come into existance
+		    var __ht__checkReady = function(callback) {
+		        if (window.jQuery) {
+		            callback(jQuery);
+		        } else {
+		            window.setTimeout(function() { __ht__checkReady(callback); }, 100);
+		        }
+		    };
+
+		    __ht__checkReady(function($) {
+			    __ht__hookwe();
+		    });
+        }
+        else
+        {
+        	//__ht__hookwe(); //2020-02-05
+			// hook on next event-loop to hook AFTER angular / other framework event listeners binding
+			// fixes comments not working when importing jquery manually in referat
+			setTimeout(function() {
+				__ht__hookwe();
+			}, 500); // 1ms timeout works too - just to skip the event loop, but better put some more to make sure other frameworks / code works too
+        	
+        }
+    }
+
+    // return false if the comment was send to the server, but wasn't saved successfully
+	// else, return true
+	function __ht__saveComment(){
+
+		if ( ((typeof __ht__selectedElementID) === "undefined")
+			|| ($( '#__ht__elementcomment' ).val() === '') ) {
+			return true;
+		}
+
+		// if the comment wasn't changed since it was last saved, exit the function
+		if(__ht__currentComments[__ht__selectedElementID.toString()] === $( '#__ht__elementcomment' ).val()){
+			return true;
+		}
+
+		__ht__startLoading();
+
+		var success = true;
+
+		$.ajax({
+			url : 'https://w23ref.w3c.fmi.uni-sofia.bg/savecomment.php',
+			type: 'POST',
+
+			// This function is called automatically when the user clicks on a new element.
+			// That's why the request must NOT be asynchronous. __ht__selectedBorder must have its old value when the
+			// response callback is executed. Only after the new comment position is saved, must the value of
+			// __ht__selectedBorder be updated with the newly selected element.
+			async: false,
+
+			//dataType: 'json',
+			data : {
+				comment: $( '#__ht__elementcomment' ).val(),
+				user_id: 85654,
+			referat_id: '85608_1_19',
+			element_id: __ht__selectedElementID
+		},
+		success: function(data, textStatus, jqXHR)
+		{
+			__ht__currentComments[__ht__selectedElementID.toString()] = $( '#__ht__elementcomment' ).val();
+			__ht__currentCommentsPositions[__ht__selectedElementID.toString()] = __ht__getElementPositionInfo(__ht__selectedBorder);
+			__ht__addNewComment(__ht__selectedElementID);
+			__ht__loadingComplete('Successfully saved comment.', true);
+			//receive(data);
+		},
+		error: function (jqXHR, textStatus, errorThrown)
+		{
+			__ht__loadingComplete('Error with saving the comment. Your session is probably expired.', false);
+			success = false;
+		}
+	});
+
+		return success;
+	}
+})();
+</script>
+
+<div style="width: 100px; height: 30px; position: fixed; top: 40%; left: 0px; background: rgb(0, 166, 147); color: white; text-align: center; font-size: 16px; line-height: 30px; cursor: default; z-index: 11000;">Коментари</div><div style="width: 100px; height: 30px; position: fixed; top: 60%; left: 0px; background: rgb(166, 0, 0); color: white; text-align: center; font-size: 16px; line-height: 30px; cursor: default; z-index: 11000;">Назад</div><div class="pfn1" style="float: left; position: sticky; width: 100%; bottom: 0px; left: 0px; height: 150px; background: rgb(85, 85, 85); color: white; z-index: 10042; text-align: left; font-size: 16px; margin: 0px; padding: 0px; border-radius: 0px; display: none;"><div style="float: left; width: 50%; height: 100%; overflow-y: scroll; overflow-wrap: break-word;"></div><div style="float: left; width: 50%; height: 100%; overflow-y: scroll; overflow-wrap: break-word;"></div><div style="position: absolute; width: 48px; top: 0px; right: 0px; font-size: 16px; height: 20px; background: rgb(199, 80, 80); line-height: 20px; text-align: center; color: white; cursor: default;">X</div></div><div style="position: fixed; width: 100%; height: 100%; left: 0px; top: 0px; background: rgb(192, 192, 192); z-index: 10043; opacity: 0.6; display: none;"><div style="position: relative; width: 200px; height: 200px; background: rgb(192, 192, 192); top: 200px; z-index: 10044; margin: auto;"></div></div></body><grammarly-desktop-integration data-grammarly-shadow-root="true"><template shadowrootmode="open"><style>
+      div.grammarly-desktop-integration {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select:none;
+        user-select:none;
+      }
+
+      div.grammarly-desktop-integration:before {
+        content: attr(data-content);
+      }
+    </style><div aria-label="grammarly-integration" role="group" tabindex="-1" class="grammarly-desktop-integration" data-content="{&quot;mode&quot;:&quot;full&quot;,&quot;isActive&quot;:true,&quot;isUserDisabled&quot;:false}"></div></template></grammarly-desktop-integration></html>

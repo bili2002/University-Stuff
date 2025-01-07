@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<!-- saved from url=(0089)https://w23ref.w3c.fmi.uni-sofia.bg/referat/85639_1_170/index.php?action=view&back=review -->
+<html lang="bg"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <title>Микроуслуги</title>
+    <link rel="stylesheet" href="./Микроуслуги_files/styles.css">
+<script src="./Микроуслуги_files/jquery.min.1.7.1.js" type="text/javascript"></script><style type="text/css">/* background-image: unset; padding: unset; span:not([data-htextrainfo]), div:not([data-htextrainfo]) { padding: 0; height: auto; width: auto; margin: 0; border-radius: 0; border: none; background: none; } //not working span:not([data-htextrainfo]), div:not([data-htextrainfo]), div:not([data-htextrainfobo]), not(.__ht__blockquote) { padding: 2; height: auto; width: auto; margin: 0; border-radius: 0; border: none; background: none; } background-image: url("../img/background.png"); background-repeat: repeat; background-size: 100%; */ span:not([data-htextrainfo]), div:not([data-htextrainfo]) { padding: 0; height: auto; width: auto; margin: 0; border-radius: 0; border: none; background: none; font-family: "Helvetica", cursive; } .__ht__btn { border-radius: 3px; padding: 3px 7px; text-decoration: none; color: #fff; position: relative; display: inline-block; } .__ht__btn:active { transform: translate(0px, 5px); -webkit-transform: translate(0px, 5px); box-shadow: 0px 1px 0px 0px; } .__ht__green { background-color: #2ecc71; box-shadow: 0px 3px 0px 0px #15B358; } .__ht__green:hover { background-color: #48E68B; } .__ht__red { background-color: #e74c3c; box-shadow: 0px 3px 0px 0px #CE3323; } .__ht__red:hover { background-color: #FF6656; } .__ht__orange { background-color: #e67e22; box-shadow: 0px 3px 0px 0px #CD6509; } .__ht__orange:hover { background-color: #FF983C; } div.__ht__blockquote { border-left: 1px solid #ccc; border-left: 10px solid #ccc; margin: 1.5em 10px; padding: 0.5em 10px; } div.__ht__blockquote p { display: inline; } .#__ht__elementcomment, #__ht__score, #__ht__finalcomment { color: black; } .__ht__bottomPadding{ padding-bottom: 155px; }</style></head>
+<body data-new-gr-c-s-check-loaded="14.1209.0" data-gr-ext-installed="">
+<div class="sticky-header" data-htextrainfo="1">
+    Микроуслуги
+</div>
+    <div class="sidebar" data-htextrainfo="2">
+        <h3 data-htextrainfo="3">Съдържание</h3>
+        <a href="https://w23ref.w3c.fmi.uni-sofia.bg/referat/85639_1_170/index.php?action=view&amp;back=review#introduction" data-htextrainfo="4">Въведение</a>
+        <a href="https://w23ref.w3c.fmi.uni-sofia.bg/referat/85639_1_170/index.php?action=view&amp;back=review#Evolution%20of%20microservices" data-htextrainfo="5">Еволюция на микроуслугите</a>
+        <a href="https://w23ref.w3c.fmi.uni-sofia.bg/referat/85639_1_170/index.php?action=view&amp;back=review#Java%20Microservices" data-htextrainfo="6">Java микроуслуги</a>
+        <a href="https://w23ref.w3c.fmi.uni-sofia.bg/referat/85639_1_170/index.php?action=view&amp;back=review#Microservise%20Architecture%20with%20Node.js" data-htextrainfo="7">Микросървис архитектура с Node.js</a>
+        <a href="https://w23ref.w3c.fmi.uni-sofia.bg/referat/85639_1_170/index.php?action=view&amp;back=review#The%20Journey%20So%20Far%20and%20Challenges%20Ahead" data-htextrainfo="8">Пътят досега и предстощите предизвикателства</a>
+        <a href="https://w23ref.w3c.fmi.uni-sofia.bg/referat/85639_1_170/index.php?action=view&amp;back=review#conclusion" data-htextrainfo="9">Заключение</a>
+        <a href="https://w23ref.w3c.fmi.uni-sofia.bg/referat/85639_1_170/index.php?action=view&amp;back=review#sources" data-htextrainfo="10">Използвани източници</a>
+    </div>
+<div class="content" data-htextrainfo="11">
+    <div class="container" data-htextrainfo="12">
+    <div class="section" data-htextrainfo="13">
+        <h2 id="introduction" data-htextrainfo="14">Въведение</h2>
+        <p data-htextrainfo="15">Микроуслугите е една от най-обсъжданите и нашумели концепции в света на съвременния софтуерен дизайн. Към настоящия момент тя е със сигурност в топ 5 най-актуални теми и тенденции в сферата. Заедно с контейнери, този подход за изграждане, проектиране и управление на приложения е основна тема в софтуерните среди. И все пак, дефинирането на понятието „микросервиси“ по ясен и достъпен начин остава предизвикателство.
+В исторически план приложенията често са били изграждани като монолитни системи – цялостни проекти, където всяка нова функционалност се добавя към съществуващата структура. С времето тези проекти стават сложни и тромави: промяната на един компонент може да доведе до срив в цялата система, а скалирането им изисква добавяне на ресурси, което е скъпо и неефективно.
+Микросервисите променят този принцип за създаване на продукт, като разделят  софтуера на малки, независими компоненти, организирани около прости функционалости . Тези компоненти (или услуги) комуникират помежду си чрез API интерфейси и често разполагат със собствени бази данни. Подходът насърчава слаба свързаност между услугите и по-лесно управление, което позволява всяка услуга да бъде разработвана, внедрявана и поддържана самостоятелно.</p>
+            <p data-htextrainfo="16"><img src="./Микроуслуги_files/p1.png" alt="Месечни активни потребители" class="img-responsive" data-htextrainfo="17"> </p>
+        <p data-htextrainfo="18">Представената графика показва колко процента от анкетираните фирми са преминали от монилитна към microservicе структура.Макар и данните да са актуални към 2020 те показват ,че дори тогва едва 22% от всички анкетирани фирми се придържат към монолитни струкутри,като към днешна дата процентът е паднал на 5%.Основна цел на този реферат ще бъде да представи развитието на микроуслугите ,както и тяхното бъдеще.
+        </p>
+    <div class="section" data-htextrainfo="19">
+        <h2 id="Evolution of microservices" data-htextrainfo="20">Еволюция на микроуслугите</h2>
+        <p data-htextrainfo="21">Архитектурата на микроуслугите се превърна в крайъгълен камък в еволюцията на разработката на софтуер, променяйки начина, по който се замислят, разработват и внедряват приложенията.</p>
+        <p data-htextrainfo="22"><strong data-htextrainfo="23">Минало:</strong>В ранните етапи на софтуерната разработка монолитните архитектури бяха стандарт. Приложенията се  изграждат като едно цяло, включващо потребителски интерфейс, бизнес логика и достъп до данни. Този подход е лесен за малки проекти, но с нарастването на сложността на системите се появяват и  сериозни ограничения:</p>
+        <ul data-htextrainfo="24">
+            <li data-htextrainfo="25">Трудно мащабиране – изискваше увеличаване на цялата система.</li>
+            <li data-htextrainfo="26">Сложна поддръжка – всяка промяна налагаше ново внедряване.</li>
+            <li data-htextrainfo="27">Увеличен риск от грешки – всяка промяна можеше да повлияе на целия проект.</li>
+            <li data-htextrainfo="28">Чести прекъсвания – цялата система се рестартираше при актуализации.</li>
+        </ul>
+        <p data-htextrainfo="29">Поради тези ограничения RESTful архитектурите се появиха през 2000-те, проправяйки пътя за по-децентрализирани подходи. RESTful API-те улесниха комуникацията между компоненти, което доведе до концепцията за микросервизи.</p>
+        <p data-htextrainfo="30">В днешно време Микросервисите се наложиха като основен подход в модерната софтуерна разработка. Те разделят приложенията на малки, независими услуги, които комуникират чрез API. Този архитектурен стил предлага:</p>
+        <p data-htextrainfo="31"><strong data-htextrainfo="32">Настояще</strong>Учениците могат да се сблъскат с неподходящо съдържание или да срещнат онлайн хищници, докато сърфират в интернет или използват социални медии.</p>
+        <ul data-htextrainfo="33">
+            <li data-htextrainfo="34">Гъвкавост – екипите могат да разработват и внедряват услуги независимо.</li>
+            <li data-htextrainfo="35">Мащабируемост – всяка услуга се мащабира самостоятелно.</li>
+            <li data-htextrainfo="36">Технологично разнообразие – различните услуги могат да използват различни технологии.</li>
+            <li data-htextrainfo="37">Устойчивост – повредата на една услуга не влияе върху цялата система.</li>
+        </ul>
+        <p data-htextrainfo="38">Инструменти като Docker и Kubernetes улесниха внедряването на микросервизи, а компании като Netflix и Amazon демонстрират успеха на този подход. Все пак предизвикателства като сложност, мрежова латентност остават актуални. </p>
+
+        <p data-htextrainfo="39"><strong data-htextrainfo="40">Бъдеще:</strong>В бъдещето развитието на микроуслугите ще продължи,като то ще бъде повлияно  от нови технологии:</p>
+        <ul data-htextrainfo="41">
+            <li data-htextrainfo="42">Безсървърни архитектури – позволяват разработка без грижа за инфраструктурата, правейки приложенията по-гъвкави.</li>
+            <li data-htextrainfo="43">Изкуствен интелект – ще автоматизира операции и ще оптимизира ресурси.</li>
+            <li data-htextrainfo="44">Edge Computing – ще приближи услугите до крайния потребител за по-бързи и реални отговори.</li>
+            <li data-htextrainfo="45">Усъвършенстван CI/CD – по-автоматизирани процеси ще ускорят внедряването на нови функции.</li>
+        </ul>
+    </div>
+
+    <div class="section" data-htextrainfo="46">
+        <h2 id="Java Microservices" data-htextrainfo="47">Java Микроуслуги</h2>
+        <p data-htextrainfo="48">Основи на Java микроуслуги Java микроуслугите представляват модулен подход за разработка, при който големи приложения се разделят на по-малки, самостоятелно внедряеми услуги. Те са естествено продължение на монолитните Java приложения, където целият код се пакетира и внедрява като един файл.</p>
+        <p data-htextrainfo="49"><strong data-htextrainfo="50">
+Монолитни Java приложения </strong>
+        </p>
+        <p data-htextrainfo="51">В монолитния модел цялата логика на приложението се изпълнява в една JVM (Java Virtual Machine). Пример е банково приложение, което включва валидация на данни, проверка на риска и създаване на акаунт. Монолитите са лесни за внедряване в началото, но с времето стават трудни за управление, поддръжка и мащабиране.За да се избегнат ограниченията на монолитите, дадени функционалности (напр. проверката на риска) се извеждат в отделни микроуслуги. Всяка микроуслуга работи в собствена JVM, комуникирайки с другите чрез API. Това разделяне позволява по-голяма гъвкавост, мащабируемост и независимост.
+        </p>
+        <p data-htextrainfo="52"><img src="./Микроуслуги_files/p2.jpg" alt="Монолит срещу сървис" class="img-responsive" data-htextrainfo="53"> </p>
+        <p data-htextrainfo="54">
+        Видове комуникация между микроуслуги
+        </p><ul data-htextrainfo="55">
+        <li data-htextrainfo="56"><strong data-htextrainfo="57">Синхронна комуникация (REST/HTTP)</strong>: Подходяща за операции, които изискват незабавен отговор, напр. проверка на риска.</li>
+        <li data-htextrainfo="58"><strong data-htextrainfo="59">Асинхронна комуникация (Messaging)</strong>: Използва се, когато незабавен отговор не е критичен, напр. генериране на фактура.</li>
+  </ul>
+  <p data-htextrainfo="60">Преход от монолит към микроуслуги: Съществуващите монолити често се разделят на микросервизи, базирани на логически домейн граници, като например "Управление на акаунти" или "Модул за рискове".
+    Най-честите предизвикателства са разделянето на стари, свързани модули,защото изисква висока техническа експертиза и задълбочено разбиране на съществуващия код.
+    В работната среда микроуслугите предлагат много предимства, но тяхната ефективност зависи от правилната им имплементация. Широко разпространено мнение е  „Ако не можете да изградите монолит правилно, микроуслугите няма да помогнат.“</p>
+    Основни характеристики на Greenfield проектите
+    Няма наследен код, който да се поддържа, но и липсва ясна представа за домейн границите на проекта.
+    Желанието е да се избегне сложност в бъдеще, но началната неопределеност на изискванията (често поради гъвкави методологии като Agile) води до предизвикателства в дизайна.
+  <p data-htextrainfo="61"></p>
+  <p data-htextrainfo="62">
+Подходи към микросервисна архитектура</p>
+<p data-htextrainfo="63"><strong data-htextrainfo="64">Техническа архитектура на микросервизи</strong></p>
+<p data-htextrainfo="65">
+Опит за автоматично извличане на микроуслуги чрез инструменти или разделяне на малки функционалности (напр. замяна на Java метод с HTTP повикване).
+</p><ul data-htextrainfo="66">
+<li data-htextrainfo="67">Пример: Разделяне на substring функция като отделен микросервиз.</li>
+<li data-htextrainfo="68">Проблем: Добавя излишна сложност без осезаема полза.</li>
+<li data-htextrainfo="69">Препоръка: Избягвайте този подход. Микроуслугите трябва да са логически обосновани, а не технически наложени.</li>
+</ul>
+ <strong data-htextrainfo="70">Архитектура, ориентирана към работния поток</strong><p data-htextrainfo="71"></p>
+<p data-htextrainfo="72"></p>
+
+Моделиране на микроуслугите според бизнес процесите, напр. управление на данни между лекари и застрахователи:
+Верига от микроуслуги за валидация, обогатяване и предаване на XML данни.
+<ul data-htextrainfo="73">
+<li data-htextrainfo="74">Въпроси:
+Ще има ли смисъл да внедрите шест приложения за обработка на един XML файл?
+Какво става, ако един микросервиз е неактивен?
+Да споделят ли микроуслугите една база данни или всяка услуга да има собствена?</li>
+<li data-htextrainfo="75">Проблеми: Въпреки ясната логика на хартия, оперативните предизвикателства на този подход са сериозни.</li>
+<li data-htextrainfo="76">Препоръка:
+Създавайте микроуслуги, базирани на ясни домейн граници (напр. управление на потребители, фактуриране).
+Започнете с по-големи модули, които можете да разделите по-късно.
+Убедете се, че разполагате със силни DevOps умения, за да поддържате сложната инфраструктура.
+</li>
+</ul>
+
+<strong data-htextrainfo="77">Полиглотна архитектура (Polyglot Architecture)</strong><p data-htextrainfo="78"></p>
+<p data-htextrainfo="79">
+
+Всеки екип или програмист използва различен език за дадена задача (напр. Java за XML валидация, Haskell за проверки за съвместимост, Erlang за скалируемост).
+</p><ul data-htextrainfo="80">
+<li data-htextrainfo="81">Предимства: Свобода на разработчиците.</li>
+<li data-htextrainfo="82">Недостатъци: Липса на стандартизация, което води до трудна поддръжка в бъдеще.</li>
+<li data-htextrainfo="83">Препоръка: Ако изберете полиглотен подход, ограничете се в рамките на една екосистема, напр. Kotlin и Java (и двата базирани на JVM). Това осигурява съвместимост и по-лесна поддръжка.</li>
+</ul>В Greenfield проектите яснотата на домейн на границите е ключов фактор за успеха на микросервисната архитектура. Започнете с умерено големи модули и стандартна екосистема. С времето може да прецизирате и разделите тези модули, но само при наличието на стабилна DevOps поддръжка.
+<p data-htextrainfo="84">
+В следващия абзац ще се обърне внимание на деплойване и тестване на Джава микроуслуги</p>
+<p data-htextrainfo="85">Деплойване на Java микросървиси
+</p><ul data-htextrainfo="86">
+<li data-htextrainfo="87"><strong data-htextrainfo="88">Основни принципи</strong>:
+Java микросървисите са обикновени .jar/.war файлове, които могат да се стартират на всяка платформа с подходяща JVM.
+Деплойването може да варира от базови стъпки до сложни оркестрации с инструменти като Docker и Kubernetes.</li>
+<li data-htextrainfo="89"><strong data-htextrainfo="90">Методи за деплойване</strong>:
+Традиционен подход: С билд инструменти (Maven/Gradle), SSH/SCP и скриптове за автоматизация като Ansible.
+Docker: Оптимизиран за стандартизирани среди, като позволява лесно управление на зависимости и конфигурации.
+Docker Swarm/Kubernetes: За управление на клъстери и автоматизация на процеси, но с висока сложност, изискваща YAML конфигурации.</li>
+</ul>
+<p data-htextrainfo="91"><strong data-htextrainfo="92">Тестване на микросървиси</strong></p>
+<ul data-htextrainfo="93">
+<li data-htextrainfo="94">Предизвикателства при интеграционното тестване:
+Необходимост от стартиране на всички микросървиси в една среда за тестване на цялостни работни потоци.
+Управление на съпътстващи компоненти като съобщителни брокери (RabbitMQ, ActiveMQ).
+</li>
+<li data-htextrainfo="95">Решения:
+Обединяване на микросървисите в един процес за локални тестове.
+Репликиране на Docker Swarm/Kubernetes средата локално.
+Ползване на специализирана DEV/TEST среда за интеграционно тестване.
+</li>
+</ul>
+<p data-htextrainfo="96"></p>
+<p data-htextrainfo="97"><strong data-htextrainfo="98">Избор на Java фреймуърк</strong></p>
+<p data-htextrainfo="99">
+Популярни фреймуъркове са Spring Boot (утвърдена екосистема) и нови алтернативи като Quarkus, Micronaut, Vert.x, Helidon.
+Основен критерии при избор е силната документация, активна общност и стабилна екосистема имат по-голямо значение от бързото време за стартиране на микросървиси.
+Препоръчително е първо да се оптимизира монолитната архитектура, преди да се премине към микросървисна.
+Успешнатата реализация на Java микросървиси изисква силен екип с опит в DevOps и архитектурно проектиране.
+Правилният избор на технологии, съобразени с реалните нужди и умения на екипа.Постоянен фокус върху устойчивост, тестване и опростяване на процесите.</p>
+<p data-htextrainfo="100">
+</p><p data-htextrainfo="101">Микросервизите предлагат гъвкавост, но добавят сериозна техническа и организационна сложност.
+Балансът между монолитни архитектури и микросервизи зависи от нуждите на проекта.
+За нови проекти е разумно да се започне с по-проста, модулна архитектура.</p>
+    </div>
+
+    <div class="section" data-htextrainfo="102">
+        <h2 id="Microservise Architecture with Node.js" data-htextrainfo="103">Микросървис архитектура с Node.js</h2>
+        <p data-htextrainfo="104">Node.js е една от популярните платформа за изграждане на архитектурки чрез микроуслуги.Тя е използвана от редица известни компании като  Microsoft, PayPal и Uber.Причините те да изберат Node.js са много но ето част от по-съществените:</p>
+          <ul data-htextrainfo="105">
+          <li data-htextrainfo="106"> Скорост (работи с V8 JavaScript Engine)</li>
+          <li data-htextrainfo="107">Асинхронност (обработка на заявки без блокиране)</li>
+          <li data-htextrainfo="108">Скалируемост (поддържа голям брой едновременни заявки)</li>
+          <li data-htextrainfo="109">Интеграция с модули (богатство от библиотеки и инструменти) </li>
+          </ul>
+            <p data-htextrainfo="110">Създаването на микроуслуга,използвайки Node.js преминава през няколко етапа.Ще дадем пример с услуга която приема два пощенски кода и показва разстоянието между тях.</p>
+            <ol data-htextrainfo="111">
+            <li data-htextrainfo="112"><strong data-htextrainfo="113">Оценка на нуждите</strong>: Определяне на функционалностите, като изчисляване на разстояние между два ZIP кода.</li>
+            <li data-htextrainfo="114"><strong data-htextrainfo="115">Инициализация</strong>
+              <ul data-htextrainfo="116">
+                <li data-htextrainfo="117">Инсталиране на Node.js и NPM.</li>
+                <li data-htextrainfo="118">Създаване на проект с npm init.</li>
+                <li data-htextrainfo="119">Добавяне на зависимости като Express и Request.</li>
+              </ul>
+              </li>
+              <li data-htextrainfo="120"><strong data-htextrainfo="121">Създаване на сървър</strong>:
+              <ul data-htextrainfo="122">
+              <li data-htextrainfo="123">Кодът създава сървър и маршрути за заявките.</li>
+              <li data-htextrainfo="124">Сървърът използва Express за обработка на API заявките.</li>
+              </ul>
+            </li>
+            <li data-htextrainfo="125"><strong data-htextrainfo="126">Дефиниране на маршрути</strong>: Използване на крайни точки за заявки, например /about и /distance.</li>
+            <li data-htextrainfo="127"><strong data-htextrainfo="128">Добавяне на контролери</strong>: Контролерите обработват логиката и синхронизират данните между потребителските заявки и API.</li>
+            <li data-htextrainfo="129"><strong data-htextrainfo="130">Външни API извиквания</strong>: Използване на Request за свързване с външни API, като ZIPCODEAPI, за изчисляване на разстояние.</li>
+            <li data-htextrainfo="131"><strong data-htextrainfo="132">Изпълнение</strong>: Преглед и тестване на готовия микросервис.</li>
+            </ol>
+            <p data-htextrainfo="133">След като обърнахме внимание на изграждането на микроуслуга с Node.js сега ще коментираме някои предизвикателства при работа с него.Node.js е еднопоточен, което ограничава производителността при тежки задачи.Друг проблем е ,че някои модули имат недостатъчна документация.При прекомерна употреба
+              на callback функции попадаме в Callback hell.И последния проблем,който в последните години се оправя макар и да не е решен съвсем е недостигът на квалифицирани кадри,които да работят с Node.js.</p>
+              <p data-htextrainfo="134">Node.js остава водеща платформа за изграждане на микросервизи поради своята мащабируемост, ефективност и подкрепа за RESTful API. Въпреки предизвикателствата,развитието на Node.js няма да спре , а интересът към него само ще расте.</p>
+        </div>
+
+        <div class="section" data-htextrainfo="135">
+            <h2 id="The Journey So Far and Challenges Ahead" data-htextrainfo="136">Пътят досега и предстощите предизвикателства</h2>
+                <p data-htextrainfo="137">Концепцията за микросервизи се е развила от SOA, тъй като индустриалните експерти осъзнали ограниченията на традиционните уеб протоколи като SOAP. Терминът "микросервизи" се е появил през 2011 г., като влияние от концепции като проектирование, основано на домейн, и непрекъсната интеграция. Развитието на микросервизите продължава с технологични напредъци като контейнери, инструменти за оркестрация (например Kubernetes), решения за мониторинг и сървърни технологии без инфраструктура (serverless), които допринасят за подобряване на разгръщането, операциите и мащабирането на микросервисите.
+Архитектурно микросервисите са преминали през няколко етапа. Първоначално услугите се разгръщат в контейнери с механизми за откриване на услуги и толерантност към грешки. С времето възникват технологии като мрежи за услуги (service meshes) и сървърни технологии без инфраструктура (serverless), които предоставят по-интегрирани решения за управление, комуникация и толерантност към грешки, което още повече увеличава гъвкавостта и мащабирането на микросервисите.
+</p><p data-htextrainfo="138"><img src="./Микроуслуги_files/p3.png" alt="Example" class="img-responsive" data-htextrainfo="139"> </p>
+Микросервисите стават все по-популярни, но тяхното прилагане не винаги е подходящо за всички ситуации. Ето някои от основните предизвикателства и области, които изискват внимание в бъдеще:
+<ul data-htextrainfo="140">
+<li data-htextrainfo="141"> <strong data-htextrainfo="142">Модуларизация на услугите и рефакторинг:</strong> При проектирането на микросервизи е важно да се определят правилните граници между услугите, за да не се доведе до проблеми с производителността и стабилността. Необходимостта от инструменти за рефакторинг и използването на асинхронна комуникация може да помогне за решаването на тези проблеми.</li>
+<li data-htextrainfo="143">  <strong data-htextrainfo="144">Грануларност на услугите :</strong>Няма консенсус за идеалния размер на микросервисите. Някои екипи създават много малки услуги, докато други обединяват по-големи компоненти. Нужно е да се развият шаблони, които да помагат при определянето на правилния размер на услугите.</li>
+<li data-htextrainfo="145">  <strong data-htextrainfo="146">Интеграция на фронт-енд компонентите:</strong> Микросервисите често се фокусират върху бекенд частта, оставяйки фронтенда по-малко модуларизиран. Това води до проблеми, когато монолитен фронт-енд използва множество бекенд микросервизи. Нужно е и фронт-енд частта да бъде разделена на микросервизи.</li>
+<li data-htextrainfo="147">  <strong data-htextrainfo="148">Мониторинг на ресурсите и управление :</strong>С нарастването на броя на услугите и инфраструктурните ресурси, мониторингът и управлението на тези ресурси стават все по-сложни. Нужни са стратегии за автоматизация и използване на машинно обучение, за да се управляват ресурси ефективно.</li>
+<li data-htextrainfo="149"> <strong data-htextrainfo="150">Откази, възстановяване и самовъзстановяване :</strong>Микросервисите, като разпределени системи, са уязвими на откази. За да се минимизират последствията от тези откази, е необходимо да се изградят услуги с висока устойчивост и автоматизирани механизми за самовъзстановяване.</li>
+<li data-htextrainfo="151">  <strong data-htextrainfo="152">Организационна култура и координация :</strong>Самостоятелността на екипите е предимство, но може да води и до проблеми с координацията между различни екипи и с целите на организацията. Нужно е да се създадат структури за координация, които да позволяват автономност, но и да вземат предвид общата архитектура и цели на компанията.</li>
+</ul>
+За да се решат тези проблеми, необходима е по-тясна съвместна работа между академичната общност и индустрията. Това би позволило на изследователите да имат достъп до реални микросървисни приложения, за да могат да експериментират и да предлагат решения, които да отговорят на реалните нужди.
+                <p data-htextrainfo="153"></p>
+
+
+        <div class="section" data-htextrainfo="154">
+            <h2 id="conclusion" data-htextrainfo="155">Заключение</h2>
+            <p data-htextrainfo="156">Рефератът разгледа -микроуслугите,които представляват мощен архитектурен подход, който предлага значителни ползи като гъвкавост, мащабируемост и възможност за независима разработка на компоненти.С наблюдението върху развиетото  и техния възход,той показа че тяхното успешно внедряване изисква внимателно обмисляне на редица предизвикателства, включително модуларизация, интеграция на фронтенд и бекенд части, управление на ресурси, устойчивост към откази и координация между екипите.
+Сблъсъкът с тези  предизвикателства кара организациите  да внедряват добри практики, като модулен дизайн, автоматизирани механизми за мониторинг и възстановяване, както и култура на сътрудничество,които ще улеснят работата.Същевременно по-тясното взаимодействие между индустрията и академичната общност може да ускори разработването на иновативни решения и инструменти, които да помогнат за по-ефективно прилагане на микроуслуги в реални производствени среди.
+Въпреки сложността си, микроуслугите остават важен инструмент за съвременния софтуерен инженеринг, предоставяйки основа за изграждане на мащабируеми, устойчиви и високопроизводителни системи. Успешното им прилагане зависи от баланса между техническите решения, организационната структура и дългосрочните бизнес цели.</p>
+        </div>
+
+        <div class="section" data-htextrainfo="157">
+            <h2 id="sources" data-htextrainfo="158">Използвани Източници</h2>
+            <ul style="list-style-type:none;" data-htextrainfo="159">
+                <li data-htextrainfo="160">
+                    <p data-htextrainfo="161">[1] Автор: Darshit Patel, Dominic Holt, Thomas Basikolo
+, Nathaniel Gibson, Juan Miguel de Joya
+ , “Getting Started with Microservices” от "ACM Selects", Ноември 2020 , Бележки от
+                    <a href="https://selects.acm.org/selections/getting-started-with-microservices" target="_blank" data-htextrainfo="162">Уеб-страница</a> Последно посетен на 29.11.2024.</p>
+                </li>
+                <li data-htextrainfo="163">
+                    <p data-htextrainfo="164">[2] Автор: Kevin Casey, “How to explain microservices in plain English”  2017г , Бележки от
+                    <a href="https://enterprisersproject.com/article/2017/8/how-explain-microservices-plain-english" target="_blank" data-htextrainfo="165">Уеб-страница</a> Последно посетен на 28.11.2024.</p>
+                </li>
+                <li data-htextrainfo="166">
+                    <p data-htextrainfo="167">[3] Автор: Mac Slocum, “Microservices: A quick and simple definition ” 2018.
+                    <a href="https://www.oreilly.com/content/a-quick-and-simple-definition-of-microservices/" target="_blank" data-htextrainfo="168">Уеб-страница</a> Последно посетен на 18.04.2024.</p>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+</div>
+<script data-htextrainfo="169">	var __ht__currentlyHoveredElements = [];
+	var __ht__currentHoverElement;
+	var __ht__hoverBorder;
+	var __ht__selectedBorder;
+	var __ht__bottomGrader;
+	var __ht__bottomGrader1stHalf;
+	var __ht__bottomGrader2ndHalf;
+
+	var __ht__backLabelLink;
+
+	var __ht__selectedElementID;
+	var __ht__submitButton;
+	var __ht__saveCommentButton;
+	var __ht__deleteCommentButton;
+
+	var __ht__highlightedID = -1;
+
+	var __ht__finalVerdicts = [];
+	
+
+	var __ht__currentComments = {};
+	
+	var __ht__currentCommentsPositions = {};
+	const __ht__action = 'view';
+
+	var __ht__loadingDiv;
+	var __ht__loadingDivInfo;
+
+	function __ht__updateTextInput() {
+      	$('#__ht__score').val( $('#__ht__scoreslider').val() );
+    }
+
+	(function() {
+    if (window.addEventListener) {
+        // Standard
+        window.addEventListener('load', __ht__jQueryCheck, false);
+    }
+    else if (window.attachEvent) {
+        // Microsoft
+        window.attachEvent('onload', __ht__jQueryCheck);
+    }
+
+    function __ht__changeViewBox(id) {
+    	if (id != __ht__highlightedID) {
+    		if (__ht__highlightedID != -1) {
+    			 $('#__ht__comment'+__ht__highlightedID.toString()).css('background', '#ff00ff');
+    			 $('.__ht__bottomComment'+__ht__highlightedID.toString()).css('background-color','transparent');
+    		}
+    		__ht__highlightedID = id;
+    		if (id != -1) {
+	    		 $('#__ht__comment'+id.toString()).css('background', '#0000ff');
+	    		 $('.__ht__bottomComment'+id.toString()).css('background', '#e67e22');
+	    	}
+    	}
+
+    	if (id != -1) {
+			$('html, body').animate({
+		        scrollTop: $('#__ht__comment'+id.toString()).offset().top
+		    }, 1000);
+
+			__ht__bottomGrader2ndHalf.animate({
+		        scrollTop: __ht__bottomGrader2ndHalf.scrollTop() + $('.__ht__bottomComment'+id.toString()).first().position().top
+		    }, 1000);
+		}
+    }
+
+    function __ht__hoveredElement(obj) {
+    	__ht__currentlyHoveredElements.push(obj);
+    	__ht__updateHoveredElement();
+    }
+
+    function __ht__unhoveredElement(obj) {
+    	__ht__currentlyHoveredElements.splice(__ht__currentlyHoveredElements.indexOf(obj), 1);
+    	__ht__updateHoveredElement();
+    }
+
+    function __ht__getElementPositionInfo(elem) {
+        var __ht__tempWidth = elem.width() + parseInt(elem.css('padding-left').replace('px', '')) + parseInt(elem.css('padding-right').replace('px', ''));
+        var __ht__tempHeight = elem.height() + parseInt(elem.css('padding-top').replace('px', '')) + parseInt(elem.css('padding-bottom').replace('px', ''));
+        var __ht__tempLeft = elem.offset().left;
+        var __ht__tempTop = elem.offset().top;
+        var __ht__tempPosition = 'absolute';
+
+		__ht__fixedparents = elem.parents().filter(function() {
+		    return $(this).css('position') == 'fixed';
+		  });
+		if ( __ht__fixedparents.length )
+		{
+			__ht__tempPosition = 'fixed';
+		}
+		else if (elem.css('position') == 'fixed')
+		{
+			__ht__tempPosition = 'fixed';
+		}
+
+		return {width: __ht__tempWidth, height: __ht__tempHeight, left: __ht__tempLeft, top: __ht__tempTop, position: __ht__tempPosition};
+    }
+
+    function __ht__updateHoveredElement() {
+    	var __ht__len = __ht__currentlyHoveredElements.length;
+    	var __ht__oldHoverElement = __ht__currentHoverElement;
+    	var __ht__maxID = -1;
+
+    	if (__ht__len == 0)
+    	{
+    		__ht__currentHoverElement = undefined;
+    	}
+    	else if (__ht__len == 1)
+    	{
+    		__ht__currentHoverElement = $(__ht__currentlyHoveredElements[0]);
+    	}
+
+    	for (i = 0; i < __ht__len; i++)
+    	{
+    		if (parseInt($(__ht__currentlyHoveredElements[i]).attr('data-htextrainfo')) > __ht__maxID)
+    		{
+    			__ht__maxID = parseInt($(__ht__currentlyHoveredElements[i]).attr('data-htextrainfo'));
+				__ht__currentHoverElement = $(__ht__currentlyHoveredElements[i]);
+    		}
+    	}
+
+    	if (__ht__currentHoverElement !== undefined)
+		{
+			var __ht__postinfos = __ht__getElementPositionInfo(__ht__currentHoverElement);
+			__ht__hoverBorder.show();
+			__ht__hoverBorder.width(__ht__postinfos.width);
+			__ht__hoverBorder.height(__ht__postinfos.height);
+			__ht__hoverBorder.css('position', __ht__postinfos.position);
+			__ht__hoverBorder.offset({ top: __ht__postinfos.top, left: __ht__postinfos.left });
+		}else{
+			__ht__hoverBorder.hide();
+		}
+    }
+
+    function __ht__addNewComment(commentID) {
+        var commentIdFullName='__ht__comment'+commentID.toString();
+
+        // If a div element has already been positioned over the commented
+        // element, then don't create a new div.
+        if(document.getElementById(commentIdFullName)){
+            return;
+        }
+
+        var __ht__temptemptemp = $('<div id='+commentIdFullName+'></div>');
+	    __ht__temptemptemp.width(__ht__currentCommentsPositions[commentID].width);
+		__ht__temptemptemp.height(__ht__currentCommentsPositions[commentID].height);
+		__ht__temptemptemp.css('position', __ht__currentCommentsPositions[commentID].position);
+		if (__ht__currentCommentsPositions[commentID].position == 'fixed')
+		{
+			__ht__temptemptemp.offset({ top: __ht__currentCommentsPositions[commentID].top - $(window).scrollTop(), left: __ht__currentCommentsPositions[commentID].left - $(window).scrollLeft() });
+		}
+		else
+		{
+			__ht__temptemptemp.offset({ top: __ht__currentCommentsPositions[commentID].top, left: __ht__currentCommentsPositions[commentID].left });
+		}
+		__ht__temptemptemp.css('background', '#ff00ff');
+		__ht__temptemptemp.css('opacity', '0.42');
+		__ht__temptemptemp.css('z-index', '10004');
+		if (__ht__action == 'review')
+		{
+			__ht__temptemptemp.css('pointer-events', 'none');
+		}
+
+		__ht__temptemptemp.attr('data-htextrainfobox', commentID);
+
+		if (__ht__action == 'view')
+		{
+			__ht__temptemptemp.bind('click', function(e) {
+		        e.preventDefault();
+
+		        __ht__bottomGrader.show();
+		        __ht__changeViewBox($(this).attr('data-htextrainfobox'));
+		    });
+		}
+
+	    $('body').append(__ht__temptemptemp);
+    }
+
+    function __ht__hookwe() {
+
+    	$('head').append('<style type="text/css">/* background-image: unset; padding: unset; span:not([data-htextrainfo]), div:not([data-htextrainfo]) { padding: 0; height: auto; width: auto; margin: 0; border-radius: 0; border: none; background: none; } //not working span:not([data-htextrainfo]), div:not([data-htextrainfo]), div:not([data-htextrainfobo]), not(.__ht__blockquote) { padding: 2; height: auto; width: auto; margin: 0; border-radius: 0; border: none; background: none; } background-image: url("../img/background.png"); background-repeat: repeat; background-size: 100%; */ span:not([data-htextrainfo]), div:not([data-htextrainfo]) { padding: 0; height: auto; width: auto; margin: 0; border-radius: 0; border: none; background: none; font-family: "Helvetica", cursive; } .__ht__btn { border-radius: 3px; padding: 3px 7px; text-decoration: none; color: #fff; position: relative; display: inline-block; } .__ht__btn:active { transform: translate(0px, 5px); -webkit-transform: translate(0px, 5px); box-shadow: 0px 1px 0px 0px; } .__ht__green { background-color: #2ecc71; box-shadow: 0px 3px 0px 0px #15B358; } .__ht__green:hover { background-color: #48E68B; } .__ht__red { background-color: #e74c3c; box-shadow: 0px 3px 0px 0px #CE3323; } .__ht__red:hover { background-color: #FF6656; } .__ht__orange { background-color: #e67e22; box-shadow: 0px 3px 0px 0px #CD6509; } .__ht__orange:hover { background-color: #FF983C; } div.__ht__blockquote { border-left: 1px solid #ccc; border-left: 10px solid #ccc; margin: 1.5em 10px; padding: 0.5em 10px; } div.__ht__blockquote p { display: inline; } .#__ht__elementcomment, #__ht__score, #__ht__finalcomment { color: black; } .__ht__bottomPadding{ padding-bottom: 155px; }</style>');
+
+    	var i = 0;
+	    $('body *').each(function() {
+	    	i++;
+		    $(this).attr('data-htextrainfo', i);
+		    if (i.toString() in __ht__currentComments)
+		    {
+		    	__ht__currentCommentsPositions[i.toString()] = __ht__getElementPositionInfo($(this));
+		    }
+		});
+
+		if (__ht__action == 'review') {
+			$('body *').click(function(event) {
+				// Check whether the click event is triggered from event propagation (bubbling or capturing).
+				// We don't want to execute this function if the event is triggered from propagation.
+				// We want the function to be executed just once for a selected element.
+				if(event.target !== event.currentTarget){
+					return;
+				}
+
+				if (__ht__saveComment()) {
+					__ht__bottomGrader.show();
+					document.getElementById('__ht__elementcomment').focus();
+					__ht__selectedBorder.show();
+					__ht__selectedBorder.css('position', __ht__hoverBorder.css('position'));
+					__ht__selectedBorder.width(__ht__hoverBorder.width());
+					__ht__selectedBorder.height(__ht__hoverBorder.height());
+					__ht__selectedBorder.offset(__ht__hoverBorder.offset());
+					__ht__selectedElementID = __ht__currentHoverElement.attr('data-htextrainfo');
+					if (__ht__selectedElementID.toString() in __ht__currentComments)
+					{
+						$( '#__ht__elementcomment' ).val(__ht__currentComments[__ht__selectedElementID.toString()]);
+					}
+					else
+					{
+						$( '#__ht__elementcomment' ).val('');
+					}
+				}
+			});
+
+			$('body *').hover(
+				function() {
+				  	__ht__hoveredElement($( this )[0]);
+				},
+				function() {
+			  		__ht__unhoveredElement($( this )[0]);
+				}
+			);
+		}
+
+		for (var __ht__prop in __ht__currentCommentsPositions) {
+		    __ht__addNewComment(__ht__prop);
+		}
+
+		__ht__bottomGraderSpacer = $('<div>Коментари</div>');
+		__ht__bottomGraderSpacer.css('width', '100px');
+		__ht__bottomGraderSpacer.css('height', '30px');
+		__ht__bottomGraderSpacer.css('position', 'fixed');
+		__ht__bottomGraderSpacer.css('top', '40%');
+		__ht__bottomGraderSpacer.css('left', '0');
+		
+		//__ht__bottomGraderSpacer.css('padding', '0');
+		//__ht__bottomGraderSpacer.css('max-width:', '100');
+		//__ht__bottomGraderSpacer.css('margin', '0');
+
+		__ht__bottomGraderSpacer.css('background', '#00A693');
+		__ht__bottomGraderSpacer.css('color', 'white');
+		__ht__bottomGraderSpacer.css('text-align', 'center');
+		__ht__bottomGraderSpacer.css('font-size', '16px');
+
+		__ht__bottomGraderSpacer.css('line-height', '30px');
+		__ht__bottomGraderSpacer.css('cursor', 'default');
+		__ht__bottomGraderSpacer.css('z-index', '11000');
+		__ht__bottomGraderSpacer.click(function() {
+            __ht__bottomGrader.toggle();
+		});
+		$('body').append(__ht__bottomGraderSpacer);
+
+		__ht__backLabelLink = $('<div>Назад</div>');
+		__ht__backLabelLink.css('width', '100px');
+		__ht__backLabelLink.css('height', '30px');
+		__ht__backLabelLink.css('position', 'fixed');
+		__ht__backLabelLink.css('top', '60%');
+		__ht__backLabelLink.css('left', '0');
+		__ht__backLabelLink.css('background', '#A60000');
+		__ht__backLabelLink.css('color', 'white');
+		__ht__backLabelLink.css('text-align', 'center');
+		__ht__backLabelLink.css('font-size', '16px');
+
+		__ht__backLabelLink.css('line-height', '30px');
+		__ht__backLabelLink.css('cursor', 'default');
+		__ht__backLabelLink.css('z-index', '11000');
+		__ht__backLabelLink.click(function() {
+	    	window.location = 'https://w23ref.w3c.fmi.uni-sofia.bg/review.php';
+		});
+		$('body').append(__ht__backLabelLink);
+
+		if (__ht__action == 'review') {
+			__ht__hoverBorder = $('<div  class="pfn2" style="float: left;"></div>');
+			__ht__hoverBorder.hide();
+			__ht__hoverBorder.css('border', '1px solid red');
+			__ht__hoverBorder.css('font-size', '16px'); //??
+			__ht__hoverBorder.css('pointer-events', 'none');
+			//__ht__hoverBorder.css('position', 'absolute');
+			__ht__hoverBorder.css('z-index', '10003');
+			$('body').append(__ht__hoverBorder);
+
+			__ht__selectedBorder = $('<div></div>');
+			__ht__selectedBorder.hide();
+			__ht__selectedBorder.css('border', '1px solid #FDBCB4');
+			__ht__selectedBorder.css('background', '#FDBCB4');
+			__ht__selectedBorder.css('opacity', '0.60');
+			__ht__selectedBorder.css('pointer-events', 'none');
+			__ht__selectedBorder.css('position', 'absolute');
+			__ht__selectedBorder.css('z-index', '10002');
+			
+			$('body').append(__ht__selectedBorder);
+		}
+
+		__ht__bottomGrader = $('<div class="pfn1"  style="background: #red; float: left; "></div>');
+		// The webkit prefix is needed for Safari to work properly with the sticky position
+		__ht__bottomGrader.css('position', '-webkit-sticky');
+		__ht__bottomGrader.css('position', 'sticky ');
+		__ht__bottomGrader.css('width', '100%');
+		__ht__bottomGrader.css('bottom', '0');
+		__ht__bottomGrader.css('left', '0');
+		__ht__bottomGrader.css('height', '150px');
+		__ht__bottomGrader.css('background', '#555555');
+		__ht__bottomGrader.css('color', 'white');
+		__ht__bottomGrader.css('z-index', '10042');
+		__ht__bottomGrader.css('text-align', 'left');//MP:2017-01-04 (merge-back)	
+		__ht__bottomGrader.css('font-size', '16px'); //??
+		//__ht__bottomGrader.css('max-width', '100%'); 
+		__ht__bottomGrader.css('margin', '0'); 
+
+		//__ht__bottomGrader.css('font-size', '16px');		
+		//__ht__bottomGrader.css('margin', '0px');//MP:2017-01-04 (merge-back)	
+		//__ht__bottomGrader.css('margin', '0%');//MP:2017-01-04 (merge-back)	
+		//__ht__bottomGrader.css('margin-left', '0%');//MP:2017-01-04 (merge-back)	
+		//__ht__bottomGrader.css('margin-right', '0%');//MP:2017-01-04 (merge-back)	
+		__ht__bottomGrader.css('padding', '0');//MP:2018-05-03 (merge-back)	
+		__ht__bottomGrader.css('border-radius', '0px');//MP:2018-05-03 (merge-back)
+		//__ht__bottomGrader.css('background-color', 'transparent');//MP:2018-05-03 (merge-back)		
+		
+        __ht__bottomGrader.hide();
+		$('body').append(__ht__bottomGrader);
+
+		if (__ht__action == 'review') {
+			__ht__bottomGrader1stHalf = $('<div><div style="width:80%; height:100%; float:left; text-align:center; "><textarea id="__ht__finalcomment" placeholder="Напишете финалния си коментар тук. Той ще се запази заедно с оценката." style="resize: none;  margin: 5px; width: 95%; height: 90%; color:black; background-color: white;"></textarea></div><div style="width:20%; height:100%; float:left; text-align:center;"><span style="margin: 5px; width: 90%; float: left; text-align: center;">Оценка</span><input id="__ht__score" style="margin: 5px; width: 90%; float: left; color:black; background-color: white;" type="text" value="5" disabled><input id="__ht__scoreslider" type="range" name="rangeInput" min="0" max="10" step="1" value="5" style="margin: 5px; width: 90%; float: left;" onchange="__ht__updateTextInput();"></div></div>');
+
+			__ht__submitButton = $('<a href="#" style="margin:auto; width:80%;height: auto; font-size:16px" class="__ht__btn __ht__orange">Запази оценка</a>');
+			__ht__bottomGrader1stHalf.find( "div:eq(1)" ).append(__ht__submitButton);
+
+			__ht__submitButton.bind('click', function(e) {
+			        e.preventDefault();
+
+			        if ( $( '#__ht__finalcomment' ).val() !== '' ) {
+
+			        	__ht__startLoading();
+
+			            $.ajax({
+			                url : 'https://w23ref.w3c.fmi.uni-sofia.bg/savescore.php',
+			                type: 'POST',
+			                //dataType: 'json',
+			                data : {
+			                    comment: $( '#__ht__finalcomment' ).val(),
+			                    user_id: 85654,
+			                    referat_id: '85639_1_170',
+			                    score: $( '#__ht__score' ).val()
+			                },
+			                success: function(data, textStatus, jqXHR)
+			                {
+			                    //receive(data);
+			                    __ht__loadingComplete('Successfully saved your score.', true);
+			                },
+			                error: function (jqXHR, textStatus, errorThrown)
+			                {
+			                    __ht__loadingComplete('Error with saving your final feedback. Your session is probably expired.', false);
+			                }
+			            });
+			        } else {
+
+			        }
+			    });
+
+			__ht__bottomGrader1stHalf.css('float', 'left');
+			__ht__bottomGrader1stHalf.css('width', '50%');
+			__ht__bottomGrader1stHalf.css('height', '100%');
+			//__ht__bottomGrader1stHalf.css('background', '#00ffff');
+			__ht__bottomGrader.append(__ht__bottomGrader1stHalf);
+
+			__ht__bottomGrader2ndHalf = $('<div><div style="width:80%; height:100%; float:left; text-align:center;"><textarea id="__ht__elementcomment" placeholder="Напишете тук своя коментар към избрания елемент от реферата. Коментарите се запазват автоматично при избор на нов елемент." style="resize: none; margin: 5px; width: 95%; height: 90%; color:black; background-color: white;"></textarea></div><div style="width:20%; height:100%; float:left; text-align:center;"></div></div>');
+			__ht__bottomGrader2ndHalf.css('float', 'left');
+			__ht__bottomGrader2ndHalf.css('width', '50%');
+			__ht__bottomGrader2ndHalf.css('height', '100%');
+			//__ht__bottomGrader2ndHalf.css('background', '#ff00ff');
+			__ht__bottomGrader.append(__ht__bottomGrader2ndHalf);
+
+			__ht__deleteCommentButton = $('<a href="#" style="margin:auto; margin-top:30px; width:80%;height: auto;" class="__ht__btn __ht__red">Изтрий коментар</a>');
+			__ht__bottomGrader2ndHalf.find( "div:eq(1)" ).append(__ht__deleteCommentButton);
+
+			__ht__deleteCommentButton.bind('click', function(e) {
+			        e.preventDefault();
+
+			        if(((typeof __ht__selectedElementID) === "undefined")
+                    || (__ht__currentComments[__ht__selectedElementID] === undefined)){
+                        return;
+                    }
+			        	__ht__startLoading();
+
+			            $.ajax({
+			                url : 'https://w23ref.w3c.fmi.uni-sofia.bg/deletecomment.php',
+			                type: 'POST',
+			                //dataType: 'json',
+			                data : {
+			                    user_id: 85654,
+			                    referat_id: '85639_1_170',
+			                    element_id: __ht__selectedElementID
+			                },
+			                success: function(data, textStatus, jqXHR)
+			                {
+			                	delete __ht__currentComments[__ht__selectedElementID.toString()];
+			                	$('#__ht__comment' + __ht__selectedElementID.toString()).remove();
+			                	$( '#__ht__elementcomment' ).val('');
+			                	__ht__loadingComplete('Successfully removed comment.', true);
+			                    //receive(data);
+			                },
+			                error: function (jqXHR, textStatus, errorThrown)
+			                {
+			                    __ht__loadingComplete('Error with removing the comment. Your session is probably expired.', false);
+			                }
+			            });
+
+			    });
+
+			__ht__bottomGrader2ndHalf.find( "div:eq(1)" ).append('<br/>');
+
+			__ht__saveCommentButton = $('<a href="#" style="margin:auto; margin-top:20px; width:80%;height: auto;" class="__ht__btn __ht__green">Запази коментар</a>');
+			__ht__bottomGrader2ndHalf.find( "div:eq(1)" ).append(__ht__saveCommentButton);
+
+			__ht__saveCommentButton.bind('click', function(e){
+				e.preventDefault();
+				__ht__saveComment();
+			});
+		}
+
+		if (__ht__action == 'view') {
+			__ht__bottomGrader1stHalf = $('<div></div>');
+			__ht__bottomGrader1stHalf.css('float', 'left');
+			__ht__bottomGrader1stHalf.css('width', '50%');
+			__ht__bottomGrader1stHalf.css('height', '100%');
+			__ht__bottomGrader1stHalf.css('overflow-y', 'scroll');
+			__ht__bottomGrader1stHalf.css('word-wrap', 'break-word');
+
+			for (var i = 0; i < __ht__finalVerdicts.length; i++) {
+				__ht__bottomGrader1stHalf.append('<div class="__ht__blockquote"><b style="color:white;">'+__ht__finalVerdicts[i]['score'].toString()+' от 10 точки</b><br/>'+__ht__finalVerdicts[i]['comment']+'</div>');
+			}
+
+			__ht__bottomGrader.append(__ht__bottomGrader1stHalf);
+
+			__ht__bottomGrader2ndHalf = $('<div></div>');
+			__ht__bottomGrader2ndHalf.css('float', 'left');
+			__ht__bottomGrader2ndHalf.css('width', '50%');
+			__ht__bottomGrader2ndHalf.css('height', '100%');
+			__ht__bottomGrader2ndHalf.css('overflow-y', 'scroll');
+			__ht__bottomGrader2ndHalf.css('word-wrap', 'break-word');
+
+			for (var __ht__prop in __ht__currentComments) {
+				for (var i = 0; i < __ht__currentComments[__ht__prop].length; i++) {
+					var __ht__temptemptemp = $('<div class="__ht__blockquote">'+__ht__currentComments[__ht__prop][i]+'</div>');
+					__ht__temptemptemp.addClass('__ht__bottomComment' + __ht__prop);
+					__ht__temptemptemp.attr('data-htextrainfobox', __ht__prop);
+					__ht__temptemptemp.css('cursor', 'default');
+					__ht__temptemptemp.bind('click', function(e) {
+				        e.preventDefault();
+
+				        __ht__changeViewBox($(this).attr('data-htextrainfobox'));
+				    });
+					__ht__bottomGrader2ndHalf.append(__ht__temptemptemp);
+				}
+			}
+
+			__ht__bottomGrader.append(__ht__bottomGrader2ndHalf);
+		}
+
+		__ht__bottomGraderX = $('<div>X</div>');
+		__ht__bottomGraderX.css('position', 'absolute');
+		__ht__bottomGraderX.css('width', '48px');
+		__ht__bottomGraderX.css('top', '0');
+		__ht__bottomGraderX.css('right', '0');
+		__ht__bottomGraderX.css('font-size', '16px');
+
+		
+		__ht__bottomGraderX.css('height', '20px');
+		__ht__bottomGraderX.css('background', '#c75050');
+
+		__ht__bottomGraderX.hover(
+	      function() {
+	        __ht__bottomGraderX.css('background', '#e04343');
+	      }, function() {
+	        __ht__bottomGraderX.css('background', '#c75050');
+	      }
+	    );
+
+		__ht__bottomGraderX.css('line-height', '20px');
+		__ht__bottomGraderX.css('text-align', 'center');
+		__ht__bottomGraderX.css('color', 'white');
+		__ht__bottomGraderX.css('cursor', 'default');
+		__ht__bottomGraderX.click(function() {
+			__ht__changeViewBox(-1);
+            __ht__bottomGrader.hide();
+		    if (__ht__action == 'review') {
+                __ht__selectedBorder.hide();
+		    }
+		});
+		__ht__bottomGrader.append(__ht__bottomGraderX);
+
+		__ht__loadingDiv = $('<div></div>');
+		__ht__loadingDiv.css('position', 'fixed');
+		__ht__loadingDiv.css('width', '100%');
+		__ht__loadingDiv.css('height', '100%');
+		__ht__loadingDiv.css('left', '0');
+		__ht__loadingDiv.css('top', '0');
+		__ht__loadingDiv.css('background', '#c0c0c0');
+		__ht__loadingDiv.css('z-index', '10043');
+		__ht__loadingDiv.css('opacity', '0.60');
+		__ht__loadingDiv.hide();
+		$('body').append(__ht__loadingDiv);
+
+		__ht__loadingDivInfo = $('<div></div>');
+		__ht__loadingDivInfo.css('position', 'relative');
+		__ht__loadingDivInfo.css('width', '200px');
+		__ht__loadingDivInfo.css('height', '200px');
+		__ht__loadingDivInfo.css('background', '#c0c0c0');
+		__ht__loadingDivInfo.css('top', '200px');
+		__ht__loadingDivInfo.css('z-index', '10044');
+		__ht__loadingDivInfo.css('margin', 'auto');
+		__ht__loadingDiv.append(__ht__loadingDivInfo);
+    }
+
+    function __ht__startLoading() {
+    	__ht__loadingDivInfo.css('background', '#c0c0c0');
+    	__ht__loadingDivInfo.html('<img src="https://w23ref.w3c.fmi.uni-sofia.bg/img/loading.gif" style="width:100%">');
+    	__ht__loadingDiv.fadeIn();
+    }
+
+    function __ht__loadingComplete(msg, noerror) {
+    	if (noerror) {
+    		// __ht__loadingDivInfo.css('background', '#00ff00');
+            __ht__loadingDivInfo.html('<img src="https://w23ref.w3c.fmi.uni-sofia.bg/img/loading.gif" style="width:100%">');
+    	} else {
+			alert(msg);
+    	}
+    	// __ht__loadingDivInfo.html(msg);
+    	__ht__loadingDiv.fadeOut(1000);
+    }
+
+    function __ht__jQueryCheck() {
+        if (typeof jQuery === "undefined") {
+            // No one's loaded it; either load it or do without
+		    var __ht__script = document.createElement("SCRIPT");
+		    __ht__script.src = 'https://w23ref.w3c.fmi.uni-sofia.bg/assets/jquery.min.1.7.1.js';
+		    __ht__script.type = 'text/javascript';
+		    document.getElementsByTagName("head")[0].appendChild(__ht__script);
+
+		    // Poll for jQuery to come into existance
+		    var __ht__checkReady = function(callback) {
+		        if (window.jQuery) {
+		            callback(jQuery);
+		        } else {
+		            window.setTimeout(function() { __ht__checkReady(callback); }, 100);
+		        }
+		    };
+
+		    __ht__checkReady(function($) {
+			    __ht__hookwe();
+		    });
+        }
+        else
+        {
+        	//__ht__hookwe(); //2020-02-05
+			// hook on next event-loop to hook AFTER angular / other framework event listeners binding
+			// fixes comments not working when importing jquery manually in referat
+			setTimeout(function() {
+				__ht__hookwe();
+			}, 500); // 1ms timeout works too - just to skip the event loop, but better put some more to make sure other frameworks / code works too
+        	
+        }
+    }
+
+    // return false if the comment was send to the server, but wasn't saved successfully
+	// else, return true
+	function __ht__saveComment(){
+
+		if ( ((typeof __ht__selectedElementID) === "undefined")
+			|| ($( '#__ht__elementcomment' ).val() === '') ) {
+			return true;
+		}
+
+		// if the comment wasn't changed since it was last saved, exit the function
+		if(__ht__currentComments[__ht__selectedElementID.toString()] === $( '#__ht__elementcomment' ).val()){
+			return true;
+		}
+
+		__ht__startLoading();
+
+		var success = true;
+
+		$.ajax({
+			url : 'https://w23ref.w3c.fmi.uni-sofia.bg/savecomment.php',
+			type: 'POST',
+
+			// This function is called automatically when the user clicks on a new element.
+			// That's why the request must NOT be asynchronous. __ht__selectedBorder must have its old value when the
+			// response callback is executed. Only after the new comment position is saved, must the value of
+			// __ht__selectedBorder be updated with the newly selected element.
+			async: false,
+
+			//dataType: 'json',
+			data : {
+				comment: $( '#__ht__elementcomment' ).val(),
+				user_id: 85654,
+			referat_id: '85639_1_170',
+			element_id: __ht__selectedElementID
+		},
+		success: function(data, textStatus, jqXHR)
+		{
+			__ht__currentComments[__ht__selectedElementID.toString()] = $( '#__ht__elementcomment' ).val();
+			__ht__currentCommentsPositions[__ht__selectedElementID.toString()] = __ht__getElementPositionInfo(__ht__selectedBorder);
+			__ht__addNewComment(__ht__selectedElementID);
+			__ht__loadingComplete('Successfully saved comment.', true);
+			//receive(data);
+		},
+		error: function (jqXHR, textStatus, errorThrown)
+		{
+			__ht__loadingComplete('Error with saving the comment. Your session is probably expired.', false);
+			success = false;
+		}
+	});
+
+		return success;
+	}
+})();
+</script>
+
+</div></div><div style="width: 100px; height: 30px; position: fixed; top: 40%; left: 0px; background: rgb(0, 166, 147); color: white; text-align: center; font-size: 16px; line-height: 30px; cursor: default; z-index: 11000;">Коментари</div><div style="width: 100px; height: 30px; position: fixed; top: 60%; left: 0px; background: rgb(166, 0, 0); color: white; text-align: center; font-size: 16px; line-height: 30px; cursor: default; z-index: 11000;">Назад</div><div class="pfn1" style="float: left; position: sticky; width: 100%; bottom: 0px; left: 0px; height: 150px; background: rgb(85, 85, 85); color: white; z-index: 10042; text-align: left; font-size: 16px; margin: 0px; padding: 0px; border-radius: 0px; display: none;"><div style="float: left; width: 50%; height: 100%; overflow-y: scroll; overflow-wrap: break-word;"></div><div style="float: left; width: 50%; height: 100%; overflow-y: scroll; overflow-wrap: break-word;"></div><div style="position: absolute; width: 48px; top: 0px; right: 0px; font-size: 16px; height: 20px; background: rgb(199, 80, 80); line-height: 20px; text-align: center; color: white; cursor: default;">X</div></div><div style="position: fixed; width: 100%; height: 100%; left: 0px; top: 0px; background: rgb(192, 192, 192); z-index: 10043; opacity: 0.6; display: none;"><div style="position: relative; width: 200px; height: 200px; background: rgb(192, 192, 192); top: 200px; z-index: 10044; margin: auto;"></div></div></body><grammarly-desktop-integration data-grammarly-shadow-root="true"><template shadowrootmode="open"><style>
+      div.grammarly-desktop-integration {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select:none;
+        user-select:none;
+      }
+
+      div.grammarly-desktop-integration:before {
+        content: attr(data-content);
+      }
+    </style><div aria-label="grammarly-integration" role="group" tabindex="-1" class="grammarly-desktop-integration" data-content="{&quot;mode&quot;:&quot;full&quot;,&quot;isActive&quot;:true,&quot;isUserDisabled&quot;:false}"></div></template></grammarly-desktop-integration></html>

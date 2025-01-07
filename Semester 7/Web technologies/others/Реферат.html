@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<!-- saved from url=(0088)https://w23ref.w3c.fmi.uni-sofia.bg/referat/85620_1_78/index.php?action=view&back=review -->
+<html lang="bg"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Реферат</title>
+    <link rel="stylesheet" href="./Реферат_files/site.css">
+<script src="./Реферат_files/jquery.min.1.7.1.js" type="text/javascript"></script><style type="text/css">/* background-image: unset; padding: unset; span:not([data-htextrainfo]), div:not([data-htextrainfo]) { padding: 0; height: auto; width: auto; margin: 0; border-radius: 0; border: none; background: none; } //not working span:not([data-htextrainfo]), div:not([data-htextrainfo]), div:not([data-htextrainfobo]), not(.__ht__blockquote) { padding: 2; height: auto; width: auto; margin: 0; border-radius: 0; border: none; background: none; } background-image: url("../img/background.png"); background-repeat: repeat; background-size: 100%; */ span:not([data-htextrainfo]), div:not([data-htextrainfo]) { padding: 0; height: auto; width: auto; margin: 0; border-radius: 0; border: none; background: none; font-family: "Helvetica", cursive; } .__ht__btn { border-radius: 3px; padding: 3px 7px; text-decoration: none; color: #fff; position: relative; display: inline-block; } .__ht__btn:active { transform: translate(0px, 5px); -webkit-transform: translate(0px, 5px); box-shadow: 0px 1px 0px 0px; } .__ht__green { background-color: #2ecc71; box-shadow: 0px 3px 0px 0px #15B358; } .__ht__green:hover { background-color: #48E68B; } .__ht__red { background-color: #e74c3c; box-shadow: 0px 3px 0px 0px #CE3323; } .__ht__red:hover { background-color: #FF6656; } .__ht__orange { background-color: #e67e22; box-shadow: 0px 3px 0px 0px #CD6509; } .__ht__orange:hover { background-color: #FF983C; } div.__ht__blockquote { border-left: 1px solid #ccc; border-left: 10px solid #ccc; margin: 1.5em 10px; padding: 0.5em 10px; } div.__ht__blockquote p { display: inline; } .#__ht__elementcomment, #__ht__score, #__ht__finalcomment { color: black; } .__ht__bottomPadding{ padding-bottom: 155px; }</style></head>
+
+<body data-new-gr-c-s-check-loaded="14.1209.0" data-gr-ext-installed="">
+<div class="container" data-htextrainfo="1">
+    <header data-htextrainfo="2">
+        <h1 data-htextrainfo="3">JSON Web Token (JWT), JSON Web Signature (JWS), <br data-htextrainfo="4"> JSON Web Encryption (JWE), JSON Web Algorithms (JWA)</h1>
+    </header>
+
+    <nav data-htextrainfo="5">
+        <h2 data-htextrainfo="6">Съдържание</h2>
+        <ul data-htextrainfo="7">
+            <li data-htextrainfo="8"><a href="https://w23ref.w3c.fmi.uni-sofia.bg/referat/85620_1_78/index.php?action=view&amp;back=review#section1" data-htextrainfo="9">1. Въведение</a></li>
+            <li data-htextrainfo="10"><a href="https://w23ref.w3c.fmi.uni-sofia.bg/referat/85620_1_78/index.php?action=view&amp;back=review#section2" data-htextrainfo="11">2. JSON Web Token (JWT)</a></li>
+            <li data-htextrainfo="12"><a href="https://w23ref.w3c.fmi.uni-sofia.bg/referat/85620_1_78/index.php?action=view&amp;back=review#section3" data-htextrainfo="13">3. JSON Web Signature (JWS)</a></li>
+            <li data-htextrainfo="14"><a href="https://w23ref.w3c.fmi.uni-sofia.bg/referat/85620_1_78/index.php?action=view&amp;back=review#section4" data-htextrainfo="15">4. JSON Web Encryption (JWE)</a></li>
+            <li data-htextrainfo="16"><a href="https://w23ref.w3c.fmi.uni-sofia.bg/referat/85620_1_78/index.php?action=view&amp;back=review#section5" data-htextrainfo="17">5. JSON Web Algorithms (JWA)</a></li>
+            <li data-htextrainfo="18"><a href="https://w23ref.w3c.fmi.uni-sofia.bg/referat/85620_1_78/index.php?action=view&amp;back=review#section6" data-htextrainfo="19">6. Заключение</a></li>
+        </ul>
+    </nav>
+
+    <section id="section1" data-htextrainfo="20">
+        <h2 data-htextrainfo="21">1.Въведение</h2>
+        <p data-htextrainfo="22">В днешно време нараства необходимостта за сигурна комуникация в интернет, което води до възникването на различни стандарти
+            за осигуряване на автентичност и конфиденциалност на предаваната информация. Един от най – разпространените формати за обмен
+            на данни е JavaScript Object Notation, познат още като JSON. Той е предпочитан, тъй като е лесен за четене и писане,
+            както от хора, така и от машини. <br data-htextrainfo="23">
+            JSON Web Token (JWT), JSON Web Signature (JWS), JSON Web Encryption (JWE) и JSON Web Algorithms (JWA) са стандарти,
+            осигуряващи сигурността на данните в мрежата. JWT е механизъм за обмен на токени между клиенти и сървъри,
+            както и за авторизация на потребители. JWS и JWE са неделима част от работата с JWT, тъй като те предоставят средства
+            за подписване и криптиране на данните, а използваните алгоритми в тези процеси се описват от JWA.
+        </p>
+    </section>
+
+    <section id="section2" data-htextrainfo="24">
+        <h2 data-htextrainfo="25">2.JSON Web Token (JWT)</h2>
+        <p data-htextrainfo="26">
+            JWT е отворен стандарт, който дефинира  компактен и самостоятелен начин за сигурно предаване на информация между две страни
+            като JSON обект. Той може да бъде подписан, криптиран или и двете. <br data-htextrainfo="27">
+            JSON Web Token е съставе от три части, разделени с точка (.) – header, payload и  signature.
+        </p>
+    </section>
+
+    <section id="section3" data-htextrainfo="28">
+        <h2 data-htextrainfo="29">3.JSON Web Signature (JWS)</h2>
+        <p data-htextrainfo="30">JWS е механизъм за осигуряване на целостта и автентичността на данни чрез използването на цифров подпис. В този случай, токенът се подписва, за да се гарантира, че данните не са променяни по пътя.
+            Header-a съдържа информация за типа на токена и използвания алгоритъм на подписване или криптиране. <br data-htextrainfo="31">
+            <br data-htextrainfo="32">
+            <span class="highlight" data-htextrainfo="33">{ <br data-htextrainfo="34">
+                                        "alg": "HS256", <br data-htextrainfo="35">
+                                        "typ": "JWT" <br data-htextrainfo="36">
+                                    } <br data-htextrainfo="37">
+            </span>
+            <br data-htextrainfo="38">
+            Payload-a съдържа твърдения (claims). Те предават информация като потребителска идентичност или срок на валидност на токенa. Твърденията биват три вида – регистрирани (registered), публични (public) и частни (private).
+            Регистрираните твърдения са стандартни и предварително дефинирани твърдения, които са част от спецификацията на JWS. Те имат специфични и добре дефинирани значения и се използват за осигуряване на стандартна информация за различни контексти. Тези твърдения не са задължителни, но могат да бъдат полезни. Някои от тях са: iss (издател), exp (време на изтичане), sub (субект), aud (аудитория), iat (време на издаване)  и други.
+            Публичните твърдения са тези, които могат да бъдат дефинирани от разработчиците и са предназначени за широко разпространение и употреба. Те трябва да бъдат уникални, за да се избегне конфликт с други твърдения. Това може да се постигне чрез използване на URL адреси или URI. Обикновено се използват за споделяне на информация между различни системи.
+            Частните твърдения са специфични за конкретни страни или системи, които обменят JWS, и нямат предварително дефинирано значение в стандарта. Те се използват за обмен на персонализирана информация между страни, които са се договорили как да използват тези твърдения. <br data-htextrainfo="39">
+            <br data-htextrainfo="40">
+            <span class="highlight" data-htextrainfo="41">{ <br data-htextrainfo="42">
+                                          "sub": "1234567890", <br data-htextrainfo="43">
+                                          "name": "John Doe", <br data-htextrainfo="44">
+                                          "admin": true <br data-htextrainfo="45">
+                                    } <br data-htextrainfo="46">
+            </span>
+            <br data-htextrainfo="47">
+            Подписът се получава от кодирания header, кодирания payload, таен ключ и посочения криптографски алгоритъм. <br data-htextrainfo="48">
+            <br data-htextrainfo="49">
+            <span class="highlight" data-htextrainfo="50">HMACSHA256( <br data-htextrainfo="51">
+                                          base64UrlEncode(header) + "." + <br data-htextrainfo="52">
+                                          base64UrlEncode(payload), <br data-htextrainfo="53">
+                                          secret) <br data-htextrainfo="54">
+            </span>
+            <br data-htextrainfo="55">
+            Ето как би изглеждал един кодиран JWS:
+            </p><figure data-htextrainfo="56">
+            <img src="./Реферат_files/jws1.png" class="mid-image" alt="JWS" data-htextrainfo="57">
+            </figure>
+            При удостоверяване, когато потребителят въведе успешно своите идентификационни данни, сървърът изпраща на клиента JWS.
+            Всеки път, когато потребителят иска достъп до защитен ресурс, той трябва да подава на сървъра своя токен.
+            Това обикновено става в Authorization header-a на заявката по следния начин: [1] <br data-htextrainfo="58">
+            <br data-htextrainfo="59">
+            <span class="highlight" data-htextrainfo="60">Authorization: Bearer [token]</span>
+            <figure data-htextrainfo="61">
+            <img src="./Реферат_files/jws2.png" class="mid-image" alt="Използване на JWS" data-htextrainfo="62">
+            <figcaption data-htextrainfo="63">
+            1.	Потребителят се вписва с идентификационни данни. <br data-htextrainfo="64">
+            2.	Когато потребителят бъде удостоверен, се създава JWS и се връща на потребителя. <br data-htextrainfo="65">
+            3.	Когато потребителят иска да получи достъп до защитен ресурс, клиентското приложение изпраща JWS. <br data-htextrainfo="66">
+            4.	След това JWS се използва от сървъра, за идентифициране на потребителя и разрешаване на достъп до ресурса. [2]
+            </figcaption>
+            </figure>
+        <p data-htextrainfo="67"></p>
+    </section>
+
+    <section id="section4" data-htextrainfo="68">
+        <h2 data-htextrainfo="69">4.JSON Web Encryption (JWE)</h2>
+        <p data-htextrainfo="70">
+            JSON Web Encryption (JWE) позволява криптиране на токен, така че само предназначеният получател да може да го прочете.
+            Той стандартизира начина за представяне на кодирани данни в JSON структура. Представянето на криптирания payload може да бъде
+            чрез JWE компактна сериализация или JWE JSON сериализация. <br data-htextrainfo="71">
+            Компактната сериализация на JWE има пет основни компонента: JOSE header, JWE Encrypted Key, JWE initialization vector,
+            JWE Ciphertext, JWE Authentication Tag. Всички те са base64url-кодирани и са свързани чрез точки (.). <br data-htextrainfo="72">
+            Допълнителните елементи, участващи в JOSE header-а, са enc и zip. enc определя алгоритъма за криптиране на съдържанието,
+            докато елементът alg определя алгоритъма за криптиране на ключа за криптиране на съдържанието (Content Encryption Key).
+            zip предоставя алгоритъм за компресия, ако е необходимо компресиране на токена. <br data-htextrainfo="73">
+            По време на процеса на криптиране, издателят генерира ключ с размер 256 бита, който се използва за криптиране на съобщението.
+            Този ключ се поставя в секцията JWE Encrypted Key. <br data-htextrainfo="74">
+            Някои алгоритми за криптиране изискват инициализиращ вектор, който е случайно генерирано число, използвано заедно с таен ключ
+            за криптиране на данни. Това предотвратява повторното криптиране на едни и същи данни с един и същ таен ключ.
+            Получателят се нуждае от този инициализиращ вектор, за да декриптира съобщението, затова той се поставя в JWE токена. <br data-htextrainfo="75">
+            Четвъртата част от токена е JWE Ciphertext, който се изчислява чрез криптиране на JSON payload. Той използва алгоритъма,
+            посочен в елемента enc на header-a. <br data-htextrainfo="76">
+            JWE Authentication Tag е последната част от JWE токена, генериран заедно с JWE Ciphertext. Той осигурява целостта на шифрования текст. [3] <br data-htextrainfo="77">
+            </p><figure data-htextrainfo="78">
+                <img src="./Реферат_files/jwsVSjwe.png" class="mid-image" alt="Разлика между JWS и JWE" data-htextrainfo="79">
+                <figcaption data-htextrainfo="80">Разлика между JWS и JWE. [4]</figcaption>
+            </figure>
+            JWS и JWE се използват за различни цели. JWS се използва за създаване на подписани токени,
+            където целта е да се гарантира целостта и автентичността на данните, докато целта на JWE е създаване на криптирани токени,
+            за да се гарантира поверителността на данните. При работа с JWS съдържанието на токена е видимо за всеки,
+            но участниците в обмена могат да бъдат сигурни, че данните не са променени след подписването.
+            В случая на JWE данните от payload-а са криптирани, така че само предвиденият получател може да ги прочете. [4]
+        <p data-htextrainfo="81"></p>
+    </section>
+
+    <section id="section5" data-htextrainfo="82">
+        <h2 data-htextrainfo="83">5.JSON Web Algorithms (JWA)</h2>
+        <p data-htextrainfo="84">
+            Спецификацията на JWA се фокусира върху изброяването на алгоритмите, необходими на JWS и JWE. Също така описва операциите,
+            които са специфични за тези алгоритми и типове ключове. <br data-htextrainfo="85">
+            JWA поддържа различни категории криптографски алгоритми. <br data-htextrainfo="86">
+            JWS използва алгоритми за подписване и проверка (Signature Algorithms). Примери за такива алгоритми са
+            HS256, HS384, HS512, RS256, RS384, RS512, ES256, ES384, ES512. <br data-htextrainfo="87">
+            JWE използва алгоритми за криптиране и декриптиране (Encryption Algorithms). Такива алгоритми са RSA-OAEP, RSA1_5 за RSA криптиране
+            и A128KW, A256KW за AES криптиране с използване на ключове с дължина 128 и 256 бита. <br data-htextrainfo="88">
+            Също така се използват хеширащи алгоритми като SHA-256, SHA-384, SHA-512 и алгорими за обмен на ключове между страните -
+            ECDH-ES (Elliptic Curve Diffie-Hellman Exchange) осугурява обмена на симетрични ключове.
+            </p><figure data-htextrainfo="89">
+                <img src="./Реферат_files/jwa1.png" class="mid-image" alt="Алгоритми, използвани от JWS" data-htextrainfo="90">
+                <figcaption data-htextrainfo="91">Алгоритми, използвани от JWS. [3]</figcaption>
+            </figure>
+
+            <figure data-htextrainfo="92">
+                <img src="./Реферат_files/jwa2.png" class="mid-image" alt="Алгоритми, използвани от JWE" data-htextrainfo="93">
+                <figcaption data-htextrainfo="94">Алгоритми, използвани от JWE. [3]</figcaption>
+            </figure>
+        <p data-htextrainfo="95"></p>
+    </section>
+
+    <section id="section6" data-htextrainfo="96">
+        <h2 data-htextrainfo="97">6.Заключение</h2>
+        <p data-htextrainfo="98">
+            JSON Web Token (JWT), JSON Web Signature (JWS), JSON Web Encryption (JWE) и JSON Web Algorithms (JWA) представляват основни
+            компоненти на модерните уеб технологии за сигурност и автентикация. Комбинацията от тези технологии позволява изграждането
+            на гъвкави, сигурни и мащабируеми решения. Чрез използването на JWT, JWS, JWE и JWA организациите могат да гарантират,
+            че комуникацията между клиент и сървър е добре защитена, дори в среда с множество рискове за сигурността.
+            В днешно време тези стандарти се превърнаха в ключов елемент в разработката на приложения, които използваме ежедневно.
+        </p>
+    </section>
+
+    <footer data-htextrainfo="99">
+        <p data-htextrainfo="100">Източници: <br data-htextrainfo="101">
+            [1] “Introduction to JSON Web Token (JWT)” от <a href="https://jwt.io/introduction" data-htextrainfo="102">"JWT.io"</a>,
+            Последно посетен на 30.11.2024.<br data-htextrainfo="103">
+
+            [2] “JSON Web Token (JWT)”, 2023г,
+            Бележки от <a href="https://www.ibm.com/docs/en/cics-ts/6.x?topic=cics-json-web-token-jwt" data-htextrainfo="104">Документация</a>,
+            Последно посетен на 30.11.2024.<br data-htextrainfo="105">
+
+            [3] Автор: Yashesvinee V, “What are JWT, JWS, JWE, JWK, JWA?”, 2023г,
+            Бележки от <a href="https://www.loginradius.com/blog/engineering/guest-post/what-are-jwt-jws-jwe-jwk-jwa/" data-htextrainfo="106">Блог</a>,
+            Последно посетен на 30.11.2024.<br data-htextrainfo="107">
+
+            [4] Автор: Денис Костенчук, “Understanding the JWE Token – A Practical Guide”, 2023г,
+            Бележки от <a href="https://medium.com/@idenisko/understanding-the-jwe-token-a-practical-guide-942224f6a9b6" data-htextrainfo="108">Блог</a>,
+            Последно посетен на 30.11.2024.<br data-htextrainfo="109">
+        </p>
+    </footer>
+
+</div>
+
+<script src="./Реферат_files/main.js" data-htextrainfo="110"></script>
+
+<div id="modalGallery" class="modal" data-htextrainfo="111">
+    <span class="close-gallery" data-htextrainfo="112">×</span>
+    <img class="modal-content" id="modalImage" data-htextrainfo="113">
+    <div id="caption" data-htextrainfo="114"></div>
+</div>
+
+<script data-htextrainfo="115">	var __ht__currentlyHoveredElements = [];
+	var __ht__currentHoverElement;
+	var __ht__hoverBorder;
+	var __ht__selectedBorder;
+	var __ht__bottomGrader;
+	var __ht__bottomGrader1stHalf;
+	var __ht__bottomGrader2ndHalf;
+
+	var __ht__backLabelLink;
+
+	var __ht__selectedElementID;
+	var __ht__submitButton;
+	var __ht__saveCommentButton;
+	var __ht__deleteCommentButton;
+
+	var __ht__highlightedID = -1;
+
+	var __ht__finalVerdicts = [];
+	
+
+	var __ht__currentComments = {};
+	
+	var __ht__currentCommentsPositions = {};
+	const __ht__action = 'view';
+
+	var __ht__loadingDiv;
+	var __ht__loadingDivInfo;
+
+	function __ht__updateTextInput() {
+      	$('#__ht__score').val( $('#__ht__scoreslider').val() );
+    }
+
+	(function() {
+    if (window.addEventListener) {
+        // Standard
+        window.addEventListener('load', __ht__jQueryCheck, false);
+    }
+    else if (window.attachEvent) {
+        // Microsoft
+        window.attachEvent('onload', __ht__jQueryCheck);
+    }
+
+    function __ht__changeViewBox(id) {
+    	if (id != __ht__highlightedID) {
+    		if (__ht__highlightedID != -1) {
+    			 $('#__ht__comment'+__ht__highlightedID.toString()).css('background', '#ff00ff');
+    			 $('.__ht__bottomComment'+__ht__highlightedID.toString()).css('background-color','transparent');
+    		}
+    		__ht__highlightedID = id;
+    		if (id != -1) {
+	    		 $('#__ht__comment'+id.toString()).css('background', '#0000ff');
+	    		 $('.__ht__bottomComment'+id.toString()).css('background', '#e67e22');
+	    	}
+    	}
+
+    	if (id != -1) {
+			$('html, body').animate({
+		        scrollTop: $('#__ht__comment'+id.toString()).offset().top
+		    }, 1000);
+
+			__ht__bottomGrader2ndHalf.animate({
+		        scrollTop: __ht__bottomGrader2ndHalf.scrollTop() + $('.__ht__bottomComment'+id.toString()).first().position().top
+		    }, 1000);
+		}
+    }
+
+    function __ht__hoveredElement(obj) {
+    	__ht__currentlyHoveredElements.push(obj);
+    	__ht__updateHoveredElement();
+    }
+
+    function __ht__unhoveredElement(obj) {
+    	__ht__currentlyHoveredElements.splice(__ht__currentlyHoveredElements.indexOf(obj), 1);
+    	__ht__updateHoveredElement();
+    }
+
+    function __ht__getElementPositionInfo(elem) {
+        var __ht__tempWidth = elem.width() + parseInt(elem.css('padding-left').replace('px', '')) + parseInt(elem.css('padding-right').replace('px', ''));
+        var __ht__tempHeight = elem.height() + parseInt(elem.css('padding-top').replace('px', '')) + parseInt(elem.css('padding-bottom').replace('px', ''));
+        var __ht__tempLeft = elem.offset().left;
+        var __ht__tempTop = elem.offset().top;
+        var __ht__tempPosition = 'absolute';
+
+		__ht__fixedparents = elem.parents().filter(function() {
+		    return $(this).css('position') == 'fixed';
+		  });
+		if ( __ht__fixedparents.length )
+		{
+			__ht__tempPosition = 'fixed';
+		}
+		else if (elem.css('position') == 'fixed')
+		{
+			__ht__tempPosition = 'fixed';
+		}
+
+		return {width: __ht__tempWidth, height: __ht__tempHeight, left: __ht__tempLeft, top: __ht__tempTop, position: __ht__tempPosition};
+    }
+
+    function __ht__updateHoveredElement() {
+    	var __ht__len = __ht__currentlyHoveredElements.length;
+    	var __ht__oldHoverElement = __ht__currentHoverElement;
+    	var __ht__maxID = -1;
+
+    	if (__ht__len == 0)
+    	{
+    		__ht__currentHoverElement = undefined;
+    	}
+    	else if (__ht__len == 1)
+    	{
+    		__ht__currentHoverElement = $(__ht__currentlyHoveredElements[0]);
+    	}
+
+    	for (i = 0; i < __ht__len; i++)
+    	{
+    		if (parseInt($(__ht__currentlyHoveredElements[i]).attr('data-htextrainfo')) > __ht__maxID)
+    		{
+    			__ht__maxID = parseInt($(__ht__currentlyHoveredElements[i]).attr('data-htextrainfo'));
+				__ht__currentHoverElement = $(__ht__currentlyHoveredElements[i]);
+    		}
+    	}
+
+    	if (__ht__currentHoverElement !== undefined)
+		{
+			var __ht__postinfos = __ht__getElementPositionInfo(__ht__currentHoverElement);
+			__ht__hoverBorder.show();
+			__ht__hoverBorder.width(__ht__postinfos.width);
+			__ht__hoverBorder.height(__ht__postinfos.height);
+			__ht__hoverBorder.css('position', __ht__postinfos.position);
+			__ht__hoverBorder.offset({ top: __ht__postinfos.top, left: __ht__postinfos.left });
+		}else{
+			__ht__hoverBorder.hide();
+		}
+    }
+
+    function __ht__addNewComment(commentID) {
+        var commentIdFullName='__ht__comment'+commentID.toString();
+
+        // If a div element has already been positioned over the commented
+        // element, then don't create a new div.
+        if(document.getElementById(commentIdFullName)){
+            return;
+        }
+
+        var __ht__temptemptemp = $('<div id='+commentIdFullName+'></div>');
+	    __ht__temptemptemp.width(__ht__currentCommentsPositions[commentID].width);
+		__ht__temptemptemp.height(__ht__currentCommentsPositions[commentID].height);
+		__ht__temptemptemp.css('position', __ht__currentCommentsPositions[commentID].position);
+		if (__ht__currentCommentsPositions[commentID].position == 'fixed')
+		{
+			__ht__temptemptemp.offset({ top: __ht__currentCommentsPositions[commentID].top - $(window).scrollTop(), left: __ht__currentCommentsPositions[commentID].left - $(window).scrollLeft() });
+		}
+		else
+		{
+			__ht__temptemptemp.offset({ top: __ht__currentCommentsPositions[commentID].top, left: __ht__currentCommentsPositions[commentID].left });
+		}
+		__ht__temptemptemp.css('background', '#ff00ff');
+		__ht__temptemptemp.css('opacity', '0.42');
+		__ht__temptemptemp.css('z-index', '10004');
+		if (__ht__action == 'review')
+		{
+			__ht__temptemptemp.css('pointer-events', 'none');
+		}
+
+		__ht__temptemptemp.attr('data-htextrainfobox', commentID);
+
+		if (__ht__action == 'view')
+		{
+			__ht__temptemptemp.bind('click', function(e) {
+		        e.preventDefault();
+
+		        __ht__bottomGrader.show();
+		        __ht__changeViewBox($(this).attr('data-htextrainfobox'));
+		    });
+		}
+
+	    $('body').append(__ht__temptemptemp);
+    }
+
+    function __ht__hookwe() {
+
+    	$('head').append('<style type="text/css">/* background-image: unset; padding: unset; span:not([data-htextrainfo]), div:not([data-htextrainfo]) { padding: 0; height: auto; width: auto; margin: 0; border-radius: 0; border: none; background: none; } //not working span:not([data-htextrainfo]), div:not([data-htextrainfo]), div:not([data-htextrainfobo]), not(.__ht__blockquote) { padding: 2; height: auto; width: auto; margin: 0; border-radius: 0; border: none; background: none; } background-image: url("../img/background.png"); background-repeat: repeat; background-size: 100%; */ span:not([data-htextrainfo]), div:not([data-htextrainfo]) { padding: 0; height: auto; width: auto; margin: 0; border-radius: 0; border: none; background: none; font-family: "Helvetica", cursive; } .__ht__btn { border-radius: 3px; padding: 3px 7px; text-decoration: none; color: #fff; position: relative; display: inline-block; } .__ht__btn:active { transform: translate(0px, 5px); -webkit-transform: translate(0px, 5px); box-shadow: 0px 1px 0px 0px; } .__ht__green { background-color: #2ecc71; box-shadow: 0px 3px 0px 0px #15B358; } .__ht__green:hover { background-color: #48E68B; } .__ht__red { background-color: #e74c3c; box-shadow: 0px 3px 0px 0px #CE3323; } .__ht__red:hover { background-color: #FF6656; } .__ht__orange { background-color: #e67e22; box-shadow: 0px 3px 0px 0px #CD6509; } .__ht__orange:hover { background-color: #FF983C; } div.__ht__blockquote { border-left: 1px solid #ccc; border-left: 10px solid #ccc; margin: 1.5em 10px; padding: 0.5em 10px; } div.__ht__blockquote p { display: inline; } .#__ht__elementcomment, #__ht__score, #__ht__finalcomment { color: black; } .__ht__bottomPadding{ padding-bottom: 155px; }</style>');
+
+    	var i = 0;
+	    $('body *').each(function() {
+	    	i++;
+		    $(this).attr('data-htextrainfo', i);
+		    if (i.toString() in __ht__currentComments)
+		    {
+		    	__ht__currentCommentsPositions[i.toString()] = __ht__getElementPositionInfo($(this));
+		    }
+		});
+
+		if (__ht__action == 'review') {
+			$('body *').click(function(event) {
+				// Check whether the click event is triggered from event propagation (bubbling or capturing).
+				// We don't want to execute this function if the event is triggered from propagation.
+				// We want the function to be executed just once for a selected element.
+				if(event.target !== event.currentTarget){
+					return;
+				}
+
+				if (__ht__saveComment()) {
+					__ht__bottomGrader.show();
+					document.getElementById('__ht__elementcomment').focus();
+					__ht__selectedBorder.show();
+					__ht__selectedBorder.css('position', __ht__hoverBorder.css('position'));
+					__ht__selectedBorder.width(__ht__hoverBorder.width());
+					__ht__selectedBorder.height(__ht__hoverBorder.height());
+					__ht__selectedBorder.offset(__ht__hoverBorder.offset());
+					__ht__selectedElementID = __ht__currentHoverElement.attr('data-htextrainfo');
+					if (__ht__selectedElementID.toString() in __ht__currentComments)
+					{
+						$( '#__ht__elementcomment' ).val(__ht__currentComments[__ht__selectedElementID.toString()]);
+					}
+					else
+					{
+						$( '#__ht__elementcomment' ).val('');
+					}
+				}
+			});
+
+			$('body *').hover(
+				function() {
+				  	__ht__hoveredElement($( this )[0]);
+				},
+				function() {
+			  		__ht__unhoveredElement($( this )[0]);
+				}
+			);
+		}
+
+		for (var __ht__prop in __ht__currentCommentsPositions) {
+		    __ht__addNewComment(__ht__prop);
+		}
+
+		__ht__bottomGraderSpacer = $('<div>Коментари</div>');
+		__ht__bottomGraderSpacer.css('width', '100px');
+		__ht__bottomGraderSpacer.css('height', '30px');
+		__ht__bottomGraderSpacer.css('position', 'fixed');
+		__ht__bottomGraderSpacer.css('top', '40%');
+		__ht__bottomGraderSpacer.css('left', '0');
+		
+		//__ht__bottomGraderSpacer.css('padding', '0');
+		//__ht__bottomGraderSpacer.css('max-width:', '100');
+		//__ht__bottomGraderSpacer.css('margin', '0');
+
+		__ht__bottomGraderSpacer.css('background', '#00A693');
+		__ht__bottomGraderSpacer.css('color', 'white');
+		__ht__bottomGraderSpacer.css('text-align', 'center');
+		__ht__bottomGraderSpacer.css('font-size', '16px');
+
+		__ht__bottomGraderSpacer.css('line-height', '30px');
+		__ht__bottomGraderSpacer.css('cursor', 'default');
+		__ht__bottomGraderSpacer.css('z-index', '11000');
+		__ht__bottomGraderSpacer.click(function() {
+            __ht__bottomGrader.toggle();
+		});
+		$('body').append(__ht__bottomGraderSpacer);
+
+		__ht__backLabelLink = $('<div>Назад</div>');
+		__ht__backLabelLink.css('width', '100px');
+		__ht__backLabelLink.css('height', '30px');
+		__ht__backLabelLink.css('position', 'fixed');
+		__ht__backLabelLink.css('top', '60%');
+		__ht__backLabelLink.css('left', '0');
+		__ht__backLabelLink.css('background', '#A60000');
+		__ht__backLabelLink.css('color', 'white');
+		__ht__backLabelLink.css('text-align', 'center');
+		__ht__backLabelLink.css('font-size', '16px');
+
+		__ht__backLabelLink.css('line-height', '30px');
+		__ht__backLabelLink.css('cursor', 'default');
+		__ht__backLabelLink.css('z-index', '11000');
+		__ht__backLabelLink.click(function() {
+	    	window.location = 'https://w23ref.w3c.fmi.uni-sofia.bg/review.php';
+		});
+		$('body').append(__ht__backLabelLink);
+
+		if (__ht__action == 'review') {
+			__ht__hoverBorder = $('<div  class="pfn2" style="float: left;"></div>');
+			__ht__hoverBorder.hide();
+			__ht__hoverBorder.css('border', '1px solid red');
+			__ht__hoverBorder.css('font-size', '16px'); //??
+			__ht__hoverBorder.css('pointer-events', 'none');
+			//__ht__hoverBorder.css('position', 'absolute');
+			__ht__hoverBorder.css('z-index', '10003');
+			$('body').append(__ht__hoverBorder);
+
+			__ht__selectedBorder = $('<div></div>');
+			__ht__selectedBorder.hide();
+			__ht__selectedBorder.css('border', '1px solid #FDBCB4');
+			__ht__selectedBorder.css('background', '#FDBCB4');
+			__ht__selectedBorder.css('opacity', '0.60');
+			__ht__selectedBorder.css('pointer-events', 'none');
+			__ht__selectedBorder.css('position', 'absolute');
+			__ht__selectedBorder.css('z-index', '10002');
+			
+			$('body').append(__ht__selectedBorder);
+		}
+
+		__ht__bottomGrader = $('<div class="pfn1"  style="background: #red; float: left; "></div>');
+		// The webkit prefix is needed for Safari to work properly with the sticky position
+		__ht__bottomGrader.css('position', '-webkit-sticky');
+		__ht__bottomGrader.css('position', 'sticky ');
+		__ht__bottomGrader.css('width', '100%');
+		__ht__bottomGrader.css('bottom', '0');
+		__ht__bottomGrader.css('left', '0');
+		__ht__bottomGrader.css('height', '150px');
+		__ht__bottomGrader.css('background', '#555555');
+		__ht__bottomGrader.css('color', 'white');
+		__ht__bottomGrader.css('z-index', '10042');
+		__ht__bottomGrader.css('text-align', 'left');//MP:2017-01-04 (merge-back)	
+		__ht__bottomGrader.css('font-size', '16px'); //??
+		//__ht__bottomGrader.css('max-width', '100%'); 
+		__ht__bottomGrader.css('margin', '0'); 
+
+		//__ht__bottomGrader.css('font-size', '16px');		
+		//__ht__bottomGrader.css('margin', '0px');//MP:2017-01-04 (merge-back)	
+		//__ht__bottomGrader.css('margin', '0%');//MP:2017-01-04 (merge-back)	
+		//__ht__bottomGrader.css('margin-left', '0%');//MP:2017-01-04 (merge-back)	
+		//__ht__bottomGrader.css('margin-right', '0%');//MP:2017-01-04 (merge-back)	
+		__ht__bottomGrader.css('padding', '0');//MP:2018-05-03 (merge-back)	
+		__ht__bottomGrader.css('border-radius', '0px');//MP:2018-05-03 (merge-back)
+		//__ht__bottomGrader.css('background-color', 'transparent');//MP:2018-05-03 (merge-back)		
+		
+        __ht__bottomGrader.hide();
+		$('body').append(__ht__bottomGrader);
+
+		if (__ht__action == 'review') {
+			__ht__bottomGrader1stHalf = $('<div><div style="width:80%; height:100%; float:left; text-align:center; "><textarea id="__ht__finalcomment" placeholder="Напишете финалния си коментар тук. Той ще се запази заедно с оценката." style="resize: none;  margin: 5px; width: 95%; height: 90%; color:black; background-color: white;"></textarea></div><div style="width:20%; height:100%; float:left; text-align:center;"><span style="margin: 5px; width: 90%; float: left; text-align: center;">Оценка</span><input id="__ht__score" style="margin: 5px; width: 90%; float: left; color:black; background-color: white;" type="text" value="5" disabled><input id="__ht__scoreslider" type="range" name="rangeInput" min="0" max="10" step="1" value="5" style="margin: 5px; width: 90%; float: left;" onchange="__ht__updateTextInput();"></div></div>');
+
+			__ht__submitButton = $('<a href="#" style="margin:auto; width:80%;height: auto; font-size:16px" class="__ht__btn __ht__orange">Запази оценка</a>');
+			__ht__bottomGrader1stHalf.find( "div:eq(1)" ).append(__ht__submitButton);
+
+			__ht__submitButton.bind('click', function(e) {
+			        e.preventDefault();
+
+			        if ( $( '#__ht__finalcomment' ).val() !== '' ) {
+
+			        	__ht__startLoading();
+
+			            $.ajax({
+			                url : 'https://w23ref.w3c.fmi.uni-sofia.bg/savescore.php',
+			                type: 'POST',
+			                //dataType: 'json',
+			                data : {
+			                    comment: $( '#__ht__finalcomment' ).val(),
+			                    user_id: 85654,
+			                    referat_id: '85620_1_78',
+			                    score: $( '#__ht__score' ).val()
+			                },
+			                success: function(data, textStatus, jqXHR)
+			                {
+			                    //receive(data);
+			                    __ht__loadingComplete('Successfully saved your score.', true);
+			                },
+			                error: function (jqXHR, textStatus, errorThrown)
+			                {
+			                    __ht__loadingComplete('Error with saving your final feedback. Your session is probably expired.', false);
+			                }
+			            });
+			        } else {
+
+			        }
+			    });
+
+			__ht__bottomGrader1stHalf.css('float', 'left');
+			__ht__bottomGrader1stHalf.css('width', '50%');
+			__ht__bottomGrader1stHalf.css('height', '100%');
+			//__ht__bottomGrader1stHalf.css('background', '#00ffff');
+			__ht__bottomGrader.append(__ht__bottomGrader1stHalf);
+
+			__ht__bottomGrader2ndHalf = $('<div><div style="width:80%; height:100%; float:left; text-align:center;"><textarea id="__ht__elementcomment" placeholder="Напишете тук своя коментар към избрания елемент от реферата. Коментарите се запазват автоматично при избор на нов елемент." style="resize: none; margin: 5px; width: 95%; height: 90%; color:black; background-color: white;"></textarea></div><div style="width:20%; height:100%; float:left; text-align:center;"></div></div>');
+			__ht__bottomGrader2ndHalf.css('float', 'left');
+			__ht__bottomGrader2ndHalf.css('width', '50%');
+			__ht__bottomGrader2ndHalf.css('height', '100%');
+			//__ht__bottomGrader2ndHalf.css('background', '#ff00ff');
+			__ht__bottomGrader.append(__ht__bottomGrader2ndHalf);
+
+			__ht__deleteCommentButton = $('<a href="#" style="margin:auto; margin-top:30px; width:80%;height: auto;" class="__ht__btn __ht__red">Изтрий коментар</a>');
+			__ht__bottomGrader2ndHalf.find( "div:eq(1)" ).append(__ht__deleteCommentButton);
+
+			__ht__deleteCommentButton.bind('click', function(e) {
+			        e.preventDefault();
+
+			        if(((typeof __ht__selectedElementID) === "undefined")
+                    || (__ht__currentComments[__ht__selectedElementID] === undefined)){
+                        return;
+                    }
+			        	__ht__startLoading();
+
+			            $.ajax({
+			                url : 'https://w23ref.w3c.fmi.uni-sofia.bg/deletecomment.php',
+			                type: 'POST',
+			                //dataType: 'json',
+			                data : {
+			                    user_id: 85654,
+			                    referat_id: '85620_1_78',
+			                    element_id: __ht__selectedElementID
+			                },
+			                success: function(data, textStatus, jqXHR)
+			                {
+			                	delete __ht__currentComments[__ht__selectedElementID.toString()];
+			                	$('#__ht__comment' + __ht__selectedElementID.toString()).remove();
+			                	$( '#__ht__elementcomment' ).val('');
+			                	__ht__loadingComplete('Successfully removed comment.', true);
+			                    //receive(data);
+			                },
+			                error: function (jqXHR, textStatus, errorThrown)
+			                {
+			                    __ht__loadingComplete('Error with removing the comment. Your session is probably expired.', false);
+			                }
+			            });
+
+			    });
+
+			__ht__bottomGrader2ndHalf.find( "div:eq(1)" ).append('<br/>');
+
+			__ht__saveCommentButton = $('<a href="#" style="margin:auto; margin-top:20px; width:80%;height: auto;" class="__ht__btn __ht__green">Запази коментар</a>');
+			__ht__bottomGrader2ndHalf.find( "div:eq(1)" ).append(__ht__saveCommentButton);
+
+			__ht__saveCommentButton.bind('click', function(e){
+				e.preventDefault();
+				__ht__saveComment();
+			});
+		}
+
+		if (__ht__action == 'view') {
+			__ht__bottomGrader1stHalf = $('<div></div>');
+			__ht__bottomGrader1stHalf.css('float', 'left');
+			__ht__bottomGrader1stHalf.css('width', '50%');
+			__ht__bottomGrader1stHalf.css('height', '100%');
+			__ht__bottomGrader1stHalf.css('overflow-y', 'scroll');
+			__ht__bottomGrader1stHalf.css('word-wrap', 'break-word');
+
+			for (var i = 0; i < __ht__finalVerdicts.length; i++) {
+				__ht__bottomGrader1stHalf.append('<div class="__ht__blockquote"><b style="color:white;">'+__ht__finalVerdicts[i]['score'].toString()+' от 10 точки</b><br/>'+__ht__finalVerdicts[i]['comment']+'</div>');
+			}
+
+			__ht__bottomGrader.append(__ht__bottomGrader1stHalf);
+
+			__ht__bottomGrader2ndHalf = $('<div></div>');
+			__ht__bottomGrader2ndHalf.css('float', 'left');
+			__ht__bottomGrader2ndHalf.css('width', '50%');
+			__ht__bottomGrader2ndHalf.css('height', '100%');
+			__ht__bottomGrader2ndHalf.css('overflow-y', 'scroll');
+			__ht__bottomGrader2ndHalf.css('word-wrap', 'break-word');
+
+			for (var __ht__prop in __ht__currentComments) {
+				for (var i = 0; i < __ht__currentComments[__ht__prop].length; i++) {
+					var __ht__temptemptemp = $('<div class="__ht__blockquote">'+__ht__currentComments[__ht__prop][i]+'</div>');
+					__ht__temptemptemp.addClass('__ht__bottomComment' + __ht__prop);
+					__ht__temptemptemp.attr('data-htextrainfobox', __ht__prop);
+					__ht__temptemptemp.css('cursor', 'default');
+					__ht__temptemptemp.bind('click', function(e) {
+				        e.preventDefault();
+
+				        __ht__changeViewBox($(this).attr('data-htextrainfobox'));
+				    });
+					__ht__bottomGrader2ndHalf.append(__ht__temptemptemp);
+				}
+			}
+
+			__ht__bottomGrader.append(__ht__bottomGrader2ndHalf);
+		}
+
+		__ht__bottomGraderX = $('<div>X</div>');
+		__ht__bottomGraderX.css('position', 'absolute');
+		__ht__bottomGraderX.css('width', '48px');
+		__ht__bottomGraderX.css('top', '0');
+		__ht__bottomGraderX.css('right', '0');
+		__ht__bottomGraderX.css('font-size', '16px');
+
+		
+		__ht__bottomGraderX.css('height', '20px');
+		__ht__bottomGraderX.css('background', '#c75050');
+
+		__ht__bottomGraderX.hover(
+	      function() {
+	        __ht__bottomGraderX.css('background', '#e04343');
+	      }, function() {
+	        __ht__bottomGraderX.css('background', '#c75050');
+	      }
+	    );
+
+		__ht__bottomGraderX.css('line-height', '20px');
+		__ht__bottomGraderX.css('text-align', 'center');
+		__ht__bottomGraderX.css('color', 'white');
+		__ht__bottomGraderX.css('cursor', 'default');
+		__ht__bottomGraderX.click(function() {
+			__ht__changeViewBox(-1);
+            __ht__bottomGrader.hide();
+		    if (__ht__action == 'review') {
+                __ht__selectedBorder.hide();
+		    }
+		});
+		__ht__bottomGrader.append(__ht__bottomGraderX);
+
+		__ht__loadingDiv = $('<div></div>');
+		__ht__loadingDiv.css('position', 'fixed');
+		__ht__loadingDiv.css('width', '100%');
+		__ht__loadingDiv.css('height', '100%');
+		__ht__loadingDiv.css('left', '0');
+		__ht__loadingDiv.css('top', '0');
+		__ht__loadingDiv.css('background', '#c0c0c0');
+		__ht__loadingDiv.css('z-index', '10043');
+		__ht__loadingDiv.css('opacity', '0.60');
+		__ht__loadingDiv.hide();
+		$('body').append(__ht__loadingDiv);
+
+		__ht__loadingDivInfo = $('<div></div>');
+		__ht__loadingDivInfo.css('position', 'relative');
+		__ht__loadingDivInfo.css('width', '200px');
+		__ht__loadingDivInfo.css('height', '200px');
+		__ht__loadingDivInfo.css('background', '#c0c0c0');
+		__ht__loadingDivInfo.css('top', '200px');
+		__ht__loadingDivInfo.css('z-index', '10044');
+		__ht__loadingDivInfo.css('margin', 'auto');
+		__ht__loadingDiv.append(__ht__loadingDivInfo);
+    }
+
+    function __ht__startLoading() {
+    	__ht__loadingDivInfo.css('background', '#c0c0c0');
+    	__ht__loadingDivInfo.html('<img src="https://w23ref.w3c.fmi.uni-sofia.bg/img/loading.gif" style="width:100%">');
+    	__ht__loadingDiv.fadeIn();
+    }
+
+    function __ht__loadingComplete(msg, noerror) {
+    	if (noerror) {
+    		// __ht__loadingDivInfo.css('background', '#00ff00');
+            __ht__loadingDivInfo.html('<img src="https://w23ref.w3c.fmi.uni-sofia.bg/img/loading.gif" style="width:100%">');
+    	} else {
+			alert(msg);
+    	}
+    	// __ht__loadingDivInfo.html(msg);
+    	__ht__loadingDiv.fadeOut(1000);
+    }
+
+    function __ht__jQueryCheck() {
+        if (typeof jQuery === "undefined") {
+            // No one's loaded it; either load it or do without
+		    var __ht__script = document.createElement("SCRIPT");
+		    __ht__script.src = 'https://w23ref.w3c.fmi.uni-sofia.bg/assets/jquery.min.1.7.1.js';
+		    __ht__script.type = 'text/javascript';
+		    document.getElementsByTagName("head")[0].appendChild(__ht__script);
+
+		    // Poll for jQuery to come into existance
+		    var __ht__checkReady = function(callback) {
+		        if (window.jQuery) {
+		            callback(jQuery);
+		        } else {
+		            window.setTimeout(function() { __ht__checkReady(callback); }, 100);
+		        }
+		    };
+
+		    __ht__checkReady(function($) {
+			    __ht__hookwe();
+		    });
+        }
+        else
+        {
+        	//__ht__hookwe(); //2020-02-05
+			// hook on next event-loop to hook AFTER angular / other framework event listeners binding
+			// fixes comments not working when importing jquery manually in referat
+			setTimeout(function() {
+				__ht__hookwe();
+			}, 500); // 1ms timeout works too - just to skip the event loop, but better put some more to make sure other frameworks / code works too
+        	
+        }
+    }
+
+    // return false if the comment was send to the server, but wasn't saved successfully
+	// else, return true
+	function __ht__saveComment(){
+
+		if ( ((typeof __ht__selectedElementID) === "undefined")
+			|| ($( '#__ht__elementcomment' ).val() === '') ) {
+			return true;
+		}
+
+		// if the comment wasn't changed since it was last saved, exit the function
+		if(__ht__currentComments[__ht__selectedElementID.toString()] === $( '#__ht__elementcomment' ).val()){
+			return true;
+		}
+
+		__ht__startLoading();
+
+		var success = true;
+
+		$.ajax({
+			url : 'https://w23ref.w3c.fmi.uni-sofia.bg/savecomment.php',
+			type: 'POST',
+
+			// This function is called automatically when the user clicks on a new element.
+			// That's why the request must NOT be asynchronous. __ht__selectedBorder must have its old value when the
+			// response callback is executed. Only after the new comment position is saved, must the value of
+			// __ht__selectedBorder be updated with the newly selected element.
+			async: false,
+
+			//dataType: 'json',
+			data : {
+				comment: $( '#__ht__elementcomment' ).val(),
+				user_id: 85654,
+			referat_id: '85620_1_78',
+			element_id: __ht__selectedElementID
+		},
+		success: function(data, textStatus, jqXHR)
+		{
+			__ht__currentComments[__ht__selectedElementID.toString()] = $( '#__ht__elementcomment' ).val();
+			__ht__currentCommentsPositions[__ht__selectedElementID.toString()] = __ht__getElementPositionInfo(__ht__selectedBorder);
+			__ht__addNewComment(__ht__selectedElementID);
+			__ht__loadingComplete('Successfully saved comment.', true);
+			//receive(data);
+		},
+		error: function (jqXHR, textStatus, errorThrown)
+		{
+			__ht__loadingComplete('Error with saving the comment. Your session is probably expired.', false);
+			success = false;
+		}
+	});
+
+		return success;
+	}
+})();
+</script>
+
+<div style="width: 100px; height: 30px; position: fixed; top: 40%; left: 0px; background: rgb(0, 166, 147); color: white; text-align: center; font-size: 16px; line-height: 30px; cursor: default; z-index: 11000;">Коментари</div><div style="width: 100px; height: 30px; position: fixed; top: 60%; left: 0px; background: rgb(166, 0, 0); color: white; text-align: center; font-size: 16px; line-height: 30px; cursor: default; z-index: 11000;">Назад</div><div class="pfn1" style="float: left; position: sticky; width: 100%; bottom: 0px; left: 0px; height: 150px; background: rgb(85, 85, 85); color: white; z-index: 10042; text-align: left; font-size: 16px; margin: 0px; padding: 0px; border-radius: 0px; display: none;"><div style="float: left; width: 50%; height: 100%; overflow-y: scroll; overflow-wrap: break-word;"></div><div style="float: left; width: 50%; height: 100%; overflow-y: scroll; overflow-wrap: break-word;"></div><div style="position: absolute; width: 48px; top: 0px; right: 0px; font-size: 16px; height: 20px; background: rgb(199, 80, 80); line-height: 20px; text-align: center; color: white; cursor: default;">X</div></div><div style="position: fixed; width: 100%; height: 100%; left: 0px; top: 0px; background: rgb(192, 192, 192); z-index: 10043; opacity: 0.6; display: none;"><div style="position: relative; width: 200px; height: 200px; background: rgb(192, 192, 192); top: 200px; z-index: 10044; margin: auto;"></div></div></body><grammarly-desktop-integration data-grammarly-shadow-root="true"><template shadowrootmode="open"><style>
+      div.grammarly-desktop-integration {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select:none;
+        user-select:none;
+      }
+
+      div.grammarly-desktop-integration:before {
+        content: attr(data-content);
+      }
+    </style><div aria-label="grammarly-integration" role="group" tabindex="-1" class="grammarly-desktop-integration" data-content="{&quot;mode&quot;:&quot;full&quot;,&quot;isActive&quot;:true,&quot;isUserDisabled&quot;:false}"></div></template></grammarly-desktop-integration></html>
