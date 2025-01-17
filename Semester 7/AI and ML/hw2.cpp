@@ -128,7 +128,7 @@ int main() {
     if (solution.size() == 1 && solution[0] == -1) {
         cout << -1 << endl;
     } else if (n > 100) {
-        cout << duration.count() / 1000 << "." << (duration.count() % 1000) / 10 << endl;
+        cout << duration.count() / 1000 << "." << (duration.count() % 1000) / 10 << 's' << endl;
     } else {
         cout << "[" << solution[0];
         for (int i = 1; i < solution.size(); ++i) {

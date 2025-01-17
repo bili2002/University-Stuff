@@ -1,3 +1,5 @@
+//teoriq
+
 #include <iostream>
 #include <vector>
 #include <stack>
@@ -7,7 +9,7 @@
 
 using namespace std;
 
-bool print_timing = false; 
+bool print_timing = true; 
 
 struct Puzzle {
     vector<vector<int>> board;
